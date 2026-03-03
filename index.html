@@ -165,6 +165,25 @@ margin-top:40px;
 </head>
 
 <body>
+  <script>
+document.getElementById("signupForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = this.elements[0].value;
+  const email = this.elements[1].value;
+  const address = this.elements[2].value;
+  const zip = this.elements[3].value;
+
+  const response = await fetch("/api/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, address, zip })
+  });
+
+  const data = await response.json();
+  alert(data.message);
+});
+</script>
 
 <header>
 <img src="logo.png" alt="Sunara Energy">
@@ -248,4 +267,5 @@ margin-top:40px;
 
 </body>
 </html>
+
 
