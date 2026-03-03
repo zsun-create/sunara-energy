@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +23,8 @@
       </a>
       <nav class="main-nav">
         <a href="plans.html">Plans &amp; Rates</a>
+        <a href="plans.html#residential">Residential</a>
+        <a href="plans.html#business">Business</a>
         <a href="about.html" style="color:var(--blue); border-color:var(--gold)">Why Sunara</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
@@ -36,6 +37,8 @@
     </div>
     <div class="mobile-nav" id="mobileNav">
       <a href="plans.html">Plans &amp; Rates</a>
+      <a href="plans.html#residential">Residential</a>
+      <a href="plans.html#business">Business</a>
       <a href="about.html">Why Sunara</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
@@ -45,17 +48,20 @@
 
   <section class="page-hero">
     <h1>Why Sunara Energy?</h1>
-    <p>Built for Texas families. Powered by transparency. Driven by service.</p>
+    <p>Built for Texas homes and businesses. Powered by transparency. Driven by service.</p>
   </section>
 
   <!-- ABOUT STORY -->
   <div class="about-grid">
     <div class="about-text">
       <h2>Electricity That Works For You</h2>
-      <p>Sunara Energy was founded on a simple idea: Texans deserve affordable, reliable electricity without the confusion, hidden fees, or gimmicks that come with most utility companies.</p>
-      <p>We are a Texas-based retail electricity provider (REP) committed to giving every customer clear pricing, real support, and the power to choose how they use energy in their home.</p>
-      <p>Whether you are moving into a new home, switching from an expensive provider, or just looking for a better deal — Sunara Energy has a plan built for your life and your budget.</p>
-      <a href="signup.html" class="btn-gold" style="display:inline-block; margin-top:10px;">Get Started Today</a>
+      <p>Sunara Energy was founded on a simple idea: Texas homes and businesses deserve affordable, reliable electricity without the confusion, hidden fees, or gimmicks that come with most utility companies.</p>
+      <p>We are a Texas-based retail electricity provider (REP) serving both residential customers and businesses of all sizes — from single-family homes to multi-location commercial operations.</p>
+      <p>Whether you are a homeowner looking to lower your monthly bill, a small business watching overhead costs, or an enterprise needing a dedicated energy partner — Sunara Energy has a plan built for you.</p>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:24px;">
+        <a href="signup.html?type=residential" class="btn-gold" style="display:inline-block;">Residential Plans</a>
+        <a href="signup.html?type=business" class="btn-outline" style="display:inline-block; padding:9px 22px; font-size:14px;">Business Plans</a>
+      </div>
     </div>
     <div class="about-image">
       <img src="s-logo.png" alt="Sunara" onerror="this.style.display='none'">
@@ -67,19 +73,58 @@
     <div class="container">
       <div class="section-header">
         <h2>Our Core Values</h2>
-        <p>Everything we do is guided by these four principles.</p>
+        <p>Everything we do — for every home and every business — is guided by these four principles.</p>
       </div>
       <div class="values-grid">
-        <div class="value-card"><div class="icon">💡</div><h4>Transparency</h4><p>No hidden fees. No bait-and-switch. You always know exactly what you're paying.</p></div>
-        <div class="value-card"><div class="icon">🤝</div><h4>Reliability</h4><p>Consistent service, consistent billing, consistent support — every single time.</p></div>
-        <div class="value-card"><div class="icon">🌎</div><h4>Community</h4><p>Texans serving Texans. Local support, local knowledge, local pride.</p></div>
-        <div class="value-card"><div class="icon">📈</div><h4>Innovation</h4><p>Always improving our tools, technology, and processes to serve you better.</p></div>
+        <div class="value-card"><div class="icon">💡</div><h4>Transparency</h4><p>No hidden fees. No bait-and-switch. You always know exactly what you're paying — whether you're a homeowner or a business owner.</p></div>
+        <div class="value-card"><div class="icon">🤝</div><h4>Reliability</h4><p>Consistent service, consistent billing, consistent support — every single time, for every single customer.</p></div>
+        <div class="value-card"><div class="icon">🌎</div><h4>Community</h4><p>Texans serving Texans. We support the homes, shops, and businesses that make our communities great.</p></div>
+        <div class="value-card"><div class="icon">📈</div><h4>Innovation</h4><p>Always improving our tools, technology, and processes to better serve residential and commercial customers alike.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="section" style="background:white;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Who We Serve</h2>
+        <p>Sunara Energy powers homes and businesses all across Texas.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
+
+        <div style="background:var(--light); border-radius:16px; padding:40px; border-top:4px solid var(--sky);">
+          <div style="font-size:40px; margin-bottom:16px;">🏠</div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:12px;">Residential</h3>
+          <p style="color:var(--gray); font-size:15px; line-height:1.8; margin-bottom:20px;">Affordable, fixed-rate plans for Texas homeowners and renters. No deposit options, same-day service, and no hidden fees — ever.</p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+            <li style="font-size:14px; color:#334155;">✓ Month-to-month and fixed-rate options</li>
+            <li style="font-size:14px; color:#334155;">✓ No deposit required for qualifying plans</li>
+            <li style="font-size:14px; color:#334155;">✓ Same-day service activation</li>
+            <li style="font-size:14px; color:#334155;">✓ Daily usage alerts via text or email</li>
+          </ul>
+          <a href="signup.html?type=residential" class="btn-plan">View Residential Plans</a>
+        </div>
+
+        <div style="background:var(--navy); border-radius:16px; padding:40px; border-top:4px solid var(--gold);">
+          <div style="font-size:40px; margin-bottom:16px;">🏢</div>
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:12px;">Business</h3>
+          <p style="color:rgba(255,255,255,0.75); font-size:15px; line-height:1.8; margin-bottom:20px;">From small storefronts to large commercial operations, Sunara Energy has a business plan built to reduce overhead and keep the lights on reliably.</p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">✓ Plans for all business sizes</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">✓ Dedicated business support team</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">✓ Multi-location billing available</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">✓ Custom rates for enterprise accounts</li>
+          </ul>
+          <a href="signup.html?type=business" class="btn-plan gold">View Business Plans</a>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- STATS -->
-  <section class="section" style="background:white;">
+  <section class="section" style="background:var(--light); padding-top:0; padding-bottom:80px;">
     <div class="container">
       <div class="section-header"><h2>By the Numbers</h2></div>
       <div class="stats-strip" style="background:var(--navy); border-radius:16px;">
@@ -94,8 +139,9 @@
   <section class="cta-banner">
     <div class="container">
       <h2>Ready to Make the Switch?</h2>
-      <p>Join thousands of Texas families saving every month with Sunara.</p>
-      <a href="signup.html" class="btn-gold large">Start My Service Now</a>
+      <p>Join thousands of Texas homes and businesses saving every month with Sunara.</p>
+      <a href="signup.html?type=residential" class="btn-gold large" style="margin-right:16px;">Residential Service</a>
+      <a href="signup.html?type=business" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">Business Service →</a>
     </div>
   </section>
 
@@ -106,9 +152,26 @@
         <p>Reliable, affordable electricity for Texas homes and businesses.</p>
         <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
       </div>
-      <div class="footer-col"><h5>Plans</h5><a href="plans.html">Flex Plan</a><a href="plans.html">12-Month Saver</a><a href="plans.html">24-Month Ultra</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="about.html">Why Sunara</a><a href="contact.html">Contact Us</a></div>
-      <div class="footer-col"><h5>Support</h5><a href="faq.html">FAQs</a><a href="login.html">My Account</a></div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="plans.html#residential">Flex Plan</a>
+        <a href="plans.html#residential">12-Month Saver</a>
+        <a href="plans.html#residential">24-Month Ultra</a>
+        <a href="signup.html?type=residential">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Business</h5>
+        <a href="plans.html#business">Business Starter</a>
+        <a href="plans.html#business">Business Pro</a>
+        <a href="plans.html#business">Business Elite</a>
+        <a href="signup.html?type=business">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">My Account</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
