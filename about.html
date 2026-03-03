@@ -1,1 +1,120 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Sunara Energy – About Us</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
+    <a href="login.html" class="top-bar-login">My Account →</a>
+  </div>
+
+  <header id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+      </a>
+      <nav class="main-nav">
+        <a href="plans.html">Plans &amp; Rates</a>
+        <a href="about.html" style="color:var(--blue); border-color:var(--gold)">Why Sunara</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" class="btn-outline">Log In</a>
+        <a href="signup.html" class="btn-gold">Start Service</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="plans.html">Plans &amp; Rates</a>
+      <a href="about.html">Why Sunara</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+      <a href="signup.html" class="btn-gold">Start Service</a>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <h1>Why Sunara Energy?</h1>
+    <p>Built for Texas families. Powered by transparency. Driven by service.</p>
+  </section>
+
+  <!-- ABOUT STORY -->
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Electricity That Works For You</h2>
+      <p>Sunara Energy was founded on a simple idea: Texans deserve affordable, reliable electricity without the confusion, hidden fees, or gimmicks that come with most utility companies.</p>
+      <p>We are a Texas-based retail electricity provider (REP) committed to giving every customer clear pricing, real support, and the power to choose how they use energy in their home.</p>
+      <p>Whether you are moving into a new home, switching from an expensive provider, or just looking for a better deal — Sunara Energy has a plan built for your life and your budget.</p>
+      <a href="signup.html" class="btn-gold" style="display:inline-block; margin-top:10px;">Get Started Today</a>
+    </div>
+    <div class="about-image">
+      <img src="s-logo.png" alt="Sunara" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Core Values</h2>
+        <p>Everything we do is guided by these four principles.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card"><div class="icon">💡</div><h4>Transparency</h4><p>No hidden fees. No bait-and-switch. You always know exactly what you're paying.</p></div>
+        <div class="value-card"><div class="icon">🤝</div><h4>Reliability</h4><p>Consistent service, consistent billing, consistent support — every single time.</p></div>
+        <div class="value-card"><div class="icon">🌎</div><h4>Community</h4><p>Texans serving Texans. Local support, local knowledge, local pride.</p></div>
+        <div class="value-card"><div class="icon">📈</div><h4>Innovation</h4><p>Always improving our tools, technology, and processes to serve you better.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section" style="background:white;">
+    <div class="container">
+      <div class="section-header"><h2>By the Numbers</h2></div>
+      <div class="stats-strip" style="background:var(--navy); border-radius:16px;">
+        <div class="stat" style="color:white;"><strong style="color:var(--gold);">50,000+</strong><span style="color:rgba(255,255,255,0.6);">Customers Served</span></div>
+        <div class="stat" style="color:white;"><strong style="color:var(--gold);">4.8 Stars</strong><span style="color:rgba(255,255,255,0.6);">Average Rating</span></div>
+        <div class="stat" style="color:white;"><strong style="color:var(--gold);">100+</strong><span style="color:rgba(255,255,255,0.6);">Texas Cities</span></div>
+        <div class="stat" style="color:white;"><strong style="color:var(--gold);">5 Years</strong><span style="color:rgba(255,255,255,0.6);">Serving Texas</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to Make the Switch?</h2>
+      <p>Join thousands of Texas families saving every month with Sunara.</p>
+      <a href="signup.html" class="btn-gold large">Start My Service Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col brand-col">
+        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <p>Reliable, affordable electricity for Texas homes and businesses.</p>
+        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+      </div>
+      <div class="footer-col"><h5>Plans</h5><a href="plans.html">Flex Plan</a><a href="plans.html">12-Month Saver</a><a href="plans.html">24-Month Ultra</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="about.html">Why Sunara</a><a href="contact.html">Contact Us</a></div>
+      <div class="footer-col"><h5>Support</h5><a href="faq.html">FAQs</a><a href="login.html">My Account</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
