@@ -288,4 +288,6 @@ function handleLogin() {
   const error    = document.getElementById('loginError');
   if (success) success.style.display = 'none';
   if (error)   error.style.display   = 'none';
-  if (!email || !password) { if (
+  if (!email || !password) { if (error) error.style.display = 'block'; return; }
+  if (success) { success.textContent = 'Customer portal coming soon! We will email you login details once your account is active.'; success.style.display = 'block'; }
+}
