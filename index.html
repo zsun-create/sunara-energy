@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Sunara Energy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
@@ -13,26 +14,21 @@
 
     header {
       background: #0a192f;
-      color: white;
-      padding: 20px 40px;
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    header span {
-      color: #00c2ff;
+    .logo img {
+      height: 50px;
     }
 
     nav a {
       color: white;
-      margin-left: 20px;
+      margin-left: 25px;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .hero {
@@ -40,6 +36,7 @@
       color: white;
       padding: 120px 20px;
       text-align: center;
+      position: relative;
     }
 
     .hero h2 {
@@ -59,6 +56,15 @@
       border: none;
       cursor: pointer;
       border-radius: 5px;
+    }
+
+    .hero-logo {
+      margin-top: 40px;
+    }
+
+    .hero-logo img {
+      height: 120px;
+      opacity: 0.9;
     }
 
     .plans {
@@ -82,10 +88,6 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    .plan h3 {
-      margin-top: 0;
-    }
-
     .plan button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -107,7 +109,9 @@
 <body>
 
 <header>
-  <h1>Sunara <span>Energy</span></h1>
+  <div class="logo">
+    <img src="logo.png" alt="Sunara Energy Logo">
+  </div>
   <nav>
     <a href="#">Plans</a>
     <a href="#">Why Us</a>
@@ -119,6 +123,10 @@
   <h2>Energy Without Limits</h2>
   <p>Reliable, affordable electricity for Texas homes.</p>
   <button>View Plans</button>
+
+  <div class="hero-logo">
+    <img src="s-logo.png" alt="Sunara S Logo">
+  </div>
 </section>
 
 <section class="plans">
