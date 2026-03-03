@@ -27,6 +27,8 @@
       </a>
       <nav class="main-nav">
         <a href="plans.html">Plans &amp; Rates</a>
+        <a href="plans.html#residential">Residential</a>
+        <a href="plans.html#business">Business</a>
         <a href="about.html">Why Sunara</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
@@ -87,49 +89,105 @@
     <div class="container">
       <div class="section-header">
         <h2>Simple, Affordable Plans</h2>
-        <p>No tricks. No gimmicks. Just great rates for your home.</p>
+        <p>Whether you're powering a home or a business — we've got the right plan for you.</p>
       </div>
-      <div class="plans-grid">
-        <div class="plan-card">
-          <div class="plan-tag">Flexible</div>
-          <h3>Flex Plan</h3>
-          <div class="plan-rate">$0.11<span>/kWh</span></div>
-          <p class="plan-term">Month-to-Month · No Contract</p>
-          <ul class="plan-features">
-            <li>✓ No long-term commitment</li>
-            <li>✓ Cancel anytime</li>
-            <li>✓ No deposit required</li>
-            <li>✓ Online account access</li>
-          </ul>
-          <a href="signup.html?plan=flex" class="btn-plan">Select Plan</a>
-        </div>
-        <div class="plan-card featured">
-          <div class="plan-tag best">⭐ Most Popular</div>
-          <h3>12-Month Saver</h3>
-          <div class="plan-rate">$0.09<span>/kWh</span></div>
-          <p class="plan-term">12-Month Fixed Rate</p>
-          <ul class="plan-features">
-            <li>✓ Locked-in rate, no surprises</li>
-            <li>✓ Save up to 18% vs. flex</li>
-            <li>✓ Free daily usage alerts</li>
-            <li>✓ Priority support</li>
-          </ul>
-          <a href="signup.html?plan=12month" class="btn-plan gold">Select Plan</a>
-        </div>
-        <div class="plan-card">
-          <div class="plan-tag">Best Value</div>
-          <h3>24-Month Ultra</h3>
-          <div class="plan-rate">$0.085<span>/kWh</span></div>
-          <p class="plan-term">24-Month Fixed Rate</p>
-          <ul class="plan-features">
-            <li>✓ Lowest rate guaranteed</li>
-            <li>✓ Protection from rate hikes</li>
-            <li>✓ Free smart home tips</li>
-            <li>✓ VIP customer support</li>
-          </ul>
-          <a href="signup.html?plan=24month" class="btn-plan">Select Plan</a>
+
+      <!-- TABS -->
+      <div class="plan-tabs">
+        <button class="plan-tab active" onclick="switchTab('residential', this)">🏠 Residential</button>
+        <button class="plan-tab" onclick="switchTab('business', this)">🏢 Business</button>
+      </div>
+
+      <!-- RESIDENTIAL PLANS -->
+      <div id="tab-residential" class="tab-content">
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="plan-tag">Flexible</div>
+            <h3>Flex Plan</h3>
+            <div class="plan-rate">$0.11<span>/kWh</span></div>
+            <p class="plan-term">Month-to-Month · No Contract</p>
+            <ul class="plan-features">
+              <li>✓ No long-term commitment</li>
+              <li>✓ Cancel anytime</li>
+              <li>✓ No deposit required</li>
+              <li>✓ Online account access</li>
+            </ul>
+            <a href="signup.html?type=residential&plan=flex" class="btn-plan">Select Plan</a>
+          </div>
+          <div class="plan-card featured">
+            <div class="plan-tag best">⭐ Most Popular</div>
+            <h3>12-Month Saver</h3>
+            <div class="plan-rate">$0.09<span>/kWh</span></div>
+            <p class="plan-term">12-Month Fixed Rate</p>
+            <ul class="plan-features">
+              <li>✓ Locked-in rate, no surprises</li>
+              <li>✓ Save up to 18% vs. flex</li>
+              <li>✓ Free daily usage alerts</li>
+              <li>✓ Priority support</li>
+            </ul>
+            <a href="signup.html?type=residential&plan=12month" class="btn-plan gold">Select Plan</a>
+          </div>
+          <div class="plan-card">
+            <div class="plan-tag">Best Value</div>
+            <h3>24-Month Ultra</h3>
+            <div class="plan-rate">$0.085<span>/kWh</span></div>
+            <p class="plan-term">24-Month Fixed Rate</p>
+            <ul class="plan-features">
+              <li>✓ Lowest rate guaranteed</li>
+              <li>✓ Protection from rate hikes</li>
+              <li>✓ Free smart home tips</li>
+              <li>✓ VIP customer support</li>
+            </ul>
+            <a href="signup.html?type=residential&plan=24month" class="btn-plan">Select Plan</a>
+          </div>
         </div>
       </div>
+
+      <!-- BUSINESS PLANS -->
+      <div id="tab-business" class="tab-content" style="display:none;">
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="plan-tag">Small Business</div>
+            <h3>Business Starter</h3>
+            <div class="plan-rate">$0.10<span>/kWh</span></div>
+            <p class="plan-term">Month-to-Month · No Contract</p>
+            <ul class="plan-features">
+              <li>✓ Up to 5,000 kWh/month</li>
+              <li>✓ No long-term commitment</li>
+              <li>✓ Dedicated business support</li>
+              <li>✓ Online account portal</li>
+            </ul>
+            <a href="signup.html?type=business&plan=biz-starter" class="btn-plan">Select Plan</a>
+          </div>
+          <div class="plan-card featured">
+            <div class="plan-tag best">⭐ Most Popular</div>
+            <h3>Business Pro</h3>
+            <div class="plan-rate">$0.083<span>/kWh</span></div>
+            <p class="plan-term">12-Month Fixed Rate</p>
+            <ul class="plan-features">
+              <li>✓ Up to 20,000 kWh/month</li>
+              <li>✓ Locked-in rate all year</li>
+              <li>✓ Monthly usage reports</li>
+              <li>✓ Priority business support</li>
+            </ul>
+            <a href="signup.html?type=business&plan=biz-pro" class="btn-plan gold">Select Plan</a>
+          </div>
+          <div class="plan-card">
+            <div class="plan-tag">Enterprise</div>
+            <h3>Business Elite</h3>
+            <div class="plan-rate">Custom<span> rate</span></div>
+            <p class="plan-term">24-Month · Negotiated Rate</p>
+            <ul class="plan-features">
+              <li>✓ Unlimited usage</li>
+              <li>✓ Custom rate negotiation</li>
+              <li>✓ Dedicated account manager</li>
+              <li>✓ Multi-location support</li>
+            </ul>
+            <a href="contact.html?type=enterprise" class="btn-plan">Contact Us</a>
+          </div>
+        </div>
+      </div>
+
       <div class="plans-cta">
         <a href="plans.html">Compare All Plans &amp; See Full Rate Details →</a>
       </div>
@@ -141,7 +199,7 @@
     <div class="container">
       <div class="section-header">
         <h2>The Sunara Difference</h2>
-        <p>We're not just another utility. We're your energy partner.</p>
+        <p>Serving Texas homes and businesses with transparent, reliable energy.</p>
       </div>
       <div class="why-grid">
         <div class="why-card"><div class="why-icon">⚡</div><h4>Transparent Pricing</h4><p>What you see is what you pay. No mystery fees, no bait-and-switch rates.</p></div>
