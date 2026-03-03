@@ -6,26 +6,30 @@
 let customerType = 'residential';
 
 const residentialPlans = [
-  { value: 'flex',    label: 'Flex Plan – $0.11/kWh (Month-to-Month)' },
-  { value: '12month', label: '12-Month Saver – $0.09/kWh (Most Popular)' },
-  { value: '24month', label: '24-Month Ultra – $0.085/kWh (Best Value)' },
+  { value: 'flex',    label: 'Flex Plan – $0.11/kWh (Month-to-Month)',   rate: '$0.11/kWh', desc: 'No contract, cancel anytime. Best for flexibility.' },
+  { value: '12month', label: '12-Month Saver – $0.09/kWh (Most Popular)', rate: '$0.09/kWh', desc: 'Fixed rate for 12 months. Save up to 18% vs. month-to-month.' },
+  { value: '24month', label: '24-Month Ultra – $0.085/kWh (Best Value)',  rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years. Best long-term value.' },
 ];
 const businessPlans = [
-  { value: 'biz-starter', label: 'Business Starter – $0.10/kWh (Month-to-Month)' },
-  { value: 'biz-pro',     label: 'Business Pro – $0.083/kWh (12-Month, Most Popular)' },
-  { value: 'biz-elite',   label: 'Business Elite – Custom Rate (24-Month)' },
+  { value: 'biz-starter', label: 'Business Starter – $0.10/kWh (Month-to-Month)', rate: '$0.10/kWh', desc: 'Up to 5,000 kWh/month. No contract, cancel anytime.' },
+  { value: 'biz-pro',     label: 'Business Pro – $0.083/kWh (12-Month)',           rate: '$0.083/kWh', desc: 'Up to 20,000 kWh/month. Locked-in rate for 12 months.' },
+  { value: 'biz-elite',   label: 'Business Elite – Custom Rate (24-Month)',         rate: 'Custom Rate', desc: 'Unlimited usage, dedicated account manager, multi-location billing.' },
 ];
 
 function setCustomerType(type) {
   customerType = type;
   const isRes = type === 'residential';
+
   document.getElementById('typeResBtn')?.classList.toggle('active', isRes);
   document.getElementById('typeBizBtn')?.classList.toggle('active', !isRes);
+
   const bizGroup = document.getElementById('bizNameGroup');
   if (bizGroup) bizGroup.style.display = isRes ? 'none' : 'block';
   const dobGroup = document.getElementById('dobGroup');
   if (dobGroup) dobGroup.style.display = isRes ? 'block' : 'none';
+
   populatePlans(type);
+
   const heroTitle = document.getElementById('signupHeroTitle');
   if (heroTitle) heroTitle.textContent = isRes ? 'Start Your Residential Service' : 'Start Your Business Service';
 }
@@ -41,6 +45,95 @@ function populatePlans(type) {
     opt.textContent = p.label;
     select.appendChild(opt);
   });
+  // Hide plan detail card when switching type
+  const detail = document.getElementById('planDetail');
+  if (detail) detail.style.display = 'none';
+}
+
+// Show plan detail card when plan is selected
+function onPlanChange() {
+  const select = document.getElementById('planSelect');
+  const detail = document.getElementById('planDetail');
+  if (!select || !detail) return;
+
+  const allPlans = [...residentialPlans, ...businessPlans];
+  const chosen   = allPlans.find(p => p.value === select.value);
+
+  if (chosen) {
+    document.getElementById('planDetailName').textContent = chosen.label.split('–')[0].trim();
+    document.getElementById('planDetailRate').textContent = chosen.rate;
+    document.getElementById('planDetailDesc').textContent = chosen.desc;
+    detail.style.display = 'block';
+  } else {
+    detail.style.display = 'none';
+  }
+}
+
+// ---- PASSWORD TOGGLE ----
+function togglePassword(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon  = document.getElementById(iconId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) icon.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    if (icon) icon.textContent = '👁';
+  }
+}
+
+// ---- PASSWORD STRENGTH ----
+function checkPasswordStrength(pw) {
+  const el = document.getElementById('passwordStrength');
+  if (!el) return;
+  if (!pw) { el.textContent = ''; return; }
+  let strength = 0;
+  if (pw.length >= 8)              strength++;
+  if (/[A-Z]/.test(pw))           strength++;
+  if (/[0-9]/.test(pw))           strength++;
+  if (/[^A-Za-z0-9]/.test(pw))   strength++;
+  const labels = ['', '🔴 Weak', '🟡 Fair', '🟠 Good', '🟢 Strong'];
+  el.textContent = 'Password strength: ' + (labels[strength] || '');
+}
+
+// ---- STEP VALIDATION ----
+function validateStep1() {
+  const first    = document.getElementById('firstName')?.value?.trim();
+  const last     = document.getElementById('lastName')?.value?.trim();
+  const email    = document.getElementById('email')?.value?.trim();
+  const phone    = document.getElementById('phone')?.value?.trim();
+  const pw       = document.getElementById('password')?.value;
+  const pwConf   = document.getElementById('confirmPassword')?.value;
+  const errorEl  = document.getElementById('step1Error');
+
+  if (!first || !last || !email || !phone || !pw || !pwConf) {
+    errorEl.textContent = '⚠️ Please fill in all fields.';
+    errorEl.style.display = 'block'; return;
+  }
+  if (pw.length < 8) {
+    errorEl.textContent = '⚠️ Password must be at least 8 characters.';
+    errorEl.style.display = 'block'; return;
+  }
+  if (pw !== pwConf) {
+    errorEl.textContent = '⚠️ Passwords do not match.';
+    errorEl.style.display = 'block'; return;
+  }
+  errorEl.style.display = 'none';
+  goStep(2);
+}
+
+function validateStep2() {
+  const address = document.getElementById('address')?.value?.trim();
+  const city    = document.getElementById('city')?.value?.trim();
+  const zip     = document.getElementById('zip')?.value?.trim();
+  const errorEl = document.getElementById('step2Error');
+
+  if (!address || !city || !zip) {
+    errorEl.style.display = 'block'; return;
+  }
+  errorEl.style.display = 'none';
+  goStep(3);
 }
 
 // ---- PLAN TABS ----
@@ -86,7 +179,7 @@ function toggleMenu() {
 
 document.addEventListener('click', function(e) {
   if (menuJustOpened) return;
-  const nav = document.getElementById('mobileNav');
+  const nav       = document.getElementById('mobileNav');
   const hamburger = document.querySelector('.hamburger');
   if (nav && hamburger && !nav.contains(e.target) && !hamburger.contains(e.target)) {
     nav.classList.remove('open');
@@ -103,7 +196,7 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// ---- ZIP RATES BY AREA ----
+// ---- ZIP RATES ----
 const zipRates = {
   '77': { city: 'Houston',              res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' }, biz: { starter: '$0.100', pro: '$0.083' } },
   '75': { city: 'Dallas',               res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' }, biz: { starter: '$0.102', pro: '$0.085' } },
@@ -137,34 +230,29 @@ function checkRates() {
   const prefix = zip.substring(0, 2);
   const info   = zipRates[prefix] || zipRates['77'];
 
-  // Update badge
   const badge = document.getElementById('zipResultsBadge');
   if (badge) badge.textContent = '📍 ZIP Code: ' + zip + '  ·  ' + info.city + ' Area';
 
-  // Update residential rates & links
-  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
-  setEl('flexRate',    info.res.flex + '<span>/kWh</span>');
+  const setEl   = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+  const setHref = (id, href) => { const el = document.getElementById(id); if (el) el.href = href; };
+
+  setEl('flexRate',    info.res.flex  + '<span>/kWh</span>');
   setEl('saver12Rate', info.res.saver + '<span>/kWh</span>');
   setEl('ultra24Rate', info.res.ultra + '<span>/kWh</span>');
-
-  // Update business rates
   setEl('bizStarterRate', info.biz.starter + '<span>/kWh</span>');
-  setEl('bizProRate',     info.biz.pro + '<span>/kWh</span>');
+  setEl('bizProRate',     info.biz.pro     + '<span>/kWh</span>');
 
-  // Update signup links with ZIP
-  const setHref = (id, href) => { const el = document.getElementById(id); if (el) el.href = href; };
-  setHref('flexLink',      'signup.html?type=residential&plan=flex&zip=' + zip);
-  setHref('saver12Link',   'signup.html?type=residential&plan=12month&zip=' + zip);
-  setHref('ultra24Link',   'signup.html?type=residential&plan=24month&zip=' + zip);
-  setHref('bizStarterLink','signup.html?type=business&plan=biz-starter&zip=' + zip);
-  setHref('bizProLink',    'signup.html?type=business&plan=biz-pro&zip=' + zip);
+  setHref('flexLink',       'signup.html?type=residential&plan=flex&zip='        + zip);
+  setHref('saver12Link',    'signup.html?type=residential&plan=12month&zip='     + zip);
+  setHref('ultra24Link',    'signup.html?type=residential&plan=24month&zip='     + zip);
+  setHref('bizStarterLink', 'signup.html?type=business&plan=biz-starter&zip='   + zip);
+  setHref('bizProLink',     'signup.html?type=business&plan=biz-pro&zip='        + zip);
 
-  // Show results section and scroll to it
   const section = document.getElementById('zipResultsSection');
-  section.style.display = 'block';
-  setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-
-  // Reset to residential tab
+  if (section) {
+    section.style.display = 'block';
+    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
   switchZipTab('residential', document.getElementById('zipResTab'));
 }
 
@@ -181,11 +269,22 @@ document.addEventListener('DOMContentLoaded', function() {
   const plan   = params.get('plan');
 
   setCustomerType(type);
-  if (plan) {
-    const planSelect = document.getElementById('planSelect');
-    if (planSelect) planSelect.value = plan;
+
+  // Wire up plan change event
+  const planSelect = document.getElementById('planSelect');
+  if (planSelect) {
+    planSelect.addEventListener('change', onPlanChange);
+    if (plan) {
+      planSelect.value = plan;
+      onPlanChange();
+    }
   }
 
+  // Wire up password strength checker
+  const pwInput = document.getElementById('password');
+  if (pwInput) pwInput.addEventListener('input', function() { checkPasswordStrength(this.value); });
+
+  // Set tomorrow as default start date
   const startDate = document.getElementById('startDate');
   if (startDate) {
     const tomorrow = new Date();
@@ -200,20 +299,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// ---- FAQ ACCORDION ----
-function toggleFaq(el) {
-  const item   = el.parentElement;
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-
-// ---- MULTI-STEP SIGNUP ----
+// ---- MULTI-STEP ----
 function goStep(step) {
   [1,2,3].forEach(s => {
     const el  = document.getElementById('formStep' + s);
     const ind = document.getElementById('step' + s + 'ind');
-    if (el)  el.style.display  = s === step ? 'block' : 'none';
+    if (el)  el.style.display = s === step ? 'block' : 'none';
     if (ind) { ind.classList.toggle('active', s === step); ind.style.opacity = s <= step ? '1' : '0.5'; }
   });
   window.scrollTo({ top: 300, behavior: 'smooth' });
@@ -221,38 +312,43 @@ function goStep(step) {
 
 // ---- SIGNUP SUBMIT ----
 async function submitSignup() {
-  const successBox = document.getElementById('successBox');
-  const errorBox   = document.getElementById('errorBox');
-  const submitBtn  = document.getElementById('submitBtn');
-  if (successBox) successBox.style.display = 'none';
-  if (errorBox)   errorBox.style.display   = 'none';
+  const plan    = document.getElementById('planSelect')?.value;
+  const terms   = document.getElementById('terms')?.checked;
+  const errorEl = document.getElementById('step3Error');
 
-  const firstName = document.getElementById('firstName')?.value?.trim();
-  const lastName  = document.getElementById('lastName')?.value?.trim();
-  const email     = document.getElementById('email')?.value?.trim();
-  const phone     = document.getElementById('phone')?.value?.trim();
-  const address   = document.getElementById('address')?.value?.trim();
-  const city      = document.getElementById('city')?.value?.trim();
-  const zip       = document.getElementById('zip')?.value?.trim();
-  const plan      = document.getElementById('planSelect')?.value;
-  const terms     = document.getElementById('terms')?.checked;
-
-  if (!firstName || !lastName || !email || !phone || !address || !city || !zip || !plan || !terms) {
-    if (errorBox) errorBox.style.display = 'block';
-    return;
+  if (!plan || !terms) {
+    errorEl.style.display = 'block'; return;
   }
+  errorEl.style.display = 'none';
 
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
+  const submitBtn = document.getElementById('submitBtn');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Creating Account...'; }
+
+  const email = document.getElementById('email')?.value?.trim();
 
   try {
-    const res = await fetch('/api/signup', {
+    await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, phone, address, city, zip, plan, type: customerType })
+      body: JSON.stringify({
+        firstName:   document.getElementById('firstName')?.value?.trim(),
+        lastName:    document.getElementById('lastName')?.value?.trim(),
+        email,
+        phone:       document.getElementById('phone')?.value?.trim(),
+        address:     document.getElementById('address')?.value?.trim(),
+        city:        document.getElementById('city')?.value?.trim(),
+        zip:         document.getElementById('zip')?.value?.trim(),
+        plan,
+        type:        customerType,
+        bizName:     document.getElementById('bizName')?.value?.trim() || '',
+      })
     });
-    if (!res.ok) throw new Error();
   } catch (_) {}
 
+  const confirmEmail = document.getElementById('confirmEmail');
+  if (confirmEmail) confirmEmail.textContent = email;
+
+  const successBox = document.getElementById('successBox');
   if (successBox) successBox.style.display = 'block';
   if (submitBtn)  submitBtn.style.display  = 'none';
 }
@@ -270,8 +366,7 @@ function submitContact() {
   const message = document.getElementById('cmessage')?.value?.trim();
 
   if (!first || !last || !email || !message) {
-    if (errorEl) errorEl.style.display = 'block';
-    return;
+    if (errorEl) errorEl.style.display = 'block'; return;
   }
   if (successEl) successEl.style.display = 'block';
   ['cfirst','clast','cemail','csubject','cmessage'].forEach(id => {
@@ -290,4 +385,12 @@ function handleLogin() {
   if (error)   error.style.display   = 'none';
   if (!email || !password) { if (error) error.style.display = 'block'; return; }
   if (success) { success.textContent = 'Customer portal coming soon! We will email you login details once your account is active.'; success.style.display = 'block'; }
+}
+
+// ---- FAQ ----
+function toggleFaq(el) {
+  const item   = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
 }
