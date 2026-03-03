@@ -2,7 +2,7 @@
 // SUNARA ENERGY — script.js
 // =============================================
 
-// ---- CUSTOMER TYPE (Residential / Business) ----
+// ---- CUSTOMER TYPE ----
 let customerType = 'residential';
 
 const residentialPlans = [
@@ -54,6 +54,20 @@ function switchTab(type, btn) {
   if (tab) tab.style.display = 'block';
 }
 
+// ---- ZIP RESULTS TAB SWITCH ----
+function switchZipTab(type, btn) {
+  if (btn) {
+    btn.closest('.plan-tabs').querySelectorAll('.plan-tab').forEach(el => {
+      el.classList.remove('active');
+      el.style.color = 'rgba(255,255,255,0.6)';
+    });
+    btn.classList.add('active');
+    btn.style.color = 'white';
+  }
+  document.getElementById('zip-tab-residential').style.display = type === 'residential' ? 'grid' : 'none';
+  document.getElementById('zip-tab-business').style.display    = type === 'business'    ? 'grid' : 'none';
+}
+
 // ---- MOBILE MENU ----
 let menuJustOpened = false;
 
@@ -89,7 +103,17 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// ---- ZIP CODE CHECKER ----
+// ---- ZIP RATES BY AREA ----
+const zipRates = {
+  '77': { city: 'Houston',              res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' }, biz: { starter: '$0.100', pro: '$0.083' } },
+  '75': { city: 'Dallas',               res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' }, biz: { starter: '$0.102', pro: '$0.085' } },
+  '76': { city: 'Fort Worth',           res: { flex: '$0.109', saver: '$0.089', ultra: '$0.084' }, biz: { starter: '$0.099', pro: '$0.082' } },
+  '78': { city: 'San Antonio / Austin', res: { flex: '$0.108', saver: '$0.088', ultra: '$0.083' }, biz: { starter: '$0.098', pro: '$0.081' } },
+  '79': { city: 'Lubbock / Amarillo',   res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' }, biz: { starter: '$0.103', pro: '$0.086' } },
+  '73': { city: 'North Texas',          res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' }, biz: { starter: '$0.101', pro: '$0.084' } },
+  '88': { city: 'West Texas',           res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' }, biz: { starter: '$0.104', pro: '$0.087' } },
+};
+
 const texasZipPrefixes = ['75','76','77','78','79','73','88'];
 
 function isTexasZip(zip) {
@@ -98,33 +122,50 @@ function isTexasZip(zip) {
 }
 
 function checkRates() {
-  const input    = document.getElementById('zipInput');
-  const errorEl  = document.getElementById('zipError');
-  const resultEl = document.getElementById('zipResult');
+  const input   = document.getElementById('zipInput');
+  const errorEl = document.getElementById('zipError');
   if (!input) return;
 
   const zip = input.value.trim();
   if (errorEl) errorEl.style.display = 'none';
-  if (resultEl) resultEl.style.display = 'none';
 
   if (!isTexasZip(zip)) {
     if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit Texas ZIP code.'; errorEl.style.display = 'block'; }
     return;
   }
 
-  const rates = {
-    '77': { city: 'Houston',              rate: '$0.09' },
-    '75': { city: 'Dallas',               rate: '$0.091' },
-    '76': { city: 'Fort Worth',           rate: '$0.089' },
-    '78': { city: 'San Antonio / Austin', rate: '$0.088' },
-    '79': { city: 'Lubbock / Amarillo',   rate: '$0.092' },
-  };
-  const info = rates[zip.substring(0,2)] || { city: 'your area', rate: '$0.09' };
+  const prefix = zip.substring(0, 2);
+  const info   = zipRates[prefix] || zipRates['77'];
 
-  if (resultEl) {
-    resultEl.innerHTML = `Plans available in ${info.city}! Best rate: <strong>${info.rate}/kWh</strong>. <a href="signup.html?zip=${zip}" style="color:var(--gold);font-weight:700;text-decoration:underline;">Sign up now →</a>`;
-    resultEl.style.display = 'block';
-  }
+  // Update badge
+  const badge = document.getElementById('zipResultsBadge');
+  if (badge) badge.textContent = '📍 ZIP Code: ' + zip + '  ·  ' + info.city + ' Area';
+
+  // Update residential rates & links
+  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+  setEl('flexRate',    info.res.flex + '<span>/kWh</span>');
+  setEl('saver12Rate', info.res.saver + '<span>/kWh</span>');
+  setEl('ultra24Rate', info.res.ultra + '<span>/kWh</span>');
+
+  // Update business rates
+  setEl('bizStarterRate', info.biz.starter + '<span>/kWh</span>');
+  setEl('bizProRate',     info.biz.pro + '<span>/kWh</span>');
+
+  // Update signup links with ZIP
+  const setHref = (id, href) => { const el = document.getElementById(id); if (el) el.href = href; };
+  setHref('flexLink',      'signup.html?type=residential&plan=flex&zip=' + zip);
+  setHref('saver12Link',   'signup.html?type=residential&plan=12month&zip=' + zip);
+  setHref('ultra24Link',   'signup.html?type=residential&plan=24month&zip=' + zip);
+  setHref('bizStarterLink','signup.html?type=business&plan=biz-starter&zip=' + zip);
+  setHref('bizProLink',    'signup.html?type=business&plan=biz-pro&zip=' + zip);
+
+  // Show results section and scroll to it
+  const section = document.getElementById('zipResultsSection');
+  section.style.display = 'block';
+  setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+
+  // Reset to residential tab
+  switchZipTab('residential', document.getElementById('zipResTab'));
 }
 
 // ---- DOM READY ----
@@ -210,7 +251,7 @@ async function submitSignup() {
       body: JSON.stringify({ firstName, lastName, email, phone, address, city, zip, plan, type: customerType })
     });
     if (!res.ok) throw new Error();
-  } catch (_) { /* show success regardless */ }
+  } catch (_) {}
 
   if (successBox) successBox.style.display = 'block';
   if (submitBtn)  submitBtn.style.display  = 'none';
@@ -247,6 +288,4 @@ function handleLogin() {
   const error    = document.getElementById('loginError');
   if (success) success.style.display = 'none';
   if (error)   error.style.display   = 'none';
-  if (!email || !password) { if (error) error.style.display = 'block'; return; }
-  if (success) { success.textContent = 'Customer portal coming soon! We will email you login details once your account is active.'; success.style.display = 'block'; }
-}
+  if (!email || !password) { if (
