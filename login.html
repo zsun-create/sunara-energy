@@ -9,56 +9,100 @@
 </head>
 <body>
 
-  <header>
+  <div class="top-bar">
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
+  </div>
+
+  <header id="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
         <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
         <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
       </a>
       <nav class="main-nav">
-        <a href="plans.html">Plans &amp; Rates</a>
-        <a href="about.html">Why Sunara</a>
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
       </nav>
       <div class="header-actions">
         <a href="signup.html" class="btn-gold">Start Service</a>
       </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+      <a href="signup.html" class="btn-gold">Start Service</a>
     </div>
   </header>
 
-  <section class="login-section">
-    <div class="login-card">
-      <div class="login-logo">
-        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'">
-      </div>
-      <h2>My Account</h2>
-      <p class="sub">Log in to manage your service, pay bills, and track usage.</p>
+  <section class="page-hero" style="padding:50px 20px;">
+    <h1>My Account</h1>
+    <p>Log in to manage your service, view usage, and pay your bill.</p>
+  </section>
 
-      <div class="form-group" style="text-align:left;">
-        <label>Email Address</label>
-        <input type="email" id="lemail" placeholder="your@email.com">
-      </div>
-      <div class="form-group" style="text-align:left;">
-        <label>Password</label>
-        <input type="password" id="lpassword" placeholder="Your password">
-      </div>
+  <section class="form-section">
+    <div style="max-width:440px; margin:0 auto; padding:0 20px;">
+      <div class="form-card">
+        <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Log In</h2>
+        <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">Enter your email and password to access your account.</p>
 
-      <div class="forgot-link"><a href="#">Forgot Password?</a></div>
+        <div id="loginSuccess" class="success-box" style="display:none;"></div>
+        <div id="loginError" class="error-box" style="display:none;">Please enter your email and password.</div>
 
-      <button class="btn-submit" onclick="handleLogin()">Log In to My Account</button>
-
-      <div class="success-box" id="loginSuccess" style="text-align:left;">Logging you in...</div>
-      <div class="error-box" id="loginError" style="text-align:left;">Please enter your email and password.</div>
-
-      <div class="login-footer">
-        New customer? <a href="signup.html">Start your service here →</a>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="lemail" placeholder="john@example.com" required></div>
+        <div class="form-group">
+          <label>Password *</label>
+          <div style="position:relative;">
+            <input type="password" id="lpassword" placeholder="Your password" required style="width:100%; padding-right:44px;">
+            <button type="button" onclick="togglePassword('lpassword','lEyeIcon')" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:18px;" id="lEyeIcon">👁</button>
+          </div>
+        </div>
+        <div style="text-align:right; margin-top:-10px; margin-bottom:20px;">
+          <a href="#" style="font-size:13px; color:var(--blue);">Forgot password?</a>
+        </div>
+        <button class="btn-submit" onclick="handleLogin()">Log In</button>
+        <p style="text-align:center; margin-top:20px; font-size:14px; color:var(--gray);">Don't have an account? <a href="signup.html" style="color:var(--blue); font-weight:700;">Sign Up →</a></p>
       </div>
     </div>
   </section>
 
-  <footer style="padding:20px; background:var(--navy); text-align:center; color:rgba(255,255,255,0.5); font-size:13px;">
-    <p>© 2026 Sunara Energy. All Rights Reserved. &nbsp;|&nbsp; <a href="#" style="color:var(--sky);">Privacy Policy</a></p>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col brand-col">
+        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
+        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+      </div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
