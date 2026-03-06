@@ -2,6 +2,11 @@
 // SUNARA ENERGY — script.js
 // =============================================
 
+// ---- EMAILJS CONFIG ----
+const EMAILJS_SERVICE_ID  = 'service_as5x5ok';
+const EMAILJS_TEMPLATE_ID = 'template_zm481zr';
+const EMAILJS_PUBLIC_KEY  = 'EhKjmL0KVGWvwc0MY';
+
 // ---- SIGNUP TYPE TOGGLE (Residential vs Business) ----
 function setSignupType(type) {
   const isRes = type === 'residential';
@@ -17,9 +22,9 @@ function setSignupType(type) {
 
 // ---- PLAN DETAIL CARD ----
 const allPlans = [
-  { value: 'flex',    name: 'Flex Plan',        rate: '$0.11/kWh', desc: 'No contract, cancel anytime. Best for flexibility.' },
-  { value: '12month', name: '12-Month Saver',    rate: '$0.09/kWh', desc: 'Fixed rate for 12 months. Save up to 18% vs. month-to-month.' },
-  { value: '24month', name: '24-Month Ultra',    rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years. Best long-term value.' },
+  { value: 'flex',    name: 'Flex Plan',      rate: '$0.11/kWh',  desc: 'No contract, cancel anytime. Best for flexibility.' },
+  { value: '12month', name: '12-Month Saver', rate: '$0.09/kWh',  desc: 'Fixed rate for 12 months. Save up to 18% vs. month-to-month.' },
+  { value: '24month', name: '24-Month Ultra', rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years. Best long-term value.' },
 ];
 
 function onPlanChange() {
@@ -189,24 +194,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const params = new URLSearchParams(window.location.search);
   const type   = params.get('type') || 'residential';
   const plan   = params.get('plan');
-  // Init signup page type
   if (document.getElementById('residentialForm')) setSignupType(type);
-  // Pre-select plan
   const planSelect = document.getElementById('planSelect');
   if (planSelect && plan) { planSelect.value = plan; onPlanChange(); }
-  // Password strength
   const pwInput = document.getElementById('password');
   if (pwInput) pwInput.addEventListener('input', function() { checkPasswordStrength(this.value); });
-  // Plan change listener
   if (planSelect) planSelect.addEventListener('change', onPlanChange);
-  // Start date
   const startDate = document.getElementById('startDate');
   if (startDate) {
     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
     startDate.min   = new Date().toISOString().split('T')[0];
     startDate.value = tomorrow.toISOString().split('T')[0];
   }
-  // Hash-based tab open on plans page
   if (window.location.hash === '#business') {
     const bizBtn = document.querySelector('.plan-tab:nth-child(2)');
     if (bizBtn) switchTab('business', bizBtn);
@@ -255,20 +254,104 @@ async function submitSignup() {
   if (btn) btn.style.display = 'none';
 }
 
-// ---- BUSINESS QUOTE SUBMIT (signup page) ----
+// ---- SHARED QUOTE SUBMIT ----
+async function sendQuote(fields, bodyId, successId, errorId) {
+  const err = document.getElementById(errorId);
+  const { first, last, company, phone, email, bill, comments, ack } = fields;
+
+  if (!first || !last || !company || !phone || !email || !bill || !ack) {
+    if (err) err.style.display = 'block';
+    return;
+  }
+  if (err) err.style.display = 'none';
+
+  const btn = document.querySelector('#' + bodyId + ' .btn-submit');
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+  // Send email via EmailJS
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      firstName: first,
+      lastName:  last,
+      company, phone, email, bill,
+      comments:  comments || 'None',
+      time:      new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CT'
+    }, EMAILJS_PUBLIC_KEY);
+  } catch (e) {
+    console.error('EmailJS error:', e);
+  }
+
+  // Save to Google Sheet
+  try {
+    await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: first, lastName: last,
+        company, phone, email, bill,
+        comments: comments || ''
+      })
+    });
+  } catch (_) {}
+
+  document.getElementById(bodyId).style.display    = 'none';
+  document.getElementById(successId).style.display = 'block';
+}
+
+// ---- SIGNUP PAGE BUSINESS QUOTE ----
 function submitBizQuote() {
-  const first = document.getElementById('bqFirst')?.value?.trim();
-  const last  = document.getElementById('bqLast')?.value?.trim();
-  const co    = document.getElementById('bqCompany')?.value?.trim();
-  const phone = document.getElementById('bqPhone')?.value?.trim();
-  const email = document.getElementById('bqEmail')?.value?.trim();
-  const bill  = document.getElementById('bqBill')?.value;
-  const ack   = document.getElementById('bqAck')?.checked;
-  const err   = document.getElementById('bizQuoteError');
-  if (!first || !last || !co || !phone || !email || !bill || !ack) { err.style.display = 'block'; return; }
-  err.style.display = 'none';
-  document.getElementById('bizQuoteBody').style.display    = 'none';
-  document.getElementById('bizQuoteSuccess').style.display = 'block';
+  sendQuote({
+    first:    document.getElementById('bqFirst')?.value?.trim(),
+    last:     document.getElementById('bqLast')?.value?.trim(),
+    company:  document.getElementById('bqCompany')?.value?.trim(),
+    phone:    document.getElementById('bqPhone')?.value?.trim(),
+    email:    document.getElementById('bqEmail')?.value?.trim(),
+    bill:     document.getElementById('bqBill')?.value,
+    comments: document.getElementById('bqComments')?.value?.trim(),
+    ack:      document.getElementById('bqAck')?.checked,
+  }, 'bizQuoteBody', 'bizQuoteSuccess', 'bizQuoteError');
+}
+
+// ---- HOMEPAGE BUSINESS TAB QUOTE ----
+function submitHomeQuote() {
+  sendQuote({
+    first:    document.getElementById('hqFirst')?.value?.trim(),
+    last:     document.getElementById('hqLast')?.value?.trim(),
+    company:  document.getElementById('hqCompany')?.value?.trim(),
+    phone:    document.getElementById('hqPhone')?.value?.trim(),
+    email:    document.getElementById('hqEmail')?.value?.trim(),
+    bill:     document.getElementById('hqBill')?.value,
+    comments: document.getElementById('hqComments')?.value?.trim(),
+    ack:      document.getElementById('hqAck')?.checked,
+  }, 'homeQuoteBody', 'homeQuoteSuccess', 'hqError');
+}
+
+// ---- ZIP RESULTS BUSINESS QUOTE ----
+function submitZipQuote() {
+  sendQuote({
+    first:    document.getElementById('zqFirst')?.value?.trim(),
+    last:     document.getElementById('zqLast')?.value?.trim(),
+    company:  document.getElementById('zqCompany')?.value?.trim(),
+    phone:    document.getElementById('zqPhone')?.value?.trim(),
+    email:    document.getElementById('zqEmail')?.value?.trim(),
+    bill:     document.getElementById('zqBill')?.value,
+    comments: document.getElementById('zqComments')?.value?.trim(),
+    ack:      document.getElementById('zqAck')?.checked,
+  }, 'zipQuoteBody', 'zipQuoteSuccess', 'zqError');
+}
+
+// ---- PLANS PAGE QUOTE ----
+function submitQuote() {
+  sendQuote({
+    first:    document.getElementById('qFirstName')?.value?.trim(),
+    last:     document.getElementById('qLastName')?.value?.trim(),
+    company:  document.getElementById('qCompany')?.value?.trim(),
+    phone:    document.getElementById('qPhone')?.value?.trim(),
+    email:    document.getElementById('qEmail')?.value?.trim(),
+    bill:     document.getElementById('qBill')?.value,
+    comments: document.getElementById('qComments')?.value?.trim(),
+    ack:      document.getElementById('qAcknowledge')?.checked,
+  }, 'quoteFormBody', 'quoteSuccess', 'quoteError');
 }
 
 // ---- CONTACT SUBMIT ----
