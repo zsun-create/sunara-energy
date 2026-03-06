@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sunara Energy – Reliable Texas Electricity</title>
-  <meta name="description" content="Switch to Sunara Energy and save on electricity. Affordable fixed-rate plans for Texas homes and businesses with no hidden fees and 24/7 support.">
+  <title>Sunara Energy – Energy Without Limits</title>
+  <meta name="description" content="Sunara Energy — affordable, reliable electricity for homes and businesses nationwide. No hidden fees, no surprises.">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
   <div class="top-bar">
-    <span>📞 Call Us: <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
     <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
     <a href="login.html" class="top-bar-login">My Account →</a>
   </div>
@@ -25,10 +25,9 @@
         <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
       </a>
       <nav class="main-nav">
-        <a href="plans.html">Plans &amp; Rates</a>
-        <a href="plans.html#residential">Residential</a>
-        <a href="plans.html#business">Business</a>
-        <a href="about.html">Why Sunara</a>
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -36,13 +35,12 @@
         <a href="login.html" class="btn-outline">Log In</a>
         <a href="signup.html" class="btn-gold">Start Service</a>
       </div>
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
     <div class="mobile-nav" id="mobileNav">
-      <a href="plans.html">Plans &amp; Rates</a>
-      <a href="plans.html#residential">Residential</a>
-      <a href="plans.html#business">Business</a>
-      <a href="about.html">Why Sunara</a>
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
       <a href="signup.html" class="btn-gold">Start Service</a>
@@ -52,22 +50,22 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge">⚡ Texas' Trusted Energy Provider</div>
-      <h1>Switch to Sunara Energy<br><span class="hero-highlight">&amp; Save Today</span></h1>
-      <p class="hero-sub">Transparent pricing. No hidden fees. Real support — from real Texans.</p>
+      <div class="hero-badge">Nationwide Energy Provider</div>
+      <h1>Energy Without Limits<br><span class="hero-highlight">Start Saving Today</span></h1>
+      <p class="hero-sub">Transparent pricing. No hidden fees. Real support — available when you need it.</p>
       <div class="zip-checker">
         <div class="zip-label">Enter your ZIP code to see plans in your area:</div>
         <div class="zip-form">
           <input type="text" id="zipInput" placeholder="e.g. 77001" maxlength="5" inputmode="numeric">
-          <button onclick="checkRates()">See My Plans →</button>
+          <button onclick="checkRatesHome()">See My Plans →</button>
         </div>
-        <div id="zipError" class="zip-error" style="display:none">Please enter a valid 5-digit Texas ZIP code.</div>
+        <div id="zipError" class="zip-error" style="display:none;">Please enter a valid 5-digit ZIP code.</div>
       </div>
       <div class="hero-trust">
-        <div class="trust-item">✅ No Deposit Options</div>
-        <div class="trust-item">✅ Same-Day Service</div>
-        <div class="trust-item">✅ Fixed Rates</div>
-        <div class="trust-item">✅ Residential &amp; Business</div>
+        <div class="trust-item">No Deposit Options</div>
+        <div class="trust-item">Same-Day Service</div>
+        <div class="trust-item">Fixed Rates</div>
+        <div class="trust-item">Residential &amp; Commercial</div>
       </div>
     </div>
     <div class="hero-image">
@@ -76,237 +74,44 @@
     </div>
   </section>
 
-  <!-- ZIP RESULTS SECTION -->
-  <section id="zipResultsSection" style="display:none; background:var(--navy); padding:70px 20px;">
-    <div class="container">
-      <div style="text-align:center; margin-bottom:40px;">
-        <div id="zipResultsBadge" style="display:inline-block; background:rgba(255,215,0,0.15); border:1px solid rgba(255,215,0,0.5); color:var(--gold); padding:8px 20px; border-radius:30px; font-size:14px; font-weight:700; margin-bottom:16px;"></div>
-        <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:42px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:10px;">Plans Available in Your Area</h2>
-        <p style="color:rgba(255,255,255,0.7); font-size:17px;">Residential fixed-rate plans or a custom business quote — pick your path below.</p>
-      </div>
-
-      <div class="plan-tabs" style="background:rgba(255,255,255,0.08); margin-bottom:40px;">
-        <button class="plan-tab active" id="zipResTab" onclick="switchZipTab('residential', this)" style="color:white;">🏠 Residential</button>
-        <button class="plan-tab" id="zipBizTab" onclick="switchZipTab('business', this)" style="color:rgba(255,255,255,0.6);">🏢 Business</button>
-      </div>
-
-      <!-- RESIDENTIAL RESULTS -->
-      <div id="zip-tab-residential" class="plans-grid">
-        <div class="plan-card" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.1);">
-          <div class="plan-tag">Flexible</div>
-          <h3 style="color:white;">Flex Plan</h3>
-          <div class="plan-rate" id="flexRate">$0.11<span>/kWh</span></div>
-          <p class="plan-term">Month-to-Month · No Contract</p>
-          <ul class="plan-features">
-            <li style="color:rgba(255,255,255,0.8);">✓ No long-term commitment</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ Cancel anytime</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ No deposit required</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ Online account access</li>
-          </ul>
-          <a id="flexLink" href="signup.html?type=residential&plan=flex" class="btn-plan">Select Plan</a>
-        </div>
-        <div class="plan-card featured" style="background:white;">
-          <div class="plan-tag best">⭐ Most Popular</div>
-          <h3>12-Month Saver</h3>
-          <div class="plan-rate" id="saver12Rate">$0.09<span>/kWh</span></div>
-          <p class="plan-term">12-Month Fixed Rate</p>
-          <ul class="plan-features">
-            <li>✓ Locked-in rate, no surprises</li>
-            <li>✓ Save up to 18% vs. flex</li>
-            <li>✓ Free daily usage alerts</li>
-            <li>✓ Priority support</li>
-          </ul>
-          <a id="saver12Link" href="signup.html?type=residential&plan=12month" class="btn-plan gold">Select Plan</a>
-        </div>
-        <div class="plan-card" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.1);">
-          <div class="plan-tag">Best Value</div>
-          <h3 style="color:white;">24-Month Ultra</h3>
-          <div class="plan-rate" id="ultra24Rate">$0.085<span>/kWh</span></div>
-          <p class="plan-term">24-Month Fixed Rate</p>
-          <ul class="plan-features">
-            <li style="color:rgba(255,255,255,0.8);">✓ Lowest rate guaranteed</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ Protection from rate hikes</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ Free smart home tips</li>
-            <li style="color:rgba(255,255,255,0.8);">✓ VIP customer support</li>
-          </ul>
-          <a id="ultra24Link" href="signup.html?type=residential&plan=24month" class="btn-plan">Select Plan</a>
-        </div>
-      </div>
-
-      <!-- BUSINESS QUOTE in ZIP results -->
-      <div id="zip-tab-business" style="display:none;">
-        <div style="max-width:640px; margin:0 auto; background:white; border-radius:18px; padding:40px 44px; box-shadow:0 8px 40px rgba(0,0,0,0.2);">
-          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:30px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Business Quote</h3>
-          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A Sunara commercial specialist will contact you within 1 business day with a custom rate.</p>
-
-          <div id="zipQuoteSuccess" style="display:none; background:#d1fae5; border:2px solid #10b981; border-radius:10px; padding:20px; text-align:center; color:#065f46; font-weight:700; margin-bottom:16px;">
-            🎉 Quote request submitted! We'll contact you within 1 business day.
-          </div>
-
-          <div id="zipQuoteBody">
-            <div class="form-row">
-              <div class="form-group"><label>First Name *</label><input type="text" id="zqFirst" placeholder="John"></div>
-              <div class="form-group"><label>Last Name *</label><input type="text" id="zqLast" placeholder="Doe"></div>
-            </div>
-            <div class="form-group"><label>Company *</label><input type="text" id="zqCompany" placeholder="Acme Corp"></div>
-            <div class="form-row">
-              <div class="form-group"><label>Phone *</label><input type="tel" id="zqPhone" placeholder="(555) 000-0000"></div>
-              <div class="form-group"><label>Email *</label><input type="email" id="zqEmail" placeholder="john@acme.com"></div>
-            </div>
-            <div class="form-group">
-              <label>Average Monthly Bill *</label>
-              <select id="zqBill">
-                <option value="">-- Select a range --</option>
-                <option>Less than $1,000</option>
-                <option>$1,000 – $5,000</option>
-                <option>$5,000 – $25,000</option>
-                <option>Greater than $25,000</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Additional Comments</label>
-              <textarea id="zqComments" placeholder="Number of locations, specific needs..." style="min-height:80px;"></textarea>
-            </div>
-            <div style="background:var(--light); border-radius:8px; padding:14px 16px; font-size:12px; color:var(--gray); line-height:1.7; margin-bottom:16px;">
-              Sunara Energy is a licensed Retail Electric Provider in Texas. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers.
-            </div>
-            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:18px;">
-              <input type="checkbox" id="zqAck" style="margin-top:3px; flex-shrink:0;">
-              <label for="zqAck" style="font-size:13px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
-            </div>
-            <div id="zqError" class="error-box" style="display:none;">⚠️ Please fill in all required fields and check the acknowledgment box.</div>
-            <button class="btn-submit" onclick="submitZipQuote()">Request My Custom Quote →</button>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align:center; margin-top:40px;">
-        <p style="color:rgba(255,255,255,0.5); font-size:13px;">Residential rates shown are estimates. Final rate confirmed at enrollment.</p>
-        <button onclick="document.getElementById('zipResultsSection').style.display='none'; window.scrollTo({top:0,behavior:'smooth'})" style="margin-top:16px; background:transparent; border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.6); padding:10px 24px; border-radius:8px; cursor:pointer; font-family:'Barlow',sans-serif; font-size:14px;">← Search a Different ZIP</button>
-      </div>
-    </div>
-  </section>
-
   <!-- STATS STRIP -->
   <div class="stats-strip">
     <div class="stat"><strong>50,000+</strong><span>Customers Served</span></div>
-    <div class="stat"><strong>4.8 ★</strong><span>Average Rating</span></div>
-    <div class="stat"><strong>$0</strong><span>Deposit Options</span></div>
+    <div class="stat"><strong>4.8 Stars</strong><span>Average Rating</span></div>
+    <div class="stat"><strong>No Deposit</strong><span>Options Available</span></div>
     <div class="stat"><strong>24/7</strong><span>Customer Support</span></div>
   </div>
 
-  <!-- PLANS WITH TABS -->
-  <section class="section plans-section">
+  <!-- WHO WE SERVE -->
+  <section class="section" style="background:white;">
     <div class="container">
       <div class="section-header">
-        <h2>Simple, Affordable Plans</h2>
-        <p>Residential fixed-rate plans or a custom business quote — we've got the right fit for you.</p>
+        <h2>Who We Serve</h2>
+        <p>Whether you're powering a home or running a business — Sunara Energy has the right solution.</p>
       </div>
-      <div class="plan-tabs">
-        <button class="plan-tab active" onclick="switchTab('residential', this)">🏠 Residential</button>
-        <button class="plan-tab" onclick="switchTab('business', this)">🏢 Business</button>
-      </div>
-
-      <!-- RESIDENTIAL -->
-      <div id="tab-residential" class="tab-content">
-        <div class="plans-grid">
-          <div class="plan-card">
-            <div class="plan-tag">Flexible</div>
-            <h3>Flex Plan</h3>
-            <div class="plan-rate">$0.11<span>/kWh</span></div>
-            <p class="plan-term">Month-to-Month · No Contract</p>
-            <ul class="plan-features">
-              <li>✓ No long-term commitment</li>
-              <li>✓ Cancel anytime</li>
-              <li>✓ No deposit required</li>
-              <li>✓ Online account access</li>
-            </ul>
-            <a href="signup.html?type=residential&plan=flex" class="btn-plan">Select Plan</a>
-          </div>
-          <div class="plan-card featured">
-            <div class="plan-tag best">⭐ Most Popular</div>
-            <h3>12-Month Saver</h3>
-            <div class="plan-rate">$0.09<span>/kWh</span></div>
-            <p class="plan-term">12-Month Fixed Rate</p>
-            <ul class="plan-features">
-              <li>✓ Locked-in rate, no surprises</li>
-              <li>✓ Save up to 18% vs. flex</li>
-              <li>✓ Free daily usage alerts</li>
-              <li>✓ Priority support</li>
-            </ul>
-            <a href="signup.html?type=residential&plan=12month" class="btn-plan gold">Select Plan</a>
-          </div>
-          <div class="plan-card">
-            <div class="plan-tag">Best Value</div>
-            <h3>24-Month Ultra</h3>
-            <div class="plan-rate">$0.085<span>/kWh</span></div>
-            <p class="plan-term">24-Month Fixed Rate</p>
-            <ul class="plan-features">
-              <li>✓ Lowest rate guaranteed</li>
-              <li>✓ Protection from rate hikes</li>
-              <li>✓ Free smart home tips</li>
-              <li>✓ VIP customer support</li>
-            </ul>
-            <a href="signup.html?type=residential&plan=24month" class="btn-plan">Select Plan</a>
-          </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
+        <div style="background:var(--light); border-radius:16px; padding:36px; border-top:4px solid var(--sky);">
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:12px;">Residential</h3>
+          <p style="color:var(--gray); font-size:15px; line-height:1.8; margin-bottom:20px;">Affordable fixed-rate plans for homeowners and renters. No deposit options, same-day service, and no hidden fees.</p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+            <li style="font-size:14px; color:#334155;">Month-to-month and fixed-rate options</li>
+            <li style="font-size:14px; color:#334155;">No deposit required for qualifying plans</li>
+            <li style="font-size:14px; color:#334155;">Same-day service activation</li>
+            <li style="font-size:14px; color:#334155;">Daily usage alerts via text or email</li>
+          </ul>
+          <a href="residential.html" class="btn-plan">View Residential Plans</a>
         </div>
-      </div>
-
-      <!-- BUSINESS — GET A QUOTE -->
-      <div id="tab-business" class="tab-content" style="display:none;">
-        <div style="max-width:640px; margin:0 auto; background:white; border-radius:18px; padding:40px 44px; box-shadow:0 8px 40px rgba(0,0,0,0.09);">
-          <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; margin-bottom:28px;">
-            <div style="text-align:center;"><div style="font-size:28px;">⚡</div><div style="font-size:13px; font-weight:700; color:var(--navy);">Custom Rates</div></div>
-            <div style="text-align:center;"><div style="font-size:28px;">🤝</div><div style="font-size:13px; font-weight:700; color:var(--navy);">Dedicated Manager</div></div>
-            <div style="text-align:center;"><div style="font-size:28px;">🏢</div><div style="font-size:13px; font-weight:700; color:var(--navy);">Multi-Location</div></div>
-            <div style="text-align:center;"><div style="font-size:28px;">📊</div><div style="font-size:13px; font-weight:700; color:var(--navy);">Monthly Reports</div></div>
-          </div>
-          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:30px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Quote</h3>
-          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">Fill out the form and a commercial specialist will contact you within 1 business day with your custom rate.</p>
-
-          <div id="homeQuoteSuccess" style="display:none; background:#d1fae5; border:2px solid #10b981; border-radius:10px; padding:20px; text-align:center; color:#065f46; font-weight:700; margin-bottom:16px;">
-            🎉 Quote request submitted! We'll contact you within 1 business day.
-          </div>
-
-          <div id="homeQuoteBody">
-            <div class="form-row">
-              <div class="form-group"><label>First Name *</label><input type="text" id="hqFirst" placeholder="John"></div>
-              <div class="form-group"><label>Last Name *</label><input type="text" id="hqLast" placeholder="Doe"></div>
-            </div>
-            <div class="form-group"><label>Company *</label><input type="text" id="hqCompany" placeholder="Acme Corp"></div>
-            <div class="form-row">
-              <div class="form-group"><label>Phone *</label><input type="tel" id="hqPhone" placeholder="(555) 000-0000"></div>
-              <div class="form-group"><label>Email *</label><input type="email" id="hqEmail" placeholder="john@acme.com"></div>
-            </div>
-            <div class="form-group">
-              <label>Average Monthly Bill *</label>
-              <select id="hqBill">
-                <option value="">-- Select a range --</option>
-                <option>Less than $1,000</option>
-                <option>$1,000 – $5,000</option>
-                <option>$5,000 – $25,000</option>
-                <option>Greater than $25,000</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Additional Comments</label>
-              <textarea id="hqComments" placeholder="Number of locations, specific needs..." style="min-height:80px;"></textarea>
-            </div>
-            <div style="background:var(--light); border-radius:8px; padding:14px 16px; font-size:12px; color:var(--gray); line-height:1.7; margin-bottom:16px;">
-              Sunara Energy is a licensed Retail Electric Provider in Texas. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers.
-            </div>
-            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:18px;">
-              <input type="checkbox" id="hqAck" style="margin-top:3px; flex-shrink:0;">
-              <label for="hqAck" style="font-size:13px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
-            </div>
-            <div id="hqError" class="error-box" style="display:none;">⚠️ Please fill in all required fields and check the acknowledgment box.</div>
-            <button class="btn-submit" onclick="submitHomeQuote()">Request My Custom Quote →</button>
-          </div>
+        <div style="background:var(--navy); border-radius:16px; padding:36px; border-top:4px solid var(--gold);">
+          <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:12px;">Commercial</h3>
+          <p style="color:rgba(255,255,255,0.75); font-size:15px; line-height:1.8; margin-bottom:20px;">From small storefronts to large operations — Sunara Energy builds a custom plan around your usage and budget.</p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">Custom rates for all business sizes</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">Dedicated business support team</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">Multi-location billing available</li>
+            <li style="font-size:14px; color:rgba(255,255,255,0.85);">Custom rates for enterprise accounts</li>
+          </ul>
+          <a href="commercial.html" class="btn-plan gold">Request a Quote</a>
         </div>
-      </div>
-
-      <div class="plans-cta">
-        <a href="plans.html">View Full Residential Plan Details &amp; Comparison →</a>
       </div>
     </div>
   </section>
@@ -316,15 +121,15 @@
     <div class="container">
       <div class="section-header">
         <h2>The Sunara Difference</h2>
-        <p>Serving Texas homes and businesses with transparent, reliable energy.</p>
+        <p>Serving homes and businesses with transparent, reliable energy — nationwide.</p>
       </div>
       <div class="why-grid">
-        <div class="why-card"><div class="why-icon">⚡</div><h4>Transparent Pricing</h4><p>What you see is what you pay. No mystery fees, no bait-and-switch rates.</p></div>
-        <div class="why-card"><div class="why-icon">🏠</div><h4>Same-Day Service</h4><p>Get your power turned on today. Sign up before noon, power on by evening.</p></div>
-        <div class="why-card"><div class="why-icon">📱</div><h4>Easy Online Account</h4><p>Manage usage, pay bills, and track spending from your phone — anytime.</p></div>
+        <div class="why-card"><div class="why-icon">⚡</div><h4>Transparent Pricing</h4><p>What you see is what you pay. No mystery fees, no bait-and-switch rates ever.</p></div>
+        <div class="why-card"><div class="why-icon">🏠</div><h4>Same-Day Service</h4><p>Sign up before noon and get power the same day in most service areas.</p></div>
+        <div class="why-card"><div class="why-icon">📱</div><h4>Easy Online Account</h4><p>Manage usage, pay bills, and track spending from your phone anytime.</p></div>
         <div class="why-card"><div class="why-icon">💳</div><h4>No Deposit Options</h4><p>Qualifying plans require zero deposit. Start your service with confidence.</p></div>
-        <div class="why-card"><div class="why-icon">🤝</div><h4>Texas-Based Support</h4><p>Our support team is right here in Texas — real humans who actually help.</p></div>
-        <div class="why-card"><div class="why-icon">🏢</div><h4>Business Solutions</h4><p>Custom commercial rates with dedicated account managers and multi-location billing.</p></div>
+        <div class="why-card"><div class="why-icon">🤝</div><h4>Real Support</h4><p>Our support team is made up of real people who actually pick up the phone.</p></div>
+        <div class="why-card"><div class="why-icon">🏢</div><h4>Commercial Solutions</h4><p>Dedicated commercial plans with account managers and multi-location billing.</p></div>
       </div>
     </div>
   </section>
@@ -337,15 +142,15 @@
         <p>Switching to Sunara takes less than 5 minutes.</p>
       </div>
       <div class="steps-grid">
-        <div class="step"><div class="step-num">1</div><h4>Enter Your ZIP Code</h4><p>See available plans and current rates for your Texas address instantly.</p></div>
+        <div class="step"><div class="step-num">1</div><h4>Enter Your ZIP Code</h4><p>See available plans and current rates for your address instantly.</p></div>
         <div class="step-arrow">→</div>
-        <div class="step"><div class="step-num">2</div><h4>Choose Your Plan</h4><p>Pick residential or request a business quote — we'll handle the rest.</p></div>
+        <div class="step"><div class="step-num">2</div><h4>Choose Your Plan</h4><p>Pick residential or request a commercial quote — we'll handle the rest.</p></div>
         <div class="step-arrow">→</div>
         <div class="step"><div class="step-num">3</div><h4>Power On!</h4><p>Complete enrollment online. Get same-day or next-day service activation.</p></div>
       </div>
       <div class="steps-cta">
         <a href="signup.html" class="btn-gold large" style="margin-right:16px;">Start Residential Service</a>
-        <a href="plans.html#business" class="btn-outline" style="display:inline-block; padding:15px 36px; font-size:17px; border-radius:12px;">Get a Business Quote</a>
+        <a href="commercial.html" class="btn-outline" style="display:inline-block; padding:15px 36px; font-size:17px; border-radius:12px;">Get a Commercial Quote</a>
       </div>
     </div>
   </section>
@@ -355,23 +160,23 @@
     <div class="container">
       <div class="section-header">
         <h2>What Our Customers Say</h2>
-        <div class="overall-rating">⭐⭐⭐⭐⭐ &nbsp; 4.8 / 5 based on 2,400+ reviews</div>
+        <div class="overall-rating">4.8 / 5 based on 2,400+ reviews</div>
       </div>
       <div class="reviews-grid">
         <div class="review-card">
-          <div class="review-stars">⭐⭐⭐⭐⭐</div>
-          <p>"Switched from my old provider and my bill dropped by $40 the first month. The signup was so easy and I had power the same day. Highly recommend Sunara!"</p>
-          <div class="reviewer">— Maria T., Houston TX &nbsp;·&nbsp; Residential</div>
+          <div class="review-stars">★★★★★</div>
+          <p>"Switched from my old provider and my bill dropped by $40 the first month. The signup was so easy and I had power the same day."</p>
+          <div class="reviewer">— Maria T. &nbsp;·&nbsp; Residential Customer</div>
         </div>
         <div class="review-card">
-          <div class="review-stars">⭐⭐⭐⭐⭐</div>
-          <p>"No hidden fees, no surprise charges. My rate has stayed exactly the same for 8 months. Customer service actually picks up the phone. Love it."</p>
-          <div class="reviewer">— James R., Dallas TX &nbsp;·&nbsp; Residential</div>
+          <div class="review-stars">★★★★★</div>
+          <p>"No hidden fees, no surprise charges. My rate has stayed exactly the same for 8 months. Customer service actually picks up the phone."</p>
+          <div class="reviewer">— James R. &nbsp;·&nbsp; Residential Customer</div>
         </div>
         <div class="review-card">
-          <div class="review-stars">⭐⭐⭐⭐⭐</div>
-          <p>"We run 3 locations and Sunara handles all of them on one account. The custom commercial rate saved us over $300/month compared to our old provider."</p>
-          <div class="reviewer">— Linda K., San Antonio TX &nbsp;·&nbsp; Business</div>
+          <div class="review-stars">★★★★★</div>
+          <p>"We run 3 locations and Sunara handles all of them on one account. The custom commercial rate saved us over $300 a month."</p>
+          <div class="reviewer">— Linda K. &nbsp;·&nbsp; Commercial Customer</div>
         </div>
       </div>
     </div>
@@ -381,9 +186,9 @@
   <section class="cta-banner">
     <div class="container">
       <h2>Ready to Start Saving?</h2>
-      <p>Join thousands of Texas homes and businesses that switched to Sunara Energy.</p>
+      <p>Join thousands of homes and businesses that switched to Sunara Energy.</p>
       <a href="signup.html" class="btn-gold large" style="margin-right:16px;">Start Residential Service</a>
-      <a href="plans.html#business" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">Get a Business Quote →</a>
+      <a href="commercial.html" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">Commercial Quote →</a>
     </div>
   </section>
 
@@ -391,66 +196,34 @@
     <div class="footer-inner">
       <div class="footer-col brand-col">
         <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
-        <p>Reliable, affordable electricity for Texas homes and businesses.</p>
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
         <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
-        <a href="plans.html#residential">Flex Plan</a>
-        <a href="plans.html#residential">12-Month Saver</a>
-        <a href="plans.html#residential">24-Month Ultra</a>
-        <a href="signup.html?type=residential">Sign Up</a>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
       </div>
       <div class="footer-col">
-        <h5>Business</h5>
-        <a href="plans.html#business">Request a Quote</a>
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
         <a href="contact.html">Contact Us</a>
-        <a href="about.html">Why Sunara</a>
       </div>
       <div class="footer-col">
         <h5>Support</h5>
-        <a href="about.html">Why Sunara</a>
+        <a href="about.html">About Us</a>
         <a href="faq.html">FAQs</a>
-        <a href="contact.html">Contact Us</a>
+        <a href="contact.html">Contact</a>
         <a href="login.html">My Account</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sunara Energy. All Rights Reserved. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms of Service</a></p>
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    function submitHomeQuote() {
-      const first = document.getElementById('hqFirst')?.value?.trim();
-      const last  = document.getElementById('hqLast')?.value?.trim();
-      const co    = document.getElementById('hqCompany')?.value?.trim();
-      const phone = document.getElementById('hqPhone')?.value?.trim();
-      const email = document.getElementById('hqEmail')?.value?.trim();
-      const bill  = document.getElementById('hqBill')?.value;
-      const ack   = document.getElementById('hqAck')?.checked;
-      const err   = document.getElementById('hqError');
-      if (!first || !last || !co || !phone || !email || !bill || !ack) { err.style.display='block'; return; }
-      err.style.display = 'none';
-      document.getElementById('homeQuoteBody').style.display = 'none';
-      document.getElementById('homeQuoteSuccess').style.display = 'block';
-    }
-    function submitZipQuote() {
-      const first = document.getElementById('zqFirst')?.value?.trim();
-      const last  = document.getElementById('zqLast')?.value?.trim();
-      const co    = document.getElementById('zqCompany')?.value?.trim();
-      const phone = document.getElementById('zqPhone')?.value?.trim();
-      const email = document.getElementById('zqEmail')?.value?.trim();
-      const bill  = document.getElementById('zqBill')?.value;
-      const ack   = document.getElementById('zqAck')?.checked;
-      const err   = document.getElementById('zqError');
-      if (!first || !last || !co || !phone || !email || !bill || !ack) { err.style.display='block'; return; }
-      err.style.display = 'none';
-      document.getElementById('zipQuoteBody').style.display = 'none';
-      document.getElementById('zipQuoteSuccess').style.display = 'block';
-    }
-  </script>
 </body>
 </html>
-
