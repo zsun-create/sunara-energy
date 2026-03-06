@@ -22,8 +22,9 @@
         <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
       </a>
       <nav class="main-nav">
-        <a href="plans.html">Plans &amp; Rates</a>
-        <a href="about.html">Why Sunara</a>
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html" style="color:var(--blue); border-color:var(--gold)">Contact</a>
       </nav>
@@ -34,8 +35,9 @@
       <button class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
     <div class="mobile-nav" id="mobileNav">
-      <a href="plans.html">Plans &amp; Rates</a>
-      <a href="about.html">Why Sunara</a>
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
       <a href="signup.html" class="btn-gold">Start Service</a>
@@ -44,97 +46,90 @@
 
   <section class="page-hero">
     <h1>Contact Us</h1>
-    <p>Real Texans ready to help — by phone, email, or online.</p>
+    <p>We are here to help. Reach out by phone, email, or the form below.</p>
   </section>
 
-  <div class="contact-grid">
+  <section class="section" style="background:white;">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 380px; gap:48px; align-items:start;">
 
-    <!-- CONTACT INFO -->
-    <div class="contact-info">
-      <h2>Get In Touch</h2>
+        <div class="form-card" style="max-width:100%;">
+          <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Send Us a Message</h2>
+          <p style="color:var(--gray); font-size:14px; margin-bottom:28px;">Fill out the form and we will get back to you within 1 business day.</p>
 
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <div>
-          <h5>Phone</h5>
-          <p><a href="tel:8005551234">(800) 555-1234</a></p>
-          <p style="font-size:13px;">For fastest service, call us directly.</p>
+          <div id="contactSuccess" class="success-box" style="display:none;">
+            Your message has been sent! We will get back to you within 1 business day.
+          </div>
+          <div id="contactError" class="error-box" style="display:none;">Please fill in all required fields.</div>
+
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" id="cfirst" placeholder="John" required></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" id="clast" placeholder="Doe" required></div>
+          </div>
+          <div class="form-group"><label>Email Address *</label><input type="email" id="cemail" placeholder="john@example.com" required></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" id="cphone" placeholder="(555) 000-0000"></div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select id="csubject">
+              <option value="">Select a topic</option>
+              <option>New Service Inquiry</option>
+              <option>Billing Question</option>
+              <option>Commercial Quote</option>
+              <option>Technical Support</option>
+              <option>Cancel Service</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message *</label><textarea id="cmessage" placeholder="How can we help you?" style="min-height:130px;" required></textarea></div>
+          <button class="btn-submit" onclick="submitContact()">Send Message</button>
         </div>
-      </div>
 
-      <div class="contact-item">
-        <div class="contact-icon">✉️</div>
         <div>
-          <h5>Email</h5>
-          <p><a href="mailto:support@sunaraenergy.com">support@sunaraenergy.com</a></p>
-          <p style="font-size:13px;">We respond within 1 business day.</p>
+          <div style="background:var(--navy); border-radius:16px; padding:32px; margin-bottom:20px; color:white;">
+            <h4 style="color:var(--gold); font-size:16px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:20px;">Contact Information</h4>
+            <div style="display:flex; flex-direction:column; gap:18px; font-size:15px;">
+              <div><div style="color:rgba(255,255,255,0.5); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Phone</div><a href="tel:8005551234" style="color:white; font-weight:700;">(800) 555-1234</a></div>
+              <div><div style="color:rgba(255,255,255,0.5); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Email</div><a href="mailto:support@sunaraenergy.com" style="color:white; font-weight:700;">support@sunaraenergy.com</a></div>
+              <div><div style="color:rgba(255,255,255,0.5); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Hours</div><span style="color:rgba(255,255,255,0.85);">Mon–Fri 8am–8pm<br>Sat 9am–5pm</span></div>
+            </div>
+          </div>
+          <div style="background:var(--light); border-radius:16px; padding:28px; border:2px solid var(--gold);">
+            <h4 style="color:var(--navy); font-size:15px; font-weight:800; margin-bottom:10px;">Looking for a Commercial Quote?</h4>
+            <p style="font-size:14px; color:var(--gray); margin-bottom:16px;">Our commercial team will build a custom rate around your usage.</p>
+            <a href="commercial.html" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:12px; border-radius:8px; font-weight:800; font-size:15px;">Request a Commercial Quote</a>
+          </div>
         </div>
-      </div>
 
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <h5>Mailing Address</h5>
-          <p style="color:var(--gray); font-size:14px;">Sunara Energy LLC<br>PO Box 10000<br>Houston, TX 77001</p>
-        </div>
-      </div>
-
-      <h5 style="color:var(--navy); margin-top:10px; margin-bottom:12px; font-size:15px; font-weight:800;">Business Hours</h5>
-      <table class="hours-table">
-        <tr><td>Monday – Friday</td><td>8:00 AM – 8:00 PM</td></tr>
-        <tr><td>Saturday</td><td>9:00 AM – 5:00 PM</td></tr>
-        <tr><td>Sunday</td><td>Closed</td></tr>
-      </table>
-
-      <div style="margin-top:28px; background:var(--light); border-radius:12px; padding:20px;">
-        <h5 style="color:var(--navy); font-weight:800; margin-bottom:8px;">Power Outage?</h5>
-        <p style="font-size:14px; color:var(--gray);">Contact your local TDU directly:</p>
-        <p style="font-size:14px; margin-top:8px;"><strong>Oncor (DFW/West TX):</strong> <a href="tel:8888133672" style="color:var(--blue);">(888) 313-3672</a></p>
-        <p style="font-size:14px;"><strong>CenterPoint (Houston):</strong> <a href="tel:8002324732" style="color:var(--blue);">(800) 332-7143</a></p>
       </div>
     </div>
-
-    <!-- CONTACT FORM -->
-    <div class="form-card" style="max-width:100%; margin:0;">
-      <h2>Send a Message</h2>
-      <p class="subtitle">We'll get back to you within 1 business day.</p>
-
-      <div class="form-row">
-        <div class="form-group"><label>First Name *</label><input type="text" id="cfirst" placeholder="John" required></div>
-        <div class="form-group"><label>Last Name *</label><input type="text" id="clast" placeholder="Doe" required></div>
-      </div>
-      <div class="form-group"><label>Email Address *</label><input type="email" id="cemail" placeholder="john@example.com" required></div>
-      <div class="form-group">
-        <label>Subject</label>
-        <select id="csubject">
-          <option value="">Select a topic</option>
-          <option>Start New Service</option>
-          <option>Billing Question</option>
-          <option>Account Access</option>
-          <option>Report an Issue</option>
-          <option>Cancel Service</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Message *</label><textarea id="cmessage" placeholder="How can we help you?" required></textarea></div>
-
-      <button class="btn-submit" onclick="submitContact()">Send Message</button>
-      <div class="success-box" id="contactSuccess">✅ Thank you! We've received your message and will respond within 1 business day.</div>
-      <div class="error-box" id="contactError">⚠️ Please fill in all required fields.</div>
-    </div>
-
-  </div>
+  </section>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-col brand-col">
         <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
-        <p>Reliable, affordable electricity for Texas homes and businesses.</p>
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
         <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
       </div>
-      <div class="footer-col"><h5>Plans</h5><a href="plans.html">Flex Plan</a><a href="plans.html">12-Month Saver</a><a href="plans.html">24-Month Ultra</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="about.html">Why Sunara</a><a href="contact.html">Contact Us</a></div>
-      <div class="footer-col"><h5>Support</h5><a href="faq.html">FAQs</a><a href="login.html">My Account</a></div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
