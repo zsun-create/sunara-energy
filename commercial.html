@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Energy Solutions – Sunara Energy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    .commercial-hero {
+      background: var(--navy);
+      padding: 80px 20px 60px;
+      text-align: center;
+    }
+    .commercial-hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .commercial-hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: clamp(15px, 2vw, 18px);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .commercial-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 48px 0 0;
+    }
+    .comm-feat {
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .comm-feat h4 { color: var(--gold); font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+    .comm-feat p  { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.6; margin: 0; }
+    .quote-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: clamp(24px, 5vw, 48px);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+    }
+    .quote-wrap h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .quote-wrap .sub {
+      color: var(--gray);
+      font-size: 15px;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .quote-disclaimer {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+      margin: 20px 0 16px;
+    }
+    .quote-ack {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .quote-ack input  { margin-top: 3px; flex-shrink: 0; width: auto; }
+    .quote-ack label  { font-size: 14px; color: var(--navy); font-weight: 600; line-height: 1.5; }
+    .quote-success {
+      display: none;
+      background: #d1fae5;
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      color: #065f46;
+    }
+    .quote-success h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
+    <a href="login.html" class="top-bar-login">My Account →</a>
+  </div>
+
+  <header id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+      </a>
+      <nav class="main-nav">
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html" style="color:var(--blue); border-color:var(--gold)">Commercial</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" class="btn-outline">Log In</a>
+        <a href="signup.html" class="btn-gold">Start Service</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+      <a href="signup.html" class="btn-gold">Start Service</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="commercial-hero">
+    <div class="container">
+      <h1>Commercial Energy Solutions</h1>
+      <p>Custom rates for businesses of every size. From small storefronts to large multi-location operations — we build a plan around your usage.</p>
+      <div class="commercial-features">
+        <div class="comm-feat"><h4>Custom Rates</h4><p>Rates tailored to your actual usage and business type</p></div>
+        <div class="comm-feat"><h4>Dedicated Manager</h4><p>Your own account rep available whenever you need</p></div>
+        <div class="comm-feat"><h4>Multi-Location</h4><p>Manage all your locations under one account</p></div>
+        <div class="comm-feat"><h4>Usage Reports</h4><p>Detailed monthly energy insights and analytics</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section class="section" style="background:var(--light);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Request a Quote</h2>
+        <p>Fill out the form below and a commercial specialist will contact you within 1 business day.</p>
+      </div>
+
+      <div class="quote-wrap">
+
+        <div id="commQuoteSuccess" class="quote-success">
+          <h3>Quote Request Submitted!</h3>
+          <p>Thank you! A Sunara Energy commercial specialist will contact you within 1 business day to discuss your custom rate options.</p>
+        </div>
+
+        <div id="commQuoteBody">
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" id="cqFirst" placeholder="John" required></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" id="cqLast" placeholder="Doe" required></div>
+          </div>
+          <div class="form-group"><label>Company *</label><input type="text" id="cqCompany" placeholder="Acme Corp" required></div>
+          <div class="form-row">
+            <div class="form-group"><label>Phone *</label><input type="tel" id="cqPhone" placeholder="(555) 000-0000" required></div>
+            <div class="form-group"><label>Email Address *</label><input type="email" id="cqEmail" placeholder="john@acme.com" required></div>
+          </div>
+          <div class="form-group">
+            <label>Average Monthly Bill *</label>
+            <select id="cqBill" required>
+              <option value="">Select a range</option>
+              <option value="Less than $1,000">Less than $1,000</option>
+              <option value="$1,000 - $5,000">$1,000 - $5,000</option>
+              <option value="$5,000 - $25,000">$5,000 - $25,000</option>
+              <option value="Greater than $25,000">Greater than $25,000</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Additional Comments</label>
+            <textarea id="cqComments" placeholder="Tell us about your business, number of locations, or any specific needs..." style="min-height:100px;"></textarea>
+          </div>
+          <div class="quote-disclaimer">
+            Sunara Energy is a licensed Retail Electric Provider. New commercial electricity enrollments are managed by our commercial division. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers and to complete an enrollment.
+          </div>
+          <div class="quote-ack">
+            <input type="checkbox" id="cqAck">
+            <label for="cqAck">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
+          </div>
+          <div id="cqError" class="error-box" style="display:none;">Please fill in all required fields and check the acknowledgment box.</div>
+          <button class="btn-submit" onclick="submitCommQuote()">Request My Custom Quote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Have Questions First?</h2>
+      <p>Our commercial team is ready to answer any questions before you submit.</p>
+      <a href="tel:8005551234" class="btn-gold large">Call (800) 555-1234</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col brand-col">
+        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
+        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+      </div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
