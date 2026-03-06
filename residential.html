@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residential Plans – Sunara Energy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
+    <a href="login.html" class="top-bar-login">My Account →</a>
+  </div>
+
+  <header id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+      </a>
+      <nav class="main-nav">
+        <a href="residential.html" style="color:var(--blue); border-color:var(--gold)">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" class="btn-outline">Log In</a>
+        <a href="signup.html" class="btn-gold">Start Service</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+      <a href="signup.html" class="btn-gold">Start Service</a>
+    </div>
+  </header>
+
+  <!-- PAGE HERO WITH ZIP -->
+  <section class="page-hero" style="padding-bottom:0;">
+    <h1>Residential Plans</h1>
+    <p>Simple, affordable electricity plans with no hidden fees. Enter your ZIP to see rates in your area.</p>
+    <div style="max-width:480px; margin:28px auto 0;">
+      <div class="zip-form">
+        <input type="text" id="zipInput" placeholder="Enter your ZIP code" maxlength="5" inputmode="numeric">
+        <button onclick="checkRates()">See Rates →</button>
+      </div>
+      <div id="zipError" style="color:#fbbf24; font-size:13px; margin-top:8px; display:none;">Please enter a valid 5-digit ZIP code.</div>
+    </div>
+  </section>
+
+  <!-- ZIP RESULTS (hidden until ZIP entered) -->
+  <section id="zipResultsSection" style="display:none; background:var(--navy); padding:60px 20px;">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:40px;">
+        <div id="zipResultsBadge" style="display:inline-block; background:rgba(255,215,0,0.15); border:1px solid rgba(255,215,0,0.4); color:var(--gold); padding:7px 20px; border-radius:30px; font-size:14px; font-weight:700; margin-bottom:16px;"></div>
+        <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:38px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:8px;">Plans Available in Your Area</h2>
+        <p style="color:rgba(255,255,255,0.65); font-size:16px;">All plans include 24/7 support and no hidden fees.</p>
+      </div>
+      <div class="plans-grid">
+        <div class="plan-card" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.1);">
+          <div class="plan-tag">Flexible</div>
+          <h3 style="color:white;">Flex Plan</h3>
+          <div class="plan-rate" id="flexRate">$0.11<span>/kWh</span></div>
+          <p class="plan-term" style="color:rgba(255,255,255,0.6);">Month-to-Month · No Contract</p>
+          <ul class="plan-features">
+            <li style="color:rgba(255,255,255,0.8);">No long-term commitment</li>
+            <li style="color:rgba(255,255,255,0.8);">Cancel anytime, no penalty</li>
+            <li style="color:rgba(255,255,255,0.8);">No deposit required</li>
+            <li style="color:rgba(255,255,255,0.8);">Online account access</li>
+            <li style="color:rgba(255,255,255,0.8);">Daily usage alerts</li>
+            <li style="color:rgba(255,255,255,0.8);">24/7 customer support</li>
+          </ul>
+          <a id="flexLink" href="signup.html?plan=flex" class="btn-plan">Select Plan</a>
+        </div>
+        <div class="plan-card featured" style="background:white;">
+          <div class="plan-tag best">Most Popular</div>
+          <h3>12-Month Saver</h3>
+          <div class="plan-rate" id="saver12Rate">$0.09<span>/kWh</span></div>
+          <p class="plan-term">12-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li>Locked-in rate, no surprises</li>
+            <li>Save up to 18% vs. flex</li>
+            <li>Free daily usage alerts</li>
+            <li>Priority customer support</li>
+            <li>Automatic payment options</li>
+            <li>Early termination: $150 fee</li>
+          </ul>
+          <a id="saver12Link" href="signup.html?plan=12month" class="btn-plan gold">Select Plan</a>
+        </div>
+        <div class="plan-card" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.1);">
+          <div class="plan-tag">Best Value</div>
+          <h3 style="color:white;">24-Month Ultra</h3>
+          <div class="plan-rate" id="ultra24Rate">$0.085<span>/kWh</span></div>
+          <p class="plan-term" style="color:rgba(255,255,255,0.6);">24-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li style="color:rgba(255,255,255,0.8);">Lowest guaranteed rate</li>
+            <li style="color:rgba(255,255,255,0.8);">Protection from market spikes</li>
+            <li style="color:rgba(255,255,255,0.8);">Free energy saving tips</li>
+            <li style="color:rgba(255,255,255,0.8);">VIP customer support line</li>
+            <li style="color:rgba(255,255,255,0.8);">Monthly usage reports</li>
+            <li style="color:rgba(255,255,255,0.8);">Early termination: $250 fee</li>
+          </ul>
+          <a id="ultra24Link" href="signup.html?plan=24month" class="btn-plan">Select Plan</a>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:32px;">
+        <p style="color:rgba(255,255,255,0.4); font-size:13px;">Rates shown are estimates for your area. Final rate confirmed at enrollment.</p>
+        <button onclick="document.getElementById('zipResultsSection').style.display='none'; window.scrollTo({top:0,behavior:'smooth'})" style="margin-top:14px; background:transparent; border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.55); padding:9px 22px; border-radius:8px; cursor:pointer; font-family:'Barlow',sans-serif; font-size:14px;">Search a Different ZIP</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALL PLANS (always visible) -->
+  <section class="section" style="background:white;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Residential Plans</h2>
+        <p>Whether you want flexibility or the lowest long-term rate — we have a plan for you.</p>
+      </div>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <div class="plan-tag">Flexible</div>
+          <h3>Flex Plan</h3>
+          <div class="plan-rate">$0.11<span>/kWh</span></div>
+          <p class="plan-term">Month-to-Month · No Contract</p>
+          <ul class="plan-features">
+            <li>No long-term commitment</li>
+            <li>Cancel anytime, no penalty</li>
+            <li>No deposit required</li>
+            <li>Online account access</li>
+            <li>Daily usage alerts</li>
+            <li>24/7 customer support</li>
+          </ul>
+          <a href="signup.html?plan=flex" class="btn-plan">Select Plan</a>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-tag best">Most Popular</div>
+          <h3>12-Month Saver</h3>
+          <div class="plan-rate">$0.09<span>/kWh</span></div>
+          <p class="plan-term">12-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li>Locked-in rate, no surprises</li>
+            <li>Save up to 18% vs. flex</li>
+            <li>Free daily usage alerts</li>
+            <li>Priority customer support</li>
+            <li>Automatic payment options</li>
+            <li>Early termination: $150 fee</li>
+          </ul>
+          <a href="signup.html?plan=12month" class="btn-plan gold">Select Plan</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-tag">Best Value</div>
+          <h3>24-Month Ultra</h3>
+          <div class="plan-rate">$0.085<span>/kWh</span></div>
+          <p class="plan-term">24-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li>Lowest guaranteed rate</li>
+            <li>Protection from market spikes</li>
+            <li>Free energy saving tips</li>
+            <li>VIP customer support line</li>
+            <li>Monthly usage reports</li>
+            <li>Early termination: $250 fee</li>
+          </ul>
+          <a href="signup.html?plan=24month" class="btn-plan">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="section" style="background:var(--light); padding-top:0;">
+    <div class="container">
+      <div class="section-header"><h2>Plan Comparison</h2></div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);">
+          <thead>
+            <tr style="background:var(--navy); color:white;">
+              <th style="padding:16px 20px; text-align:left; font-size:13px; text-transform:uppercase;">Feature</th>
+              <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">Flex</th>
+              <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase; background:var(--blue);">12-Month</th>
+              <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">24-Month</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Rate per kWh</td><td style="padding:14px 20px; text-align:center;">$0.11</td><td style="padding:14px 20px; text-align:center; background:#fffbeb; font-weight:800; color:var(--blue);">$0.09</td><td style="padding:14px 20px; text-align:center; font-weight:800; color:var(--blue);">$0.085</td></tr>
+            <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Contract Length</td><td style="padding:14px 20px; text-align:center;">None</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">12 months</td><td style="padding:14px 20px; text-align:center;">24 months</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">No Deposit</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+            <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Daily Alerts</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Priority Support</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">VIP</td></tr>
+            <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Monthly Reports</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">—</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+            <tr>
+              <td style="padding:14px 20px;"></td>
+              <td style="padding:14px 20px; text-align:center;"><a href="signup.html?plan=flex" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+              <td style="padding:14px 20px; text-align:center; background:#fffbeb;"><a href="signup.html?plan=12month" class="btn-plan gold" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+              <td style="padding:14px 20px; text-align:center;"><a href="signup.html?plan=24month" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to Start?</h2>
+      <p>Sign up online in minutes. Same-day service available.</p>
+      <a href="signup.html" class="btn-gold large">Start Service Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col brand-col">
+        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
+        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+      </div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
