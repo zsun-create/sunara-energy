@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Start Service – Sunara Energy</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     @media (max-width: 768px) {
       .signup-layout { grid-template-columns: 1fr !important; }
@@ -29,10 +29,9 @@
         <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
       </a>
       <nav class="main-nav">
-        <a href="plans.html">Plans &amp; Rates</a>
-        <a href="plans.html#residential">Residential</a>
-        <a href="plans.html#business">Business</a>
-        <a href="about.html">Why Sunara</a>
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -42,16 +41,15 @@
       <button class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
     <div class="mobile-nav" id="mobileNav">
-      <a href="plans.html">Plans &amp; Rates</a>
-      <a href="plans.html#residential">Residential</a>
-      <a href="plans.html#business">Business</a>
-      <a href="about.html">Why Sunara</a>
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
     </div>
   </header>
 
-  <section class="page-hero" style="padding:50px 40px;">
+  <section class="page-hero" style="padding:50px 20px;">
     <h1 id="signupHeroTitle">Start Your Service</h1>
     <p id="signupHeroSub">Create your account and get power turned on fast. No hidden fees ever.</p>
   </section>
@@ -65,12 +63,12 @@
         <div class="form-group" style="margin-bottom:28px;">
           <label style="font-size:15px; font-weight:800; color:var(--navy); margin-bottom:10px; display:block;">I need service for my *</label>
           <div class="plan-tabs" style="max-width:100%; margin:0;">
-            <button class="plan-tab active" id="typeResBtn" onclick="setSignupType('residential')">🏠 Residential / Home</button>
-            <button class="plan-tab" id="typeBizBtn" onclick="setSignupType('business')">🏢 Business / Commercial</button>
+            <button class="plan-tab active" id="typeResBtn" onclick="setSignupType('residential')">Residential / Home</button>
+            <button class="plan-tab" id="typeBizBtn" onclick="setSignupType('business')">Business / Commercial</button>
           </div>
         </div>
 
-        <!-- ======= RESIDENTIAL FORM ======= -->
+        <!-- RESIDENTIAL FORM -->
         <div id="residentialForm">
           <div style="display:flex; gap:0; margin-bottom:32px;">
             <div class="step-ind active" id="step1ind"><span>1</span> Account</div>
@@ -81,7 +79,7 @@
           <!-- STEP 1 -->
           <div id="formStep1">
             <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Create Your Account</h2>
-            <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">You'll use this email and password to log in and manage your service.</p>
+            <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">You will use this email and password to log in and manage your service.</p>
             <div class="form-row">
               <div class="form-group"><label>First Name *</label><input type="text" id="firstName" placeholder="John" required></div>
               <div class="form-group"><label>Last Name *</label><input type="text" id="lastName" placeholder="Doe" required></div>
@@ -106,9 +104,9 @@
             <div id="passwordStrength" style="margin-top:-10px; margin-bottom:16px; font-size:13px;"></div>
             <div class="form-group"><label>Phone Number *</label><input type="tel" id="phone" placeholder="(555) 000-0000" required></div>
             <div class="form-group"><label>Date of Birth *</label><input type="date" id="dob"></div>
-            <div id="step1Error" class="error-box" style="display:none;">⚠️ Please fill in all fields. Make sure passwords match and are at least 8 characters.</div>
-            <button class="btn-submit" onclick="validateStep1()">Next: Service Address →</button>
-            <p style="text-align:center; margin-top:16px; font-size:14px; color:var(--gray);">Already have an account? <a href="login.html" style="color:var(--blue); font-weight:700;">Log In →</a></p>
+            <div id="step1Error" class="error-box" style="display:none;">Please fill in all fields. Make sure passwords match and are at least 8 characters.</div>
+            <button class="btn-submit" onclick="validateStep1()">Next: Service Address</button>
+            <p style="text-align:center; margin-top:16px; font-size:14px; color:var(--gray);">Already have an account? <a href="login.html" style="color:var(--blue); font-weight:700;">Log In</a></p>
           </div>
 
           <!-- STEP 2 -->
@@ -128,10 +126,10 @@
               </select>
             </div>
             <div class="form-group"><label>Requested Start Date *</label><input type="date" id="startDate" required></div>
-            <div id="step2Error" class="error-box" style="display:none;">⚠️ Please fill in all address fields.</div>
+            <div id="step2Error" class="error-box" style="display:none;">Please fill in all address fields.</div>
             <div style="display:flex; gap:12px;">
-              <button class="btn-submit" onclick="goStep(1)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">← Back</button>
-              <button class="btn-submit" onclick="validateStep2()" style="flex:1;">Next: Choose Plan →</button>
+              <button class="btn-submit" onclick="goStep(1)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">Back</button>
+              <button class="btn-submit" onclick="validateStep2()" style="flex:1;">Next: Choose Plan</button>
             </div>
           </div>
 
@@ -142,7 +140,7 @@
             <div class="form-group">
               <label>Select Your Plan *</label>
               <select id="planSelect">
-                <option value="">-- Choose a plan --</option>
+                <option value="">Choose a plan</option>
                 <option value="flex">Flex Plan – $0.11/kWh (Month-to-Month)</option>
                 <option value="12month">12-Month Saver – $0.09/kWh (Most Popular)</option>
                 <option value="24month">24-Month Ultra – $0.085/kWh (Best Value)</option>
@@ -156,7 +154,7 @@
             <div class="form-group">
               <label>How did you hear about us?</label>
               <select id="referral">
-                <option value="">-- Select --</option>
+                <option value="">Select one</option>
                 <option>Google Search</option>
                 <option>Friend or Family</option>
                 <option>Social Media</option>
@@ -168,26 +166,26 @@
               <input type="checkbox" id="terms" style="width:auto; margin-top:3px; flex-shrink:0;">
               <label for="terms" style="font-weight:400; font-size:14px; color:var(--gray);">I agree to the <a href="#" style="color:var(--blue);">Terms of Service</a> and <a href="#" style="color:var(--blue);">Privacy Policy</a>. I authorize Sunara Energy to begin electricity service at my address.</label>
             </div>
-            <div id="step3Error" class="error-box" style="display:none;">⚠️ Please select a plan and accept the terms.</div>
+            <div id="step3Error" class="error-box" style="display:none;">Please select a plan and accept the terms.</div>
             <div style="display:flex; gap:12px;">
-              <button class="btn-submit" onclick="goStep(2)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">← Back</button>
-              <button class="btn-submit" id="submitBtn" onclick="submitSignup()" style="flex:1;">Create Account &amp; Submit →</button>
+              <button class="btn-submit" onclick="goStep(2)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">Back</button>
+              <button class="btn-submit" id="submitBtn" onclick="submitSignup()" style="flex:1;">Create Account & Submit</button>
             </div>
             <div class="success-box" id="successBox" style="display:none;">
-              🎉 <strong>Account created &amp; application submitted!</strong><br><br>
-              Welcome to Sunara Energy! Check your email at <strong id="confirmEmail"></strong> for your login details and service confirmation. We'll contact you within 1 hour to confirm your start date.
+              <strong>Account created and application submitted!</strong><br><br>
+              Welcome to Sunara Energy! Check your email at <strong id="confirmEmail"></strong> for your login details and service confirmation. We will contact you within 1 hour to confirm your start date.
             </div>
           </div>
         </div>
 
-        <!-- ======= BUSINESS QUOTE FORM ======= -->
+        <!-- BUSINESS QUOTE FORM -->
         <div id="businessForm" style="display:none;">
-          <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Business Quote</h2>
-          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A Sunara commercial specialist will contact you within 1 business day with a custom rate for your business.</p>
+          <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Commercial Quote</h2>
+          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A commercial specialist will contact you within 1 business day with a custom rate.</p>
 
           <div id="bizQuoteSuccess" style="display:none; background:#d1fae5; border:2px solid #10b981; border-radius:12px; padding:24px; text-align:center; color:#065f46;">
-            <strong style="font-size:20px; display:block; margin-bottom:8px;">🎉 Quote Request Submitted!</strong>
-            Thank you! A Sunara Energy commercial specialist will contact you within 1 business day to discuss your custom rate options.
+            <strong style="font-size:20px; display:block; margin-bottom:8px;">Quote Request Submitted!</strong>
+            A Sunara Energy commercial specialist will contact you within 1 business day to discuss your custom rate options.
           </div>
 
           <div id="bizQuoteBody">
@@ -203,10 +201,10 @@
             <div class="form-group">
               <label>Average Monthly Bill *</label>
               <select id="bqBill">
-                <option value="">-- Select a range --</option>
+                <option value="">Select a range</option>
                 <option>Less than $1,000</option>
-                <option>$1,000 – $5,000</option>
-                <option>$5,000 – $25,000</option>
+                <option>$1,000 - $5,000</option>
+                <option>$5,000 - $25,000</option>
                 <option>Greater than $25,000</option>
               </select>
             </div>
@@ -215,22 +213,22 @@
               <textarea id="bqComments" placeholder="Tell us about your business, number of locations, or any specific needs..." style="min-height:100px;"></textarea>
             </div>
             <div style="background:var(--light); border-radius:10px; padding:16px 20px; font-size:13px; color:var(--gray); line-height:1.7; margin:20px 0;">
-              Sunara Energy is a licensed Retail Electric Provider in Texas. New commercial electricity enrollments in Texas are managed by our commercial division. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers and to complete an enrollment.
+              Sunara Energy is a licensed Retail Electric Provider. New commercial electricity enrollments are managed by our commercial division. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers and to complete an enrollment.
             </div>
             <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:20px;">
-              <input type="checkbox" id="bqAck" style="margin-top:3px; flex-shrink:0;">
+              <input type="checkbox" id="bqAck" style="margin-top:3px; flex-shrink:0; width:auto;">
               <label for="bqAck" style="font-size:14px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
             </div>
-            <div id="bizQuoteError" class="error-box" style="display:none;">⚠️ Please fill in all required fields and check the acknowledgment box.</div>
-            <button class="btn-submit" onclick="submitBizQuote()">Request My Custom Quote →</button>
+            <div id="bizQuoteError" class="error-box" style="display:none;">Please fill in all required fields and check the acknowledgment box.</div>
+            <button class="btn-submit" onclick="submitBizQuote()">Request My Custom Quote</button>
           </div>
         </div>
 
         <div class="form-trust" style="margin-top:24px;">
-          <span>🔒 Secure &amp; Encrypted</span>
-          <span>⚡ Same-Day Available</span>
-          <span>💳 No Deposit Options</span>
-          <span>📞 24/7 Support</span>
+          <span>Secure & Encrypted</span>
+          <span>Same-Day Available</span>
+          <span>No Deposit Options</span>
+          <span>24/7 Support</span>
         </div>
       </div>
 
@@ -239,18 +237,18 @@
         <div style="background:var(--navy); color:white; border-radius:14px; padding:28px; margin-bottom:20px;">
           <h4 style="color:var(--gold); font-size:16px; margin-bottom:16px; text-transform:uppercase; letter-spacing:1px;">Why Sunara?</h4>
           <div style="display:flex; flex-direction:column; gap:14px; font-size:14px; line-height:1.5;">
-            <div>✅ No hidden fees ever</div>
-            <div>✅ Same-day service available</div>
-            <div>✅ No deposit required</div>
-            <div>✅ Fixed rates – no surprises</div>
-            <div>✅ Real Texan support team</div>
-            <div>✅ Residential &amp; Business plans</div>
+            <div>No hidden fees ever</div>
+            <div>Same-day service available</div>
+            <div>No deposit required</div>
+            <div>Fixed rates — no surprises</div>
+            <div>Real support team</div>
+            <div>Residential and Commercial plans</div>
           </div>
         </div>
         <div style="background:var(--light); border-radius:14px; padding:28px; border:2px solid var(--gold);">
           <h4 style="color:var(--navy); font-size:15px; font-weight:800; margin-bottom:10px;">Need Help?</h4>
-          <p style="font-size:14px; color:var(--gray); margin-bottom:14px;">Our Texas-based team is ready to help you choose the right plan.</p>
-          <a href="tel:8005551234" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:12px; border-radius:8px; font-weight:800; font-size:15px;">📞 (800) 555-1234</a>
+          <p style="font-size:14px; color:var(--gray); margin-bottom:14px;">Our team is ready to help you choose the right plan.</p>
+          <a href="tel:8005551234" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:12px; border-radius:8px; font-weight:800; font-size:15px;">(800) 555-1234</a>
           <p style="font-size:12px; color:var(--gray); text-align:center; margin-top:10px;">Mon–Fri 8am–8pm · Sat 9am–5pm</p>
         </div>
       </div>
@@ -262,12 +260,27 @@
     <div class="footer-inner">
       <div class="footer-col brand-col">
         <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
-        <p>Reliable, affordable electricity for Texas homes and businesses.</p>
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
         <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
       </div>
-      <div class="footer-col"><h5>Residential</h5><a href="plans.html#residential">Flex Plan</a><a href="plans.html#residential">12-Month Saver</a><a href="plans.html#residential">24-Month Ultra</a></div>
-      <div class="footer-col"><h5>Business</h5><a href="plans.html#business">Request a Quote</a><a href="contact.html">Contact Us</a></div>
-      <div class="footer-col"><h5>Support</h5><a href="faq.html">FAQs</a><a href="contact.html">Contact Us</a><a href="login.html">My Account</a></div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
