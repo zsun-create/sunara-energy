@@ -7,7 +7,7 @@ const EMAILJS_SERVICE_ID  = 'service_as5x5ok';
 const EMAILJS_TEMPLATE_ID = 'template_zm481zr';
 const EMAILJS_PUBLIC_KEY  = 'EhKjmL0KVGWvwc0MY';
 
-// ---- SIGNUP TYPE TOGGLE (Residential vs Business) ----
+// ---- SIGNUP TYPE TOGGLE ----
 function setSignupType(type) {
   const isRes = type === 'residential';
   document.getElementById('typeResBtn')?.classList.toggle('active', isRes);
@@ -16,15 +16,15 @@ function setSignupType(type) {
   document.getElementById('businessForm').style.display    = isRes ? 'none'  : 'block';
   const title = document.getElementById('signupHeroTitle');
   const sub   = document.getElementById('signupHeroSub');
-  if (title) title.textContent = isRes ? 'Start Your Residential Service' : 'Request a Business Quote';
-  if (sub)   sub.textContent   = isRes ? 'Create your account and get power turned on fast. No hidden fees ever.' : 'Fill out the form below and a commercial specialist will contact you within 1 business day.';
+  if (title) title.textContent = isRes ? 'Start Your Residential Service' : 'Request a Commercial Quote';
+  if (sub)   sub.textContent   = isRes ? 'Create your account and get power turned on fast.' : 'Fill out the form and a specialist will contact you within 1 business day.';
 }
 
 // ---- PLAN DETAIL CARD ----
 const allPlans = [
   { value: 'flex',    name: 'Flex Plan',      rate: '$0.11/kWh',  desc: 'No contract, cancel anytime. Best for flexibility.' },
   { value: '12month', name: '12-Month Saver', rate: '$0.09/kWh',  desc: 'Fixed rate for 12 months. Save up to 18% vs. month-to-month.' },
-  { value: '24month', name: '24-Month Ultra', rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years. Best long-term value.' },
+  { value: '24month', name: '24-Month Ultra', rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years.' },
 ];
 
 function onPlanChange() {
@@ -61,7 +61,7 @@ function checkPasswordStrength(pw) {
   if (/[A-Z]/.test(pw))         s++;
   if (/[0-9]/.test(pw))         s++;
   if (/[^A-Za-z0-9]/.test(pw)) s++;
-  el.textContent = 'Password strength: ' + (['','🔴 Weak','🟡 Fair','🟠 Good','🟢 Strong'][s] || '');
+  el.textContent = 'Password strength: ' + (['','Weak','Fair','Good','Strong'][s] || '');
 }
 
 // ---- STEP VALIDATION ----
@@ -73,9 +73,9 @@ function validateStep1() {
   const pw     = document.getElementById('password')?.value;
   const pwConf = document.getElementById('confirmPassword')?.value;
   const err    = document.getElementById('step1Error');
-  if (!first || !last || !email || !phone || !pw || !pwConf) { err.textContent = '⚠️ Please fill in all fields.'; err.style.display = 'block'; return; }
-  if (pw.length < 8) { err.textContent = '⚠️ Password must be at least 8 characters.'; err.style.display = 'block'; return; }
-  if (pw !== pwConf) { err.textContent = '⚠️ Passwords do not match.'; err.style.display = 'block'; return; }
+  if (!first || !last || !email || !phone || !pw || !pwConf) { err.textContent = 'Please fill in all fields.'; err.style.display = 'block'; return; }
+  if (pw.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
+  if (pw !== pwConf) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
   err.style.display = 'none';
   goStep(2);
 }
@@ -88,31 +88,6 @@ function validateStep2() {
   if (!address || !city || !zip) { err.style.display = 'block'; return; }
   err.style.display = 'none';
   goStep(3);
-}
-
-// ---- PLAN TABS ----
-function switchTab(type, btn) {
-  if (btn) {
-    btn.closest('.plan-tabs').querySelectorAll('.plan-tab').forEach(el => el.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-  const tab = document.getElementById('tab-' + type);
-  if (tab) tab.style.display = 'block';
-}
-
-// ---- ZIP RESULTS TAB SWITCH ----
-function switchZipTab(type, btn) {
-  if (btn) {
-    btn.closest('.plan-tabs').querySelectorAll('.plan-tab').forEach(el => {
-      el.classList.remove('active');
-      el.style.color = 'rgba(255,255,255,0.6)';
-    });
-    btn.classList.add('active');
-    btn.style.color = 'white';
-  }
-  document.getElementById('zip-tab-residential').style.display = type === 'residential' ? 'grid' : 'none';
-  document.getElementById('zip-tab-business').style.display    = type === 'business'    ? 'block' : 'none';
 }
 
 // ---- MOBILE MENU ----
@@ -143,72 +118,102 @@ window.addEventListener('scroll', function() {
 
 // ---- ZIP RATES ----
 const zipRates = {
-  '77': { city: 'Houston',              res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
-  '75': { city: 'Dallas',               res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
-  '76': { city: 'Fort Worth',           res: { flex: '$0.109', saver: '$0.089', ultra: '$0.084' } },
-  '78': { city: 'San Antonio / Austin', res: { flex: '$0.108', saver: '$0.088', ultra: '$0.083' } },
-  '79': { city: 'Lubbock / Amarillo',   res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
-  '73': { city: 'North Texas',          res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
-  '88': { city: 'West Texas',           res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
+  '77': { city: 'Houston Area',         res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
+  '75': { city: 'Dallas Area',          res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
+  '76': { city: 'Fort Worth Area',      res: { flex: '$0.109', saver: '$0.089', ultra: '$0.084' } },
+  '78': { city: 'Central South Area',   res: { flex: '$0.108', saver: '$0.088', ultra: '$0.083' } },
+  '79': { city: 'West Central Area',    res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
+  '73': { city: 'North Central Area',   res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
+  '88': { city: 'Southwest Area',       res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
+  '30': { city: 'Southeast Area',       res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
+  '60': { city: 'Midwest Area',         res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
+  '10': { city: 'Northeast Area',       res: { flex: '$0.115', saver: '$0.095', ultra: '$0.090' } },
+  '90': { city: 'West Coast Area',      res: { flex: '$0.116', saver: '$0.096', ultra: '$0.091' } },
+  '85': { city: 'Southwest Area',       res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
+  '33': { city: 'Southeast Area',       res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
+  '98': { city: 'Pacific Northwest',    res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
 };
-const texasZipPrefixes = ['75','76','77','78','79','73','88'];
 
-function isTexasZip(zip) {
-  if (!/^\d{5}$/.test(zip)) return false;
-  return texasZipPrefixes.some(p => zip.startsWith(p));
+function getZipInfo(zip) {
+  const prefix2 = zip.substring(0, 2);
+  const prefix1 = zip.substring(0, 1);
+  return zipRates[prefix2] || zipRates[prefix1] || { city: 'Your Area', res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } };
 }
 
+function isValidZip(zip) {
+  return /^\d{5}$/.test(zip);
+}
+
+// ---- CHECK RATES (residential.html) ----
 function checkRates() {
   const input   = document.getElementById('zipInput');
   const errorEl = document.getElementById('zipError');
   if (!input) return;
   const zip = input.value.trim();
   if (errorEl) errorEl.style.display = 'none';
-  if (!isTexasZip(zip)) {
-    if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit Texas ZIP code.'; errorEl.style.display = 'block'; }
+  if (!isValidZip(zip)) {
+    if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit ZIP code.'; errorEl.style.display = 'block'; }
     return;
   }
-  const info = zipRates[zip.substring(0,2)] || zipRates['77'];
+  const info  = getZipInfo(zip);
   const badge = document.getElementById('zipResultsBadge');
-  if (badge) badge.textContent = '📍 ZIP Code: ' + zip + '  ·  ' + info.city + ' Area';
+  if (badge) badge.textContent = 'ZIP Code: ' + zip + '  —  ' + info.city;
   const setEl   = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
   const setHref = (id, h)   => { const el = document.getElementById(id); if (el) el.href = h; };
   setEl('flexRate',    info.res.flex  + '<span>/kWh</span>');
   setEl('saver12Rate', info.res.saver + '<span>/kWh</span>');
   setEl('ultra24Rate', info.res.ultra + '<span>/kWh</span>');
-  setHref('flexLink',    'signup.html?type=residential&plan=flex&zip='    + zip);
-  setHref('saver12Link', 'signup.html?type=residential&plan=12month&zip=' + zip);
-  setHref('ultra24Link', 'signup.html?type=residential&plan=24month&zip=' + zip);
+  setHref('flexLink',    'signup.html?plan=flex&zip='    + zip);
+  setHref('saver12Link', 'signup.html?plan=12month&zip=' + zip);
+  setHref('ultra24Link', 'signup.html?plan=24month&zip=' + zip);
   const section = document.getElementById('zipResultsSection');
   if (section) { section.style.display = 'block'; setTimeout(() => section.scrollIntoView({ behavior:'smooth', block:'start' }), 50); }
-  switchZipTab('residential', document.getElementById('zipResTab'));
+}
+
+// ---- CHECK RATES HOME (index.html — redirects to residential with ZIP) ----
+function checkRatesHome() {
+  const input   = document.getElementById('zipInput');
+  const errorEl = document.getElementById('zipError');
+  if (!input) return;
+  const zip = input.value.trim();
+  if (errorEl) errorEl.style.display = 'none';
+  if (!isValidZip(zip)) {
+    if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit ZIP code.'; errorEl.style.display = 'block'; }
+    return;
+  }
+  window.location.href = 'residential.html?zip=' + zip;
 }
 
 // ---- DOM READY ----
 document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+
+  // Auto-run ZIP check if zip in URL (coming from homepage)
+  const zipParam = params.get('zip');
   const zipInput = document.getElementById('zipInput');
-  if (zipInput) {
-    zipInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkRates(); });
+  if (zipParam && zipInput) {
+    zipInput.value = zipParam;
+    checkRates();
+  }
+
+  if (zipInput && !zipParam) {
+    zipInput.addEventListener('keydown', e => { if (e.key === 'Enter') { checkRates ? checkRates() : checkRatesHome(); } });
     zipInput.addEventListener('input', function() { this.value = this.value.replace(/\D/g,''); });
   }
-  const params = new URLSearchParams(window.location.search);
-  const type   = params.get('type') || 'residential';
-  const plan   = params.get('plan');
+
+  const type = params.get('type') || 'residential';
+  const plan = params.get('plan');
   if (document.getElementById('residentialForm')) setSignupType(type);
   const planSelect = document.getElementById('planSelect');
   if (planSelect && plan) { planSelect.value = plan; onPlanChange(); }
+  if (planSelect) planSelect.addEventListener('change', onPlanChange);
   const pwInput = document.getElementById('password');
   if (pwInput) pwInput.addEventListener('input', function() { checkPasswordStrength(this.value); });
-  if (planSelect) planSelect.addEventListener('change', onPlanChange);
   const startDate = document.getElementById('startDate');
   if (startDate) {
     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
     startDate.min   = new Date().toISOString().split('T')[0];
     startDate.value = tomorrow.toISOString().split('T')[0];
-  }
-  if (window.location.hash === '#business') {
-    const bizBtn = document.querySelector('.plan-tab:nth-child(2)');
-    if (bizBtn) switchTab('business', bizBtn);
   }
 });
 
@@ -240,11 +245,12 @@ async function submitSignup() {
       body: JSON.stringify({
         firstName: document.getElementById('firstName')?.value?.trim(),
         lastName:  document.getElementById('lastName')?.value?.trim(),
-        email, phone: document.getElementById('phone')?.value?.trim(),
+        email,
+        phone:   document.getElementById('phone')?.value?.trim(),
         address: document.getElementById('address')?.value?.trim(),
         city:    document.getElementById('city')?.value?.trim(),
         zip:     document.getElementById('zip')?.value?.trim(),
-        plan, type: 'residential'
+        plan,    type: 'residential'
       })
     });
   } catch (_) {}
@@ -258,44 +264,44 @@ async function submitSignup() {
 async function sendQuote(fields, bodyId, successId, errorId) {
   const err = document.getElementById(errorId);
   const { first, last, company, phone, email, bill, comments, ack } = fields;
-
   if (!first || !last || !company || !phone || !email || !bill || !ack) {
     if (err) err.style.display = 'block';
     return;
   }
   if (err) err.style.display = 'none';
-
   const btn = document.querySelector('#' + bodyId + ' .btn-submit');
   if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
-
-  // Send email via EmailJS
   try {
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      firstName: first,
-      lastName:  last,
+      firstName: first, lastName: last,
       company, phone, email, bill,
-      comments:  comments || 'None',
-      time:      new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CT'
+      comments: comments || 'None',
+      time: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CT'
     }, EMAILJS_PUBLIC_KEY);
-  } catch (e) {
-    console.error('EmailJS error:', e);
-  }
-
-  // Save to Google Sheet
+  } catch (e) { console.error('EmailJS error:', e); }
   try {
     await fetch('/api/quote', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: first, lastName: last,
-        company, phone, email, bill,
-        comments: comments || ''
-      })
+      body: JSON.stringify({ firstName: first, lastName: last, company, phone, email, bill, comments: comments || '' })
     });
   } catch (_) {}
-
   document.getElementById(bodyId).style.display    = 'none';
   document.getElementById(successId).style.display = 'block';
+}
+
+// ---- COMMERCIAL PAGE QUOTE ----
+function submitCommQuote() {
+  sendQuote({
+    first:    document.getElementById('cqFirst')?.value?.trim(),
+    last:     document.getElementById('cqLast')?.value?.trim(),
+    company:  document.getElementById('cqCompany')?.value?.trim(),
+    phone:    document.getElementById('cqPhone')?.value?.trim(),
+    email:    document.getElementById('cqEmail')?.value?.trim(),
+    bill:     document.getElementById('cqBill')?.value,
+    comments: document.getElementById('cqComments')?.value?.trim(),
+    ack:      document.getElementById('cqAck')?.checked,
+  }, 'commQuoteBody', 'commQuoteSuccess', 'cqError');
 }
 
 // ---- SIGNUP PAGE BUSINESS QUOTE ----
@@ -310,48 +316,6 @@ function submitBizQuote() {
     comments: document.getElementById('bqComments')?.value?.trim(),
     ack:      document.getElementById('bqAck')?.checked,
   }, 'bizQuoteBody', 'bizQuoteSuccess', 'bizQuoteError');
-}
-
-// ---- HOMEPAGE BUSINESS TAB QUOTE ----
-function submitHomeQuote() {
-  sendQuote({
-    first:    document.getElementById('hqFirst')?.value?.trim(),
-    last:     document.getElementById('hqLast')?.value?.trim(),
-    company:  document.getElementById('hqCompany')?.value?.trim(),
-    phone:    document.getElementById('hqPhone')?.value?.trim(),
-    email:    document.getElementById('hqEmail')?.value?.trim(),
-    bill:     document.getElementById('hqBill')?.value,
-    comments: document.getElementById('hqComments')?.value?.trim(),
-    ack:      document.getElementById('hqAck')?.checked,
-  }, 'homeQuoteBody', 'homeQuoteSuccess', 'hqError');
-}
-
-// ---- ZIP RESULTS BUSINESS QUOTE ----
-function submitZipQuote() {
-  sendQuote({
-    first:    document.getElementById('zqFirst')?.value?.trim(),
-    last:     document.getElementById('zqLast')?.value?.trim(),
-    company:  document.getElementById('zqCompany')?.value?.trim(),
-    phone:    document.getElementById('zqPhone')?.value?.trim(),
-    email:    document.getElementById('zqEmail')?.value?.trim(),
-    bill:     document.getElementById('zqBill')?.value,
-    comments: document.getElementById('zqComments')?.value?.trim(),
-    ack:      document.getElementById('zqAck')?.checked,
-  }, 'zipQuoteBody', 'zipQuoteSuccess', 'zqError');
-}
-
-// ---- PLANS PAGE QUOTE ----
-function submitQuote() {
-  sendQuote({
-    first:    document.getElementById('qFirstName')?.value?.trim(),
-    last:     document.getElementById('qLastName')?.value?.trim(),
-    company:  document.getElementById('qCompany')?.value?.trim(),
-    phone:    document.getElementById('qPhone')?.value?.trim(),
-    email:    document.getElementById('qEmail')?.value?.trim(),
-    bill:     document.getElementById('qBill')?.value,
-    comments: document.getElementById('qComments')?.value?.trim(),
-    ack:      document.getElementById('qAcknowledge')?.checked,
-  }, 'quoteFormBody', 'quoteSuccess', 'quoteError');
 }
 
 // ---- CONTACT SUBMIT ----
