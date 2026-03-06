@@ -22,8 +22,9 @@
         <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
       </a>
       <nav class="main-nav">
-        <a href="plans.html">Plans &amp; Rates</a>
-        <a href="about.html">Why Sunara</a>
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
         <a href="faq.html" style="color:var(--blue); border-color:var(--gold)">FAQs</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -34,8 +35,9 @@
       <button class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
     <div class="mobile-nav" id="mobileNav">
-      <a href="plans.html">Plans &amp; Rates</a>
-      <a href="about.html">Why Sunara</a>
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
       <a href="signup.html" class="btn-gold">Start Service</a>
@@ -44,61 +46,90 @@
 
   <section class="page-hero">
     <h1>Frequently Asked Questions</h1>
-    <p>Everything you need to know about switching to Sunara Energy.</p>
+    <p>Everything you need to know about Sunara Energy. Can't find your answer? Call us at (800) 555-1234.</p>
   </section>
 
-  <section class="faq-section">
-    <div class="faq-container">
-      <div class="section-header" style="margin-bottom:40px;"><h2>Common Questions</h2></div>
+  <section class="section" style="background:white;">
+    <div class="container" style="max-width:760px;">
 
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>How do I switch to Sunara Energy?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Switching is simple. Enter your ZIP code to see available plans, choose the one that fits your budget, and complete the short enrollment form. We handle the rest — including notifying your current provider. Most customers are switched within 1–2 billing cycles.</div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid var(--border);">General Questions</h3>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What is Sunara Energy?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Sunara Energy is a retail electricity provider (REP) offering affordable, transparent electricity plans for residential customers and businesses nationwide. We believe in straightforward pricing with no hidden fees.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Where does Sunara Energy provide service?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Sunara Energy provides service in deregulated electricity markets across the United States. Enter your ZIP code on our homepage to confirm availability in your area.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How is Sunara Energy different from my local utility?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Your local utility still delivers the electricity to your home or business. Sunara Energy is your retail electricity provider — we supply the electricity and handle your billing. You choose your rate with us, while your utility handles the physical delivery and maintenance.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Are there any hidden fees?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">No. Sunara Energy is committed to complete pricing transparency. The rate you see when you sign up is the rate you pay. There are no surprise charges or fees added to your bill.</div>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>Do I need a deposit to sign up?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Many of our plans require no deposit at all. Deposit requirements depend on the plan selected and a quick credit check. Our Flex Plan is available with no deposit and no credit check for most customers.</div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--navy); text-transform:uppercase; margin:40px 0 20px; padding-bottom:10px; border-bottom:2px solid var(--border);">Signing Up</h3>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How do I sign up?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Simply enter your ZIP code on our website to see available plans in your area. Choose the plan that fits your needs and complete your enrollment online in minutes.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Is a deposit required?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Many of our plans require no deposit. Deposit requirements vary based on your plan selection and credit history. You will be notified of any deposit requirement before completing your enrollment.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How quickly can I get service started?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">In most service areas, same-day or next-day service activation is available. Sign up before noon and we will work to get your power activated the same business day.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Can I switch from my current provider?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Yes. Switching to Sunara Energy is easy and there is no interruption to your electricity service. We handle the switch for you — your power stays on throughout the entire process.</div>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>Can I get same-day electricity service?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Yes! If you enroll before 12pm on a business day, we can often activate your service the same day. Enrollment after noon is typically activated the next business day. We will always confirm your start date after you apply.</div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--navy); text-transform:uppercase; margin:40px 0 20px; padding-bottom:10px; border-bottom:2px solid var(--border);">Plans & Billing</h3>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What residential plans do you offer?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">We offer three residential plans: the Flex Plan (month-to-month, no contract), the 12-Month Saver (fixed rate for 12 months), and the 24-Month Ultra (our lowest guaranteed rate for 24 months). Visit our Residential page to compare all plans.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What does a fixed rate mean?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">A fixed rate means your electricity rate per kWh stays the same for the entire length of your contract. Your rate will not go up even if market prices increase — giving you predictable bills month after month.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What is an early termination fee?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">If you cancel a fixed-term plan before your contract ends, an early termination fee applies. The 12-Month Saver has a $150 fee and the 24-Month Ultra has a $250 fee. The Flex Plan has no early termination fee since it has no contract.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How do I pay my bill?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">You can pay your bill online through your Sunara Energy account, set up automatic payments, or call our support team. We accept all major credit and debit cards as well as ACH bank transfers.</div>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>What is the difference between prepaid and postpaid plans?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Postpaid plans bill you at the end of each month based on your actual usage. Prepaid plans let you pay upfront and use electricity as you go — no deposit required and no credit check. Both options are available at Sunara Energy.</div>
-      </div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--navy); text-transform:uppercase; margin:40px 0 20px; padding-bottom:10px; border-bottom:2px solid var(--border);">Commercial</h3>
 
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>Are there any hidden fees?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">No. Sunara Energy does not charge enrollment fees, setup fees, or surprise charges. Your rate is exactly what you see on the plan page. The only additional items on your bill are standard TDU pass-through charges set by the grid operator — not us.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>What happens if I cancel my contract early?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">The Flex Plan has no contract and no cancellation fee — cancel anytime. The 12-Month Saver has a $150 early termination fee, and the 24-Month Ultra has a $250 fee. These fees do not apply if you move out of your service address.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>How do I pay my bill?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">You can pay online through your account portal, by phone, or by setting up autopay. We accept all major credit cards, debit cards, and ACH bank transfers. Autopay customers receive a $5/month discount.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>What if there is a power outage?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Power outages are handled by your local TDU (like Oncor or CenterPoint), not your retail electricity provider. Call your TDU directly to report outages. We can provide the right outage number for your area — just contact our support team.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>Is Sunara Energy available in my area?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Sunara Energy serves deregulated electricity areas in Texas. Enter your ZIP code on our homepage or plans page to instantly check availability in your area.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)"><span>How do I contact customer support?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">You can reach us by phone at (800) 555-1234, by email through our contact page, or through your online account portal. Our support team is available Mon–Fri 8am–8pm and Saturday 9am–5pm.</div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Do you offer commercial electricity plans?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Yes. We provide custom commercial electricity solutions for businesses of all sizes. Our commercial rates are tailored to your actual usage, business type, and number of locations. Visit our Commercial page to request a quote.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How does the commercial quote process work?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Simply fill out our commercial quote form with your business details and average monthly bill. A Sunara Energy commercial specialist will contact you within 1 business day to discuss your custom rate options.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">Can you handle multiple business locations?<span class="faq-arrow">+</span></div>
+          <div class="faq-answer">Yes. We offer multi-location billing and account management. All your locations can be managed under a single Sunara Energy account with consolidated reporting.</div>
+        </div>
       </div>
 
     </div>
@@ -107,9 +138,9 @@
   <section class="cta-banner">
     <div class="container">
       <h2>Still Have Questions?</h2>
-      <p>Our Texas-based team is happy to help.</p>
+      <p>Our support team is available Mon–Fri 8am–8pm and Sat 9am–5pm.</p>
       <a href="contact.html" class="btn-gold large" style="margin-right:16px;">Contact Us</a>
-      <a href="tel:8005551234" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">📞 (800) 555-1234</a>
+      <a href="tel:8005551234" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">(800) 555-1234</a>
     </div>
   </section>
 
@@ -117,12 +148,28 @@
     <div class="footer-inner">
       <div class="footer-col brand-col">
         <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
-        <p>Reliable, affordable electricity for Texas homes and businesses.</p>
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
         <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
       </div>
-      <div class="footer-col"><h5>Plans</h5><a href="plans.html">Flex Plan</a><a href="plans.html">12-Month Saver</a><a href="plans.html">24-Month Ultra</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="about.html">Why Sunara</a><a href="contact.html">Contact Us</a></div>
-      <div class="footer-col"><h5>Support</h5><a href="faq.html">FAQs</a><a href="login.html">My Account</a></div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
