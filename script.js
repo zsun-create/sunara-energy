@@ -118,20 +118,20 @@ window.addEventListener('scroll', function() {
 
 // ---- ZIP RATES ----
 const zipRates = {
-  '77': { city: 'Houston Area',         res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
-  '75': { city: 'Dallas Area',          res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
-  '76': { city: 'Fort Worth Area',      res: { flex: '$0.109', saver: '$0.089', ultra: '$0.084' } },
-  '78': { city: 'Central South Area',   res: { flex: '$0.108', saver: '$0.088', ultra: '$0.083' } },
-  '79': { city: 'West Central Area',    res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
-  '73': { city: 'North Central Area',   res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
-  '88': { city: 'Southwest Area',       res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
-  '30': { city: 'Southeast Area',       res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
-  '60': { city: 'Midwest Area',         res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
-  '10': { city: 'Northeast Area',       res: { flex: '$0.115', saver: '$0.095', ultra: '$0.090' } },
-  '90': { city: 'West Coast Area',      res: { flex: '$0.116', saver: '$0.096', ultra: '$0.091' } },
-  '85': { city: 'Southwest Area',       res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
-  '33': { city: 'Southeast Area',       res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
-  '98': { city: 'Pacific Northwest',    res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
+  '77': { city: 'Houston Area',       res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
+  '75': { city: 'Dallas Area',        res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
+  '76': { city: 'Fort Worth Area',    res: { flex: '$0.109', saver: '$0.089', ultra: '$0.084' } },
+  '78': { city: 'Central South Area', res: { flex: '$0.108', saver: '$0.088', ultra: '$0.083' } },
+  '79': { city: 'West Central Area',  res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
+  '73': { city: 'North Central Area', res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
+  '88': { city: 'Southwest Area',     res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
+  '30': { city: 'Southeast Area',     res: { flex: '$0.112', saver: '$0.092', ultra: '$0.087' } },
+  '60': { city: 'Midwest Area',       res: { flex: '$0.110', saver: '$0.090', ultra: '$0.085' } },
+  '10': { city: 'Northeast Area',     res: { flex: '$0.115', saver: '$0.095', ultra: '$0.090' } },
+  '90': { city: 'West Coast Area',    res: { flex: '$0.116', saver: '$0.096', ultra: '$0.091' } },
+  '85': { city: 'Southwest Area',     res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } },
+  '33': { city: 'Southeast Area',     res: { flex: '$0.113', saver: '$0.093', ultra: '$0.088' } },
+  '98': { city: 'Pacific Northwest',  res: { flex: '$0.114', saver: '$0.094', ultra: '$0.089' } },
 };
 
 function getZipInfo(zip) {
@@ -155,9 +155,14 @@ function checkRates() {
     if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit ZIP code.'; errorEl.style.display = 'block'; }
     return;
   }
+
   const info  = getZipInfo(zip);
+
+  // Update badge
   const badge = document.getElementById('zipResultsBadge');
   if (badge) badge.textContent = 'ZIP Code: ' + zip + '  —  ' + info.city;
+
+  // Update rates in results section
   const setEl   = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
   const setHref = (id, h)   => { const el = document.getElementById(id); if (el) el.href = h; };
   setEl('flexRate',    info.res.flex  + '<span>/kWh</span>');
@@ -166,10 +171,42 @@ function checkRates() {
   setHref('flexLink',    'signup.html?plan=flex&zip='    + zip);
   setHref('saver12Link', 'signup.html?plan=12month&zip=' + zip);
   setHref('ultra24Link', 'signup.html?plan=24month&zip=' + zip);
-  const section = document.getElementById('zipResultsSection');
-const overview = document.getElementById('planOverview');
-if (section) { section.style.display = 'block'; setTimeout(() => section.scrollIntoView({ behavior:'smooth', block:'start' }), 50); }
-if (overview) overview.style.display = 'none'; }
+
+  // Update comparison table rates
+  const setTableEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setTableEl('tableFlexRate',    info.res.flex);
+  setTableEl('tableSaverRate',   info.res.saver);
+  setTableEl('tableUltraRate',   info.res.ultra);
+
+  // Hide default overview, show ZIP results
+  const overview   = document.getElementById('planOverview');
+  const results    = document.getElementById('zipResultsSection');
+  const tableDefault = document.getElementById('tableDefault');
+  const tableZip     = document.getElementById('tableZip');
+
+  if (overview)     overview.style.display     = 'none';
+  if (results)      results.style.display      = 'block';
+  if (tableDefault) tableDefault.style.display = 'none';
+  if (tableZip)     tableZip.style.display     = 'block';
+
+  setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ---- RESET ZIP (show defaults again) ----
+function resetZip() {
+  const overview   = document.getElementById('planOverview');
+  const results    = document.getElementById('zipResultsSection');
+  const tableDefault = document.getElementById('tableDefault');
+  const tableZip     = document.getElementById('tableZip');
+
+  if (results)      results.style.display      = 'none';
+  if (overview)     overview.style.display      = 'block';
+  if (tableDefault) tableDefault.style.display  = 'block';
+  if (tableZip)     tableZip.style.display      = 'none';
+
+  const input = document.getElementById('zipInput');
+  if (input) input.value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ---- CHECK RATES HOME (index.html — redirects to residential with ZIP) ----
@@ -188,19 +225,18 @@ function checkRatesHome() {
 
 // ---- DOM READY ----
 document.addEventListener('DOMContentLoaded', function() {
-  const params = new URLSearchParams(window.location.search);
-
-  // Auto-run ZIP check if zip in URL (coming from homepage)
+  const params   = new URLSearchParams(window.location.search);
   const zipParam = params.get('zip');
   const zipInput = document.getElementById('zipInput');
+
   if (zipParam && zipInput) {
     zipInput.value = zipParam;
     checkRates();
   }
 
-  if (zipInput && !zipParam) {
-    zipInput.addEventListener('keydown', e => { if (e.key === 'Enter') { checkRates ? checkRates() : checkRatesHome(); } });
-    zipInput.addEventListener('input', function() { this.value = this.value.replace(/\D/g,''); });
+  if (zipInput) {
+    zipInput.addEventListener('keydown', e => { if (e.key === 'Enter') { if (window.location.pathname.includes('residential')) checkRates(); else checkRatesHome(); } });
+    zipInput.addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
   }
 
   const type = params.get('type') || 'residential';
