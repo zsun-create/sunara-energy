@@ -167,7 +167,9 @@ function checkRates() {
   setHref('saver12Link', 'signup.html?plan=12month&zip=' + zip);
   setHref('ultra24Link', 'signup.html?plan=24month&zip=' + zip);
   const section = document.getElementById('zipResultsSection');
-  if (section) { section.style.display = 'block'; setTimeout(() => section.scrollIntoView({ behavior:'smooth', block:'start' }), 50); }
+const overview = document.getElementById('planOverview');
+if (section) { section.style.display = 'block'; setTimeout(() => section.scrollIntoView({ behavior:'smooth', block:'start' }), 50); }
+if (overview) overview.style.display = 'none'; }
 }
 
 // ---- CHECK RATES HOME (index.html — redirects to residential with ZIP) ----
