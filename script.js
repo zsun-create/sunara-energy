@@ -281,7 +281,7 @@ async function submitSignup() {
   const firstName = document.getElementById('firstName')?.value?.trim();
   const lastName  = document.getElementById('lastName')?.value?.trim();
   const phone     = document.getElementById('phone')?.value?.trim();
-  const dob       = document.getElementById('dob')?.value;
+  const dob = '';
   const address   = document.getElementById('address')?.value?.trim();
   const city      = document.getElementById('city')?.value?.trim();
   const zip       = document.getElementById('zip')?.value?.trim();
