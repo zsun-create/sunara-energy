@@ -7,6 +7,26 @@ const EMAILJS_SERVICE_ID  = 'service_as5x5ok';
 const EMAILJS_TEMPLATE_ID = 'template_zm481zr';
 const EMAILJS_PUBLIC_KEY  = 'EhKjmL0KVGWvwc0MY';
 
+// ---- TOAST NOTIFICATION SYSTEM ----
+let _toastTimer;
+function showToast(type, title, msg) {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  document.getElementById('toastIcon').textContent  = icons[type] || 'ℹ️';
+  document.getElementById('toastTitle').textContent = title;
+  document.getElementById('toastMsg').textContent   = msg;
+  toast.className = 'toast ' + type;
+  void toast.offsetWidth; // force reflow for animation restart
+  toast.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(hideToast, 5000);
+}
+function hideToast() {
+  const toast = document.getElementById('toast');
+  if (toast) toast.classList.remove('show');
+}
+
 // ---- SIGNUP TYPE TOGGLE ----
 function setSignupType(type) {
   const isRes = type === 'residential';
@@ -61,7 +81,8 @@ function checkPasswordStrength(pw) {
   if (/[A-Z]/.test(pw))         s++;
   if (/[0-9]/.test(pw))         s++;
   if (/[^A-Za-z0-9]/.test(pw)) s++;
-  el.textContent = 'Password strength: ' + (['','Weak','Fair','Good','Strong'][s] || '');
+  const labels = ['', 'Weak 🔴', 'Fair 🟡', 'Good 🟢', 'Strong 💪'];
+  el.textContent = pw ? 'Password strength: ' + (labels[s] || '') : '';
 }
 
 // ---- STEP VALIDATION ----
@@ -72,11 +93,19 @@ function validateStep1() {
   const phone  = document.getElementById('phone')?.value?.trim();
   const pw     = document.getElementById('password')?.value;
   const pwConf = document.getElementById('confirmPassword')?.value;
-  const err    = document.getElementById('step1Error');
-  if (!first || !last || !email || !phone || !pw || !pwConf) { err.textContent = 'Please fill in all fields.'; err.style.display = 'block'; return; }
-  if (pw.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
-  if (pw !== pwConf) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
-  err.style.display = 'none';
+
+  if (!first || !last || !email || !phone || !pw || !pwConf) {
+    showToast('error', 'Missing Fields', 'Please fill in all required fields.');
+    return;
+  }
+  if (pw.length < 8) {
+    showToast('error', 'Weak Password', 'Password must be at least 8 characters.');
+    return;
+  }
+  if (pw !== pwConf) {
+    showToast('error', 'Passwords Don\'t Match', 'Please make sure both passwords are identical.');
+    return;
+  }
   goStep(2);
 }
 
@@ -84,9 +113,11 @@ function validateStep2() {
   const address = document.getElementById('address')?.value?.trim();
   const city    = document.getElementById('city')?.value?.trim();
   const zip     = document.getElementById('zip')?.value?.trim();
-  const err     = document.getElementById('step2Error');
-  if (!address || !city || !zip) { err.style.display = 'block'; return; }
-  err.style.display = 'none';
+
+  if (!address || !city || !zip) {
+    showToast('error', 'Missing Address', 'Please fill in all address fields.');
+    return;
+  }
   goStep(3);
 }
 
@@ -135,9 +166,7 @@ const zipRates = {
 };
 
 function getZipInfo(zip) {
-  const prefix2 = zip.substring(0, 2);
-  const prefix1 = zip.substring(0, 1);
-  return zipRates[prefix2] || zipRates[prefix1] || { city: 'Your Area', res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } };
+  return zipRates[zip.substring(0,2)] || zipRates[zip.substring(0,1)] || { city: 'Your Area', res: { flex: '$0.111', saver: '$0.091', ultra: '$0.086' } };
 }
 
 function isValidZip(zip) {
@@ -155,14 +184,9 @@ function checkRates() {
     if (errorEl) { errorEl.textContent = 'Please enter a valid 5-digit ZIP code.'; errorEl.style.display = 'block'; }
     return;
   }
-
   const info  = getZipInfo(zip);
-
-  // Update badge
   const badge = document.getElementById('zipResultsBadge');
   if (badge) badge.textContent = 'ZIP Code: ' + zip + '  —  ' + info.city;
-
-  // Update rates in results section
   const setEl   = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
   const setHref = (id, h)   => { const el = document.getElementById(id); if (el) el.href = h; };
   setEl('flexRate',    info.res.flex  + '<span>/kWh</span>');
@@ -171,45 +195,37 @@ function checkRates() {
   setHref('flexLink',    'signup.html?plan=flex&zip='    + zip);
   setHref('saver12Link', 'signup.html?plan=12month&zip=' + zip);
   setHref('ultra24Link', 'signup.html?plan=24month&zip=' + zip);
-
-  // Update comparison table rates
   const setTableEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  setTableEl('tableFlexRate',    info.res.flex);
-  setTableEl('tableSaverRate',   info.res.saver);
-  setTableEl('tableUltraRate',   info.res.ultra);
-
-  // Hide default overview, show ZIP results
-  const overview   = document.getElementById('planOverview');
-  const results    = document.getElementById('zipResultsSection');
+  setTableEl('tableFlexRate',  info.res.flex);
+  setTableEl('tableSaverRate', info.res.saver);
+  setTableEl('tableUltraRate', info.res.ultra);
+  const overview     = document.getElementById('planOverview');
+  const results      = document.getElementById('zipResultsSection');
   const tableDefault = document.getElementById('tableDefault');
   const tableZip     = document.getElementById('tableZip');
-
   if (overview)     overview.style.display     = 'none';
   if (results)      results.style.display      = 'block';
   if (tableDefault) tableDefault.style.display = 'none';
   if (tableZip)     tableZip.style.display     = 'block';
-
   setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
-// ---- RESET ZIP (show defaults again) ----
+// ---- RESET ZIP ----
 function resetZip() {
-  const overview   = document.getElementById('planOverview');
-  const results    = document.getElementById('zipResultsSection');
+  const overview     = document.getElementById('planOverview');
+  const results      = document.getElementById('zipResultsSection');
   const tableDefault = document.getElementById('tableDefault');
   const tableZip     = document.getElementById('tableZip');
-
   if (results)      results.style.display      = 'none';
   if (overview)     overview.style.display      = 'block';
   if (tableDefault) tableDefault.style.display  = 'block';
   if (tableZip)     tableZip.style.display      = 'none';
-
   const input = document.getElementById('zipInput');
   if (input) input.value = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ---- CHECK RATES HOME (index.html — redirects to residential with ZIP) ----
+// ---- CHECK RATES HOME ----
 function checkRatesHome() {
   const input   = document.getElementById('zipInput');
   const errorEl = document.getElementById('zipError');
@@ -235,7 +251,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (zipInput) {
-    zipInput.addEventListener('keydown', e => { if (e.key === 'Enter') { if (window.location.pathname.includes('residential')) checkRates(); else checkRatesHome(); } });
+    zipInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (window.location.pathname.includes('residential')) checkRates();
+        else checkRatesHome();
+      }
+    });
     zipInput.addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
   }
 
@@ -249,9 +270,32 @@ document.addEventListener('DOMContentLoaded', function() {
   if (pwInput) pwInput.addEventListener('input', function() { checkPasswordStrength(this.value); });
   const startDate = document.getElementById('startDate');
   if (startDate) {
-    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
     startDate.min   = new Date().toISOString().split('T')[0];
     startDate.value = tomorrow.toISOString().split('T')[0];
+  }
+
+  // ---- PERSISTENT LOGIN: Update header nav if logged in ----
+  const token = localStorage.getItem('sunara_token');
+  const user  = localStorage.getItem('sunara_user');
+  if (token && user) {
+    try {
+      const u = JSON.parse(user);
+      // Update "Log In" links to "My Dashboard"
+      document.querySelectorAll('a[href="login.html"]').forEach(el => {
+        if (el.textContent.trim() === 'Log In' || el.classList.contains('btn-outline')) {
+          el.href = 'dashboard.html';
+          el.textContent = 'My Dashboard';
+        }
+      });
+      // Update top bar
+      const topBarLogin = document.querySelector('.top-bar-login');
+      if (topBarLogin) {
+        topBarLogin.href = 'dashboard.html';
+        topBarLogin.textContent = 'My Dashboard →';
+      }
+    } catch (_) {}
   }
 });
 
@@ -270,40 +314,45 @@ function goStep(step) {
 async function submitSignup() {
   const plan  = document.getElementById('planSelect')?.value;
   const terms = document.getElementById('terms')?.checked;
-  const err   = document.getElementById('step3Error');
-  if (!plan || !terms) { err.textContent = 'Please select a plan and accept the terms.'; err.style.display = 'block'; return; }
-  err.style.display = 'none';
+
+  if (!plan) {
+    showToast('error', 'No Plan Selected', 'Please choose a plan before continuing.');
+    return;
+  }
+  if (!terms) {
+    showToast('warning', 'Terms Required', 'Please accept the Terms of Service to continue.');
+    return;
+  }
+
   const btn = document.getElementById('submitBtn');
   if (btn) { btn.disabled = true; btn.textContent = 'Creating Account...'; }
 
-  const email     = document.getElementById('email')?.value?.trim();
-  const password  = document.getElementById('password')?.value;
-  const firstName = document.getElementById('firstName')?.value?.trim();
-  const lastName  = document.getElementById('lastName')?.value?.trim();
-  const phone     = document.getElementById('phone')?.value?.trim();
-  const dob = '';
-  const address   = document.getElementById('address')?.value?.trim();
-  const city      = document.getElementById('city')?.value?.trim();
-  const zip       = document.getElementById('zip')?.value?.trim();
-  const startDate = document.getElementById('startDate')?.value;
+  const email       = document.getElementById('email')?.value?.trim();
+  const password    = document.getElementById('password')?.value;
+  const firstName   = document.getElementById('firstName')?.value?.trim();
+  const lastName    = document.getElementById('lastName')?.value?.trim();
+  const phone       = document.getElementById('phone')?.value?.trim();
+  const address     = document.getElementById('address')?.value?.trim();
+  const city        = document.getElementById('city')?.value?.trim();
+  const zip         = document.getElementById('zip')?.value?.trim();
+  const startDate   = document.getElementById('startDate')?.value;
   const serviceType = document.getElementById('serviceType')?.value;
 
   try {
     const res  = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, password, phone, dateOfBirth: dob, address, city, zip, serviceType, startDate, plan })
+      body: JSON.stringify({ firstName, lastName, email, password, phone, dateOfBirth: '', address, city, zip, serviceType, startDate, plan })
     });
     const data = await res.json();
 
     if (!res.ok) {
-      err.textContent = data.error || 'Signup failed. Please try again.';
-      err.style.display = 'block';
+      showToast('error', 'Signup Failed', data.error || 'Something went wrong. Please try again.');
       if (btn) { btn.disabled = false; btn.textContent = 'Create Account & Submit'; }
       return;
     }
 
-    // Send welcome email via EmailJS
+    // Send welcome email
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         firstName, lastName, company: 'N/A', phone, email,
@@ -312,34 +361,40 @@ async function submitSignup() {
       }, EMAILJS_PUBLIC_KEY);
     } catch (_) {}
 
-    const confirmEmail = document.getElementById('confirmEmail');
-    if (confirmEmail) confirmEmail.textContent = email;
+    // Hide all steps + step indicators
+    [1,2,3].forEach(s => {
+      const el  = document.getElementById('formStep' + s);
+      const ind = document.getElementById('step' + s + 'ind');
+      if (el)  el.style.display = 'none';
+      if (ind) ind.style.display = 'none';
+    });
 
-    // Hide all steps, show only success
-    document.getElementById('formStep3').style.display = 'none';
-    document.getElementById('successBox').style.display = 'block';
-    if (btn) btn.style.display = 'none';
+    // Show success screen
+    const successEl = document.getElementById('signupSuccess');
+    const confirmEl = document.getElementById('confirmEmail');
+    if (confirmEl) confirmEl.textContent = email;
+    if (successEl) successEl.style.display = 'block';
 
-    // Scroll to success message
+    // Scroll to success
     setTimeout(() => {
-      document.getElementById('successBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
 
+    showToast('success', 'Account Created!', 'Welcome to Sunara Energy, ' + firstName + '!');
+
   } catch (e) {
-    err.textContent = 'Something went wrong. Please try again.';
-    err.style.display = 'block';
+    showToast('error', 'Connection Error', 'Something went wrong. Please try again.');
     if (btn) { btn.disabled = false; btn.textContent = 'Create Account & Submit'; }
   }
 }
+
 // ---- SHARED QUOTE SUBMIT ----
-async function sendQuote(fields, bodyId, successId, errorId) {
-  const err = document.getElementById(errorId);
+async function sendQuote(fields, bodyId, successId) {
   const { first, last, company, phone, email, bill, comments, ack } = fields;
   if (!first || !last || !company || !phone || !email || !bill || !ack) {
-    if (err) err.style.display = 'block';
+    showToast('error', 'Missing Fields', 'Please fill in all required fields and check the acknowledgment box.');
     return;
   }
-  if (err) err.style.display = 'none';
   const btn = document.querySelector('#' + bodyId + ' .btn-submit');
   if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
   try {
@@ -359,6 +414,7 @@ async function sendQuote(fields, bodyId, successId, errorId) {
   } catch (_) {}
   document.getElementById(bodyId).style.display    = 'none';
   document.getElementById(successId).style.display = 'block';
+  showToast('success', 'Request Submitted!', 'A specialist will contact you within 1 business day.');
 }
 
 // ---- COMMERCIAL PAGE QUOTE ----
@@ -372,7 +428,7 @@ function submitCommQuote() {
     bill:     document.getElementById('cqBill')?.value,
     comments: document.getElementById('cqComments')?.value?.trim(),
     ack:      document.getElementById('cqAck')?.checked,
-  }, 'commQuoteBody', 'commQuoteSuccess', 'cqError');
+  }, 'commQuoteBody', 'commQuoteSuccess');
 }
 
 // ---- SIGNUP PAGE BUSINESS QUOTE ----
@@ -386,34 +442,33 @@ function submitBizQuote() {
     bill:     document.getElementById('bqBill')?.value,
     comments: document.getElementById('bqComments')?.value?.trim(),
     ack:      document.getElementById('bqAck')?.checked,
-  }, 'bizQuoteBody', 'bizQuoteSuccess', 'bizQuoteError');
+  }, 'bizQuoteBody', 'bizQuoteSuccess');
 }
 
 // ---- CONTACT SUBMIT ----
 function submitContact() {
-  const successEl = document.getElementById('contactSuccess');
-  const errorEl   = document.getElementById('contactError');
-  if (successEl) successEl.style.display = 'none';
-  if (errorEl)   errorEl.style.display   = 'none';
   const first   = document.getElementById('cfirst')?.value?.trim();
   const last    = document.getElementById('clast')?.value?.trim();
   const email   = document.getElementById('cemail')?.value?.trim();
   const message = document.getElementById('cmessage')?.value?.trim();
-  if (!first || !last || !email || !message) { if (errorEl) errorEl.style.display = 'block'; return; }
-  if (successEl) successEl.style.display = 'block';
+  if (!first || !last || !email || !message) {
+    showToast('error', 'Missing Fields', 'Please fill in all required fields.');
+    return;
+  }
+  showToast('success', 'Message Sent!', 'We\'ll get back to you within 1 business day.');
   ['cfirst','clast','cemail','csubject','cmessage'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 }
 
-// ---- LOGIN ----
+// ---- LOGIN (used on login.html — overridden inline there, kept here as fallback) ----
 async function handleLogin() {
   const email    = document.getElementById('lemail')?.value?.trim();
   const password = document.getElementById('lpassword')?.value;
-  const success  = document.getElementById('loginSuccess');
-  const error    = document.getElementById('loginError');
   const btn      = document.getElementById('loginBtn');
-  if (success) success.style.display = 'none';
-  if (error)   error.style.display   = 'none';
-  if (!email || !password) { if (error) { error.textContent = 'Please enter your email and password.'; error.style.display = 'block'; } return; }
+
+  if (!email || !password) {
+    showToast('error', 'Missing Fields', 'Please enter your email and password.');
+    return;
+  }
   if (btn) { btn.disabled = true; btn.textContent = 'Logging in...'; }
   try {
     const res  = await fetch('/api/login', {
@@ -423,15 +478,16 @@ async function handleLogin() {
     });
     const data = await res.json();
     if (!res.ok) {
-      if (error) { error.textContent = data.error || 'Invalid email or password.'; error.style.display = 'block'; }
+      showToast('error', 'Login Failed', data.error || 'Invalid email or password.');
       if (btn) { btn.disabled = false; btn.textContent = 'Log In'; }
       return;
     }
     localStorage.setItem('sunara_token', data.accessToken);
-    localStorage.setItem('sunara_user',  JSON.stringify({ email: data.email, userId: data.userId }));
-    window.location.href = 'dashboard.html';
+    localStorage.setItem('sunara_user', JSON.stringify({ email: data.email, userId: data.userId }));
+    showToast('success', 'Welcome Back!', 'Redirecting to your dashboard...');
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
   } catch (e) {
-    if (error) { error.textContent = 'Something went wrong. Please try again.'; error.style.display = 'block'; }
+    showToast('error', 'Connection Error', 'Something went wrong. Please try again.');
     if (btn) { btn.disabled = false; btn.textContent = 'Log In'; }
   }
 }
