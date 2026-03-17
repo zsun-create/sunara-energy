@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Sunara Energy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body { background: var(--light); }
+    .admin-wrap { max-width:1200px; margin:0 auto; padding:32px 20px; }
+    .admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; flex-wrap:wrap; gap:16px; }
+    .admin-header h1 { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--navy); text-transform:uppercase; }
+    .admin-table { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+    .admin-table th { background:var(--navy); color:white; padding:14px 16px; text-align:left; font-size:12px; text-transform:uppercase; letter-spacing:1px; }
+    .admin-table td { padding:14px 16px; border-bottom:1px solid var(--border); font-size:14px; color:var(--navy); vertical-align:top; }
+    .admin-table tr:last-child td { border-bottom:none; }
+    .admin-table tr:hover td { background:#f8fafc; }
+    .status-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; }
+    .status-pending { background:#fef3c7; color:#92400e; }
+    .status-active { background:#d1fae5; color:#065f46; }
+    .admin-login { max-width:380px; margin:80px auto; background:white; border-radius:16px; padding:36px; box-shadow:var(--shadow); }
+    .admin-login h2 { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:20px; }
+    .stat-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
+    .stat-card { background:white; border-radius:12px; padding:22px; box-shadow:var(--shadow); border-top:4px solid var(--gold); }
+    .stat-card strong { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:var(--navy); display:block; }
+    .stat-card span { font-size:13px; color:var(--gray); font-weight:600; }
+    @media (max-width:768px) { .admin-table { font-size:12px; } .admin-table th, .admin-table td { padding:10px; } }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN LOGIN -->
+  <div id="adminLoginWrap">
+    <div class="admin-login">
+      <h2>Admin Access</h2>
+      <p style="color:var(--gray); font-size:14px; margin-bottom:20px;">Enter your admin key to access the dashboard.</p>
+      <div id="adminLoginError" class="error-box" style="display:none; margin-bottom:16px;">Invalid admin key.</div>
+      <div class="form-group"><label>Admin Key *</label><input type="password" id="adminKeyInput" placeholder="Enter admin key"></div>
+      <button class="btn-submit" onclick="adminLogin()">Access Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="adminDashWrap" style="display:none;">
+    <div style="background:var(--navy); padding:20px 32px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:900; color:white; text-transform:uppercase;">Sunara Energy — Admin</div>
+      <button onclick="adminLogout()" style="background:transparent; border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.7); padding:8px 18px; border-radius:8px; cursor:pointer; font-family:'Barlow',sans-serif; font-size:13px;">Log Out</button>
+    </div>
+
+    <div class="admin-wrap">
+      <div id="adminLoading" style="text-align:center; padding:60px; color:var(--gray);">Loading customers...</div>
+
+      <div id="adminContent" style="display:none;">
+        <div class="stat-cards">
+          <div class="stat-card"><strong id="statTotal">0</strong><span>Total Customers</span></div>
+          <div class="stat-card"><strong id="statPending">0</strong><span>Pending Orders</span></div>
+          <div class="stat-card"><strong id="statActive">0</strong><span>Active Orders</span></div>
+          <div class="stat-card" style="border-color:var(--sky);"><strong id="statToday">0</strong><span>Signups Today</span></div>
+        </div>
+
+        <div class="admin-header">
+          <h1>All Customers</h1>
+          <input type="text" id="adminSearch" placeholder="Search by name or email..." oninput="filterCustomers()" style="padding:10px 16px; border-radius:8px; border:2px solid var(--border); font-family:'Barlow',sans-serif; font-size:14px; width:260px;">
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="adminTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Plan</th>
+                <th>Address</th>
+                <th>ZIP</th>
+                <th>Start Date</th>
+                <th>Status</th>
+                <th>Signed Up</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    let allCustomers = [];
+    let adminKey     = '';
+
+    const planNames = {
+      'flex':    'Flex Plan',
+      '12month': '12-Month Saver',
+      '24month': '24-Month Ultra'
+    };
+
+    function adminLogin() {
+      const key = document.getElementById('adminKeyInput').value.trim();
+      if (!key) return;
+      adminKey = key;
+      loadAdminData();
+    }
+
+    function adminLogout() {
+      adminKey = '';
+      document.getElementById('adminDashWrap').style.display = 'none';
+      document.getElementById('adminLoginWrap').style.display = 'block';
+      document.getElementById('adminKeyInput').value = '';
+    }
+
+    async function loadAdminData() {
+      try {
+        const res  = await fetch('/api/admin', { headers: { 'x-admin-key': adminKey } });
+        const data = await res.json();
+
+        if (!res.ok) {
+          document.getElementById('adminLoginError').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('adminLoginWrap').style.display  = 'none';
+        document.getElementById('adminDashWrap').style.display   = 'block';
+        document.getElementById('adminLoading').style.display    = 'none';
+        document.getElementById('adminContent').style.display    = 'block';
+
+        allCustomers = data.customers || [];
+        renderStats();
+        renderTable(allCustomers);
+
+      } catch (err) {
+        document.getElementById('adminLoginError').style.display = 'block';
+      }
+    }
+
+    function renderStats() {
+      const today = new Date().toDateString();
+      let pending = 0, active = 0, todayCount = 0;
+      allCustomers.forEach(c => {
+        (c.service_orders || []).forEach(o => {
+          if (o.status === 'pending')  pending++;
+          if (o.status === 'active')   active++;
+        });
+        if (new Date(c.created_at).toDateString() === today) todayCount++;
+      });
+      document.getElementById('statTotal').textContent   = allCustomers.length;
+      document.getElementById('statPending').textContent = pending;
+      document.getElementById('statActive').textContent  = active;
+      document.getElementById('statToday').textContent   = todayCount;
+    }
+
+    function renderTable(customers) {
+      const tbody = document.getElementById('adminTableBody');
+      if (!customers.length) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--gray); padding:40px;">No customers yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = customers.map(c => {
+        const orders = c.service_orders || [];
+        if (!orders.length) {
+          return `<tr>
+            <td>${c.first_name} ${c.last_name}</td>
+            <td><a href="mailto:${c.email}" style="color:var(--blue);">${c.email}</a></td>
+            <td>${c.phone || '—'}</td>
+            <td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>—</td>
+            <td>${new Date(c.created_at).toLocaleDateString()}</td>
+          </tr>`;
+        }
+        return orders.map((o, i) => `<tr>
+          <td>${i === 0 ? c.first_name + ' ' + c.last_name : ''}</td>
+          <td>${i === 0 ? `<a href="mailto:${c.email}" style="color:var(--blue);">${c.email}</a>` : ''}</td>
+          <td>${i === 0 ? (c.phone || '—') : ''}</td>
+          <td>${planNames[o.plan] || o.plan}</td>
+          <td>${o.address}, ${o.city}</td>
+          <td>${o.zip}</td>
+          <td>${o.start_date || '—'}</td>
+          <td><span class="status-badge status-${o.status}">${o.status}</span></td>
+          <td>${i === 0 ? new Date(c.created_at).toLocaleDateString() : ''}</td>
+        </tr>`).join('');
+      }).join('');
+    }
+
+    function filterCustomers() {
+      const q = document.getElementById('adminSearch').value.toLowerCase();
+      const filtered = allCustomers.filter(c =>
+        (c.first_name + ' ' + c.last_name).toLowerCase().includes(q) ||
+        c.email.toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    }
+  </script>
+</body>
+</html>
