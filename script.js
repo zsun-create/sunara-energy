@@ -346,6 +346,12 @@ async function submitSignup() {
     });
     const data = await res.json();
 
+    // Save token if returned from signup API
+if (data.accessToken) {
+  localStorage.setItem('sunara_token', data.accessToken);
+  localStorage.setItem('sunara_user', JSON.stringify({ email: data.email || email, userId: data.userId }));
+}
+
     if (!res.ok) {
       showToast('error', 'Signup Failed', data.error || 'Something went wrong. Please try again.');
       if (btn) { btn.disabled = false; btn.textContent = 'Create Account & Submit'; }
