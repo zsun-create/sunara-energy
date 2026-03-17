@@ -48,7 +48,7 @@ function togglePassword(inputId, iconId) {
   const icon  = document.getElementById(iconId);
   if (!input) return;
   input.type = input.type === 'password' ? 'text' : 'password';
-  if (icon) icon.textContent = input.type === 'password' ? '👁' : '🙈';
+  if (icon) icon.textContent = input.type === 'password' ? 'Show' : 'Hide';
 }
 
 // ---- PASSWORD STRENGTH ----
