@@ -18,9 +18,64 @@
       color: var(--blue);
       letter-spacing: 0.5px;
     }
+
+    /* TOAST */
+    .toast {
+      position: fixed; top: 24px; right: 24px; z-index: 9999;
+      min-width: 300px; max-width: 420px; background: white;
+      border-radius: 12px; padding: 16px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      display: flex; align-items: flex-start; gap: 14px;
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      border-left: 4px solid var(--border);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { border-left-color: #10b981; }
+    .toast.error   { border-left-color: #ef4444; }
+    .toast.info    { border-left-color: var(--sky); }
+    .toast-icon  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .toast-body  { flex: 1; }
+    .toast-title { font-weight: 800; font-size: 14px; color: var(--navy); margin-bottom: 3px; }
+    .toast-msg   { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .toast-close { background: none; border: none; cursor: pointer; color: var(--gray); font-size: 18px; padding: 0; line-height: 1; }
+
+    /* INPUT STATES */
+    .form-group input.input-error { border-color: #ef4444 !important; background: #fff5f5; }
+
+    /* SUCCESS SCREEN */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeInUp 0.4s ease;
+    }
+    .success-screen .checkmark {
+      width: 72px; height: 72px; background: #d1fae5;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 36px; margin: 0 auto 20px;
+    }
+    .success-screen h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 900; color: var(--navy);
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .success-screen p { color: var(--gray); font-size: 15px; line-height: 1.7; margin-bottom: 24px; }
+    .success-screen .confirm-email { color: var(--blue); font-weight: 700; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
 <body>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="alert">
+    <div class="toast-icon" id="toastIcon"></div>
+    <div class="toast-body">
+      <div class="toast-title" id="toastTitle"></div>
+      <div class="toast-msg"   id="toastMsg"></div>
+    </div>
+    <button class="toast-close" onclick="hideToast()">×</button>
+  </div>
 
   <div class="top-bar">
     <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
@@ -108,9 +163,7 @@
             </div>
             <div id="passwordStrength" style="margin-top:-10px; margin-bottom:16px; font-size:13px;"></div>
             <div class="form-group"><label>Phone Number *</label><input type="tel" id="phone" placeholder="(555) 000-0000" required></div>
-            
-            <div id="step1Error" class="error-box" style="display:none;">Please fill in all fields. Make sure passwords match and are at least 8 characters.</div>
-            <button class="btn-submit" onclick="validateStep1()">Next: Service Address</button>
+            <button class="btn-submit" onclick="validateStep1()">Next: Service Address →</button>
             <p style="text-align:center; margin-top:16px; font-size:14px; color:var(--gray);">Already have an account? <a href="login.html" style="color:var(--blue); font-weight:700;">Log In</a></p>
           </div>
 
@@ -131,10 +184,9 @@
               </select>
             </div>
             <div class="form-group"><label>Requested Start Date *</label><input type="date" id="startDate" required></div>
-            <div id="step2Error" class="error-box" style="display:none;">Please fill in all address fields.</div>
             <div style="display:flex; gap:12px;">
-              <button class="btn-submit" onclick="goStep(1)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">Back</button>
-              <button class="btn-submit" onclick="validateStep2()" style="flex:1;">Next: Choose Plan</button>
+              <button class="btn-submit" onclick="goStep(1)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">← Back</button>
+              <button class="btn-submit" onclick="validateStep2()" style="flex:1;">Next: Choose Plan →</button>
             </div>
           </div>
 
@@ -171,16 +223,22 @@
               <input type="checkbox" id="terms" style="width:auto; margin-top:3px; flex-shrink:0;">
               <label for="terms" style="font-weight:400; font-size:14px; color:var(--gray);">I agree to the <a href="#" style="color:var(--blue);">Terms of Service</a> and <a href="#" style="color:var(--blue);">Privacy Policy</a>. I authorize Sunara Energy to begin electricity service at my address.</label>
             </div>
-            <div id="step3Error" class="error-box" style="display:none;"></div>
             <div style="display:flex; gap:12px;">
-              <button class="btn-submit" onclick="goStep(2)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">Back</button>
+              <button class="btn-submit" onclick="goStep(2)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">← Back</button>
               <button class="btn-submit" id="submitBtn" onclick="submitSignup()" style="flex:1;">Create Account & Submit</button>
             </div>
-            <div class="success-box" id="successBox" style="display:none;">
-              <strong>Account created and application submitted!</strong><br><br>
-              Welcome to Sunara Energy! Check your email at <strong id="confirmEmail"></strong> for your login details. We will contact you within 1 hour to confirm your start date.<br><br>
-              <a href="dashboard.html" style="color:var(--blue); font-weight:700;">Go to My Dashboard →</a>
-            </div>
+          </div>
+
+          <!-- SUCCESS SCREEN (replaces entire form on success) -->
+          <div class="success-screen" id="signupSuccess">
+            <div class="checkmark">✅</div>
+            <h3>You're All Set!</h3>
+            <p>
+              Welcome to Sunara Energy! We've sent a confirmation to<br>
+              <span class="confirm-email" id="confirmEmail"></span><br><br>
+              Our team will contact you within 1 hour to confirm your start date.
+            </p>
+            <a href="dashboard.html" class="btn-submit" style="display:inline-block; width:auto; padding:14px 32px; text-decoration:none;">Go to My Dashboard →</a>
           </div>
         </div>
 
@@ -188,9 +246,10 @@
         <div id="businessForm" style="display:none;">
           <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Commercial Quote</h2>
           <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A commercial specialist will contact you within 1 business day with a custom rate.</p>
-          <div id="bizQuoteSuccess" style="display:none; background:#d1fae5; border:2px solid #10b981; border-radius:12px; padding:24px; text-align:center; color:#065f46;">
-            <strong style="font-size:20px; display:block; margin-bottom:8px;">Quote Request Submitted!</strong>
-            A Sunara Energy commercial specialist will contact you within 1 business day.
+          <div id="bizQuoteSuccess" style="display:none; text-align:center; padding:40px 20px; animation:fadeInUp 0.4s ease;">
+            <div style="width:72px; height:72px; background:#d1fae5; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 20px;">✅</div>
+            <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:10px;">Quote Request Submitted!</h3>
+            <p style="color:var(--gray); font-size:15px;">A Sunara Energy commercial specialist will contact you within 1 business day.</p>
           </div>
           <div id="bizQuoteBody">
             <div class="form-row">
@@ -223,16 +282,15 @@
               <input type="checkbox" id="bqAck" style="margin-top:3px; flex-shrink:0; width:auto;">
               <label for="bqAck" style="font-size:14px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
             </div>
-            <div id="bizQuoteError" class="error-box" style="display:none;">Please fill in all required fields and check the acknowledgment box.</div>
             <button class="btn-submit" onclick="submitBizQuote()">Request My Custom Quote</button>
           </div>
         </div>
 
         <div class="form-trust" style="margin-top:24px;">
-          <span>Secure & Encrypted</span>
-          <span>Same-Day Available</span>
-          <span>No Deposit Options</span>
-          <span>24/7 Support</span>
+          <span>🔒 Secure & Encrypted</span>
+          <span>⚡ Same-Day Available</span>
+          <span>💰 No Deposit Options</span>
+          <span>📞 24/7 Support</span>
         </div>
       </div>
 
@@ -241,12 +299,12 @@
         <div style="background:var(--navy); color:white; border-radius:14px; padding:28px; margin-bottom:20px;">
           <h4 style="color:var(--gold); font-size:16px; margin-bottom:16px; text-transform:uppercase; letter-spacing:1px;">Why Sunara?</h4>
           <div style="display:flex; flex-direction:column; gap:14px; font-size:14px; line-height:1.5;">
-            <div>No hidden fees ever</div>
-            <div>Same-day service available</div>
-            <div>No deposit required</div>
-            <div>Fixed rates — no surprises</div>
-            <div>Real support team</div>
-            <div>Residential and Commercial plans</div>
+            <div>✓ No hidden fees ever</div>
+            <div>✓ Same-day service available</div>
+            <div>✓ No deposit required</div>
+            <div>✓ Fixed rates — no surprises</div>
+            <div>✓ Real support team</div>
+            <div>✓ Residential and Commercial plans</div>
           </div>
         </div>
         <div style="background:var(--light); border-radius:14px; padding:28px; border:2px solid var(--gold);">
