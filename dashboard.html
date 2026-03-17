@@ -7,6 +7,51 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
   <style>
+    /* TOAST */
+    .toast {
+      position: fixed; top: 24px; right: 24px; z-index: 9999;
+      min-width: 300px; max-width: 420px; background: white;
+      border-radius: 12px; padding: 16px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      display: flex; align-items: flex-start; gap: 14px;
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      border-left: 4px solid var(--border);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { border-left-color: #10b981; }
+    .toast.error   { border-left-color: #ef4444; }
+    .toast.info    { border-left-color: var(--sky); }
+    .toast-icon  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .toast-body  { flex: 1; }
+    .toast-title { font-weight: 800; font-size: 14px; color: var(--navy); margin-bottom: 3px; }
+    .toast-msg   { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .toast-close { background: none; border: none; cursor: pointer; color: var(--gray); font-size: 18px; padding: 0; line-height: 1; flex-shrink: 0; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 8000; display: flex; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: white; border-radius: 18px; padding: 40px;
+      max-width: 480px; width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      transform: translateY(20px);
+      transition: transform 0.25s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal h3 { font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:10px; }
+    .modal p  { color:var(--gray); font-size:14px; line-height:1.6; margin-bottom:24px; }
+    .modal-actions { display:flex; gap:12px; }
+    .btn-danger { background:#ef4444; color:white; border:none; padding:13px 24px; border-radius:8px; font-weight:800; font-size:14px; cursor:pointer; font-family:'Barlow',sans-serif; transition:background 0.2s; }
+    .btn-danger:hover { background:#dc2626; }
+    .btn-cancel { background:var(--light); color:var(--navy); border:2px solid var(--border); padding:13px 24px; border-radius:8px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Barlow',sans-serif; }
+
+    /* DASHBOARD LAYOUT */
     .dash-grid { display:grid; grid-template-columns:280px 1fr; gap:32px; max-width:1100px; margin:40px auto; padding:0 20px; }
     .dash-sidebar { display:flex; flex-direction:column; gap:16px; }
     .dash-card { background:white; border-radius:14px; padding:28px; box-shadow:var(--shadow); }
@@ -16,14 +61,55 @@
     .dash-stat-value { font-size:16px; font-weight:700; color:var(--navy); }
     .plan-badge { display:inline-block; background:var(--navy); color:var(--gold); padding:6px 16px; border-radius:20px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
     .status-badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; text-transform:uppercase; }
-    .status-pending { background:#fef3c7; color:#92400e; }
-    .status-active { background:#d1fae5; color:#065f46; }
-    .status-cancelled { background:#fee2e2; color:#991b1b; }
+    .status-pending  { background:#fef3c7; color:#92400e; }
+    .status-active   { background:#d1fae5; color:#065f46; }
+    .status-cancelled{ background:#fee2e2; color:#991b1b; }
     .dash-loading { text-align:center; padding:60px 20px; color:var(--gray); font-size:16px; }
+
+    /* TABS */
+    .dash-tabs { display:flex; gap:0; margin-bottom:24px; background:var(--light); border-radius:10px; padding:4px; }
+    .dash-tab { flex:1; padding:10px 16px; border:none; background:transparent; border-radius:8px; font-family:'Barlow',sans-serif; font-size:14px; font-weight:700; color:var(--gray); cursor:pointer; transition:all 0.2s; }
+    .dash-tab.active { background:white; color:var(--navy); box-shadow:var(--shadow); }
+    .dash-tab-content { display:none; }
+    .dash-tab-content.active { display:block; }
+
+    /* SETTINGS */
+    .settings-section { margin-bottom:28px; }
+    .settings-section h5 { font-size:13px; font-weight:800; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+    .settings-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--border); }
+    .settings-row:last-child { border-bottom:none; }
+    .settings-label { font-size:14px; font-weight:700; color:var(--navy); }
+    .settings-value { font-size:14px; color:var(--gray); }
+    .settings-danger { background:#fff5f5; border:1px solid #fecaca; border-radius:12px; padding:20px; margin-top:8px; }
+    .settings-danger h5 { color:#dc2626; margin-bottom:8px; }
+    .settings-danger p { font-size:13px; color:#991b1b; margin-bottom:16px; }
+
     @media (max-width:768px) { .dash-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="alert">
+    <div class="toast-icon" id="toastIcon"></div>
+    <div class="toast-body">
+      <div class="toast-title" id="toastTitle"></div>
+      <div class="toast-msg"   id="toastMsg"></div>
+    </div>
+    <button class="toast-close" onclick="hideToast()">×</button>
+  </div>
+
+  <!-- DELETE ACCOUNT MODAL -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <h3>Delete Account</h3>
+      <p>Are you sure you want to permanently delete your Sunara Energy account? This will cancel all active services and cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-danger" id="confirmDeleteBtn" onclick="confirmDeleteAccount()">Yes, Delete My Account</button>
+        <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
 
   <div class="top-bar">
     <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
@@ -93,24 +179,84 @@
 
       <!-- MAIN CONTENT -->
       <div>
-        <div class="dash-card" style="margin-bottom:24px;">
-          <h4>My Service</h4>
-          <div id="dashOrders">
-            <p style="color:var(--gray); font-size:14px;">No service orders found.</p>
+        <!-- TABS -->
+        <div class="dash-tabs">
+          <button class="dash-tab active" onclick="switchTab('service')">My Service</button>
+          <button class="dash-tab" onclick="switchTab('settings')">Account Settings</button>
+        </div>
+
+        <!-- SERVICE TAB -->
+        <div class="dash-tab-content active" id="tab-service">
+          <div class="dash-card" style="margin-bottom:24px;">
+            <h4>My Service Orders</h4>
+            <div id="dashOrders">
+              <p style="color:var(--gray); font-size:14px;">No service orders found.</p>
+            </div>
+          </div>
+          <div class="dash-card">
+            <h4>Quick Actions</h4>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:14px;">
+              <a href="contact.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">Contact Support</a>
+              <a href="residential.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">View All Plans</a>
+              <a href="faq.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">FAQs</a>
+              <a href="#" onclick="handleLogout()" style="display:block; text-align:center; background:#fff5f5; border-radius:10px; padding:18px; color:#991b1b; font-weight:700; font-size:14px; border:2px solid #fecaca;">Log Out</a>
+            </div>
           </div>
         </div>
 
-        <div class="dash-card">
-          <h4>Quick Actions</h4>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:14px;">
-            <a href="contact.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">Contact Support</a>
-            <a href="residential.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">View All Plans</a>
-            <a href="faq.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">FAQs</a>
-            <a href="#" onclick="handleLogout()" style="display:block; text-align:center; background:#fee2e2; border-radius:10px; padding:18px; color:#991b1b; font-weight:700; font-size:14px; border:2px solid #fecaca;">Log Out</a>
+        <!-- SETTINGS TAB -->
+        <div class="dash-tab-content" id="tab-settings">
+          <div class="dash-card">
+            <h4>Account Settings</h4>
+
+            <div class="settings-section">
+              <h5>Personal Information</h5>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Full Name</div>
+                  <div class="settings-value" id="settingsName">—</div>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Email Address</div>
+                  <div class="settings-value" id="settingsEmail">—</div>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Phone Number</div>
+                  <div class="settings-value" id="settingsPhone">—</div>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Member Since</div>
+                  <div class="settings-value" id="settingsSince">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h5>Support</h5>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Need to update your info?</div>
+                  <div class="settings-value">Contact our support team</div>
+                </div>
+                <a href="contact.html" style="background:var(--blue); color:white; padding:9px 18px; border-radius:8px; font-weight:700; font-size:13px; white-space:nowrap;">Contact Us</a>
+              </div>
+            </div>
+
+            <div class="settings-danger">
+              <h5>⚠️ Danger Zone</h5>
+              <p>Permanently delete your account and cancel all services. This action cannot be undone.</p>
+              <button class="btn-danger" onclick="openDeleteModal()">Delete My Account</button>
+            </div>
           </div>
         </div>
+
       </div>
-
     </div>
   </div>
 
@@ -153,6 +299,75 @@
       '24month': '24-Month Ultra'
     };
 
+    // TOAST SYSTEM
+    let toastTimer;
+    function showToast(type, title, msg) {
+      const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+      const toast = document.getElementById('toast');
+      document.getElementById('toastIcon').textContent  = icons[type] || 'ℹ️';
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMsg').textContent   = msg;
+      toast.className = 'toast ' + type;
+      void toast.offsetWidth;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 5000);
+    }
+    function hideToast() {
+      document.getElementById('toast').classList.remove('show');
+    }
+
+    // TABS
+    function switchTab(tab) {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dash-tab-content').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // MODAL
+    function openDeleteModal()  { document.getElementById('deleteModal').classList.add('open'); }
+    function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); }
+
+    // DELETE ACCOUNT
+    async function confirmDeleteAccount() {
+      const btn   = document.getElementById('confirmDeleteBtn');
+      const token = localStorage.getItem('sunara_token');
+      btn.disabled = true;
+      btn.textContent = 'Deleting...';
+
+      try {
+        const res = await fetch('/api/customer', {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (res.ok) {
+          closeDeleteModal();
+          showToast('info', 'Account Deleted', 'Your account has been permanently deleted.');
+          localStorage.removeItem('sunara_token');
+          localStorage.removeItem('sunara_user');
+          setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+        } else {
+          showToast('error', 'Could Not Delete', 'Please contact support to delete your account.');
+          btn.disabled = false;
+          btn.textContent = 'Yes, Delete My Account';
+        }
+      } catch (e) {
+        showToast('error', 'Connection Error', 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Yes, Delete My Account';
+      }
+    }
+
+    // LOGOUT
+    function handleLogout() {
+      localStorage.removeItem('sunara_token');
+      localStorage.removeItem('sunara_user');
+      window.location.href = 'login.html';
+    }
+
+    // LOAD DASHBOARD
     async function loadDashboard() {
       const token = localStorage.getItem('sunara_token');
       if (!token) { window.location.href = 'login.html'; return; }
@@ -165,14 +380,23 @@
 
         const { customer, orders } = data;
 
-        document.getElementById('dashLoading').style.display  = 'none';
-        document.getElementById('dashContent').style.display  = 'block';
-        document.getElementById('dashWelcome').textContent    = 'Welcome back, ' + customer.first_name + '!';
-        document.getElementById('dashName').textContent       = customer.first_name + ' ' + customer.last_name;
-        document.getElementById('dashEmail').textContent      = customer.email;
-        document.getElementById('dashPhone').textContent      = customer.phone || '—';
-        document.getElementById('dashSince').textContent      = new Date(customer.created_at).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        document.getElementById('dashLoading').style.display = 'none';
+        document.getElementById('dashContent').style.display = 'block';
 
+        document.getElementById('dashWelcome').textContent = 'Welcome back, ' + customer.first_name + '!';
+        document.getElementById('dashName').textContent    = customer.first_name + ' ' + customer.last_name;
+        document.getElementById('dashEmail').textContent   = customer.email;
+        document.getElementById('dashPhone').textContent   = customer.phone || '—';
+        const since = new Date(customer.created_at).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        document.getElementById('dashSince').textContent   = since;
+
+        // Settings tab
+        document.getElementById('settingsName').textContent  = customer.first_name + ' ' + customer.last_name;
+        document.getElementById('settingsEmail').textContent = customer.email;
+        document.getElementById('settingsPhone').textContent = customer.phone || '—';
+        document.getElementById('settingsSince').textContent = since;
+
+        // Orders
         const ordersEl = document.getElementById('dashOrders');
         if (!orders || orders.length === 0) {
           ordersEl.innerHTML = '<p style="color:var(--gray); font-size:14px;">No service orders found.</p>';
@@ -180,9 +404,7 @@
           ordersEl.innerHTML = orders.map(o => `
             <div style="background:var(--light); border-radius:12px; padding:24px; margin-bottom:16px; border-left:4px solid var(--gold);">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-                <div>
-                  <div class="plan-badge">${planNames[o.plan] || o.plan}</div>
-                </div>
+                <div class="plan-badge">${planNames[o.plan] || o.plan}</div>
                 <div class="status-badge status-${o.status}">${o.status}</div>
               </div>
               <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px;">
@@ -203,12 +425,6 @@
     function showDashError() {
       document.getElementById('dashLoading').style.display = 'none';
       document.getElementById('dashError').style.display   = 'block';
-    }
-
-    function handleLogout() {
-      localStorage.removeItem('sunara_token');
-      localStorage.removeItem('sunara_user');
-      window.location.href = 'login.html';
     }
 
     loadDashboard();
