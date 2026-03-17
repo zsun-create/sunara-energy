@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard – Sunara Energy</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    .dash-grid { display:grid; grid-template-columns:280px 1fr; gap:32px; max-width:1100px; margin:40px auto; padding:0 20px; }
+    .dash-sidebar { display:flex; flex-direction:column; gap:16px; }
+    .dash-card { background:white; border-radius:14px; padding:28px; box-shadow:var(--shadow); }
+    .dash-card h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:16px; padding-bottom:12px; border-bottom:2px solid var(--border); }
+    .dash-stat { display:flex; flex-direction:column; gap:4px; margin-bottom:16px; }
+    .dash-stat-label { font-size:11px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:1px; }
+    .dash-stat-value { font-size:16px; font-weight:700; color:var(--navy); }
+    .plan-badge { display:inline-block; background:var(--navy); color:var(--gold); padding:6px 16px; border-radius:20px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+    .status-badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; text-transform:uppercase; }
+    .status-pending { background:#fef3c7; color:#92400e; }
+    .status-active { background:#d1fae5; color:#065f46; }
+    .status-cancelled { background:#fee2e2; color:#991b1b; }
+    .dash-loading { text-align:center; padding:60px 20px; color:var(--gray); font-size:16px; }
+    @media (max-width:768px) { .dash-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
+    <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
+    <a href="#" onclick="handleLogout()" class="top-bar-login">Log Out →</a>
+  </div>
+
+  <header id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+      </a>
+      <nav class="main-nav">
+        <a href="residential.html">Residential</a>
+        <a href="commercial.html">Commercial</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" onclick="handleLogout()" class="btn-outline">Log Out</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="residential.html">Residential</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
+
+  <div style="background:var(--navy); padding:40px 20px;">
+    <div style="max-width:1100px; margin:0 auto;">
+      <h1 style="font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:6px;">My Dashboard</h1>
+      <p id="dashWelcome" style="color:rgba(255,255,255,0.65); font-size:16px;">Welcome back!</p>
+    </div>
+  </div>
+
+  <div id="dashLoading" class="dash-loading">Loading your account...</div>
+  <div id="dashError" style="display:none; text-align:center; padding:60px 20px;">
+    <p style="color:var(--gray); font-size:16px; margin-bottom:16px;">Could not load your account. Please log in again.</p>
+    <a href="login.html" class="btn-gold">Go to Login</a>
+  </div>
+
+  <div id="dashContent" style="display:none;">
+    <div class="dash-grid">
+
+      <!-- SIDEBAR -->
+      <div class="dash-sidebar">
+        <div class="dash-card">
+          <h4>My Account</h4>
+          <div class="dash-stat"><div class="dash-stat-label">Name</div><div class="dash-stat-value" id="dashName">—</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Email</div><div class="dash-stat-value" id="dashEmail" style="font-size:14px; word-break:break-all;">—</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Phone</div><div class="dash-stat-value" id="dashPhone">—</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">Member Since</div><div class="dash-stat-value" id="dashSince">—</div></div>
+        </div>
+        <div class="dash-card" style="background:var(--navy);">
+          <h4 style="color:var(--gold); border-color:rgba(255,255,255,0.1);">Need Help?</h4>
+          <p style="color:rgba(255,255,255,0.65); font-size:14px; margin-bottom:16px;">Our support team is here for you.</p>
+          <a href="tel:8005551234" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:11px; border-radius:8px; font-weight:800; font-size:14px;">(800) 555-1234</a>
+          <a href="contact.html" style="display:block; text-align:center; margin-top:10px; color:rgba(255,255,255,0.6); font-size:13px;">Send a Message</a>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div>
+        <div class="dash-card" style="margin-bottom:24px;">
+          <h4>My Service</h4>
+          <div id="dashOrders">
+            <p style="color:var(--gray); font-size:14px;">No service orders found.</p>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h4>Quick Actions</h4>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:14px;">
+            <a href="contact.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">Contact Support</a>
+            <a href="residential.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">View All Plans</a>
+            <a href="faq.html" style="display:block; text-align:center; background:var(--light); border-radius:10px; padding:18px; color:var(--navy); font-weight:700; font-size:14px; border:2px solid var(--border);">FAQs</a>
+            <a href="#" onclick="handleLogout()" style="display:block; text-align:center; background:#fee2e2; border-radius:10px; padding:18px; color:#991b1b; font-weight:700; font-size:14px; border:2px solid #fecaca;">Log Out</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col brand-col">
+        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
+        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+      </div>
+      <div class="footer-col">
+        <h5>Residential</h5>
+        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
+      </div>
+      <div class="footer-col">
+        <h5>Commercial</h5>
+        <a href="commercial.html">Request a Quote</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">My Account</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const planNames = {
+      'flex':    'Flex Plan — Month-to-Month',
+      '12month': '12-Month Saver',
+      '24month': '24-Month Ultra'
+    };
+
+    async function loadDashboard() {
+      const token = localStorage.getItem('sunara_token');
+      if (!token) { window.location.href = 'login.html'; return; }
+
+      try {
+        const res  = await fetch('/api/customer', { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await res.json();
+
+        if (!res.ok) { showDashError(); return; }
+
+        const { customer, orders } = data;
+
+        document.getElementById('dashLoading').style.display  = 'none';
+        document.getElementById('dashContent').style.display  = 'block';
+        document.getElementById('dashWelcome').textContent    = 'Welcome back, ' + customer.first_name + '!';
+        document.getElementById('dashName').textContent       = customer.first_name + ' ' + customer.last_name;
+        document.getElementById('dashEmail').textContent      = customer.email;
+        document.getElementById('dashPhone').textContent      = customer.phone || '—';
+        document.getElementById('dashSince').textContent      = new Date(customer.created_at).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+        const ordersEl = document.getElementById('dashOrders');
+        if (!orders || orders.length === 0) {
+          ordersEl.innerHTML = '<p style="color:var(--gray); font-size:14px;">No service orders found.</p>';
+        } else {
+          ordersEl.innerHTML = orders.map(o => `
+            <div style="background:var(--light); border-radius:12px; padding:24px; margin-bottom:16px; border-left:4px solid var(--gold);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+                <div>
+                  <div class="plan-badge">${planNames[o.plan] || o.plan}</div>
+                </div>
+                <div class="status-badge status-${o.status}">${o.status}</div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px;">
+                <div class="dash-stat"><div class="dash-stat-label">Address</div><div class="dash-stat-value" style="font-size:14px;">${o.address}, ${o.city} ${o.zip}</div></div>
+                <div class="dash-stat"><div class="dash-stat-label">Service Type</div><div class="dash-stat-value">${o.service_type === 'new' ? 'New Service' : 'Switching Provider'}</div></div>
+                <div class="dash-stat"><div class="dash-stat-label">Start Date</div><div class="dash-stat-value">${o.start_date || '—'}</div></div>
+                <div class="dash-stat"><div class="dash-stat-label">Submitted</div><div class="dash-stat-value">${new Date(o.created_at).toLocaleDateString()}</div></div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+      } catch (err) {
+        showDashError();
+      }
+    }
+
+    function showDashError() {
+      document.getElementById('dashLoading').style.display = 'none';
+      document.getElementById('dashError').style.display   = 'block';
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('sunara_token');
+      localStorage.removeItem('sunara_user');
+      window.location.href = 'login.html';
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
