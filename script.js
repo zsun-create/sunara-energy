@@ -271,33 +271,58 @@ async function submitSignup() {
   const plan  = document.getElementById('planSelect')?.value;
   const terms = document.getElementById('terms')?.checked;
   const err   = document.getElementById('step3Error');
-  if (!plan || !terms) { err.style.display = 'block'; return; }
+  if (!plan || !terms) { err.textContent = 'Please select a plan and accept the terms.'; err.style.display = 'block'; return; }
   err.style.display = 'none';
   const btn = document.getElementById('submitBtn');
   if (btn) { btn.disabled = true; btn.textContent = 'Creating Account...'; }
-  const email = document.getElementById('email')?.value?.trim();
+
+  const email     = document.getElementById('email')?.value?.trim();
+  const password  = document.getElementById('password')?.value;
+  const firstName = document.getElementById('firstName')?.value?.trim();
+  const lastName  = document.getElementById('lastName')?.value?.trim();
+  const phone     = document.getElementById('phone')?.value?.trim();
+  const dob       = document.getElementById('dob')?.value;
+  const address   = document.getElementById('address')?.value?.trim();
+  const city      = document.getElementById('city')?.value?.trim();
+  const zip       = document.getElementById('zip')?.value?.trim();
+  const startDate = document.getElementById('startDate')?.value;
+  const serviceType = document.getElementById('serviceType')?.value;
+
   try {
-    await fetch('/api/signup', {
+    const res  = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: document.getElementById('firstName')?.value?.trim(),
-        lastName:  document.getElementById('lastName')?.value?.trim(),
-        email,
-        phone:   document.getElementById('phone')?.value?.trim(),
-        address: document.getElementById('address')?.value?.trim(),
-        city:    document.getElementById('city')?.value?.trim(),
-        zip:     document.getElementById('zip')?.value?.trim(),
-        plan,    type: 'residential'
-      })
+      body: JSON.stringify({ firstName, lastName, email, password, phone, dateOfBirth: dob, address, city, zip, serviceType, startDate, plan })
     });
-  } catch (_) {}
-  const confirmEmail = document.getElementById('confirmEmail');
-  if (confirmEmail) confirmEmail.textContent = email;
-  document.getElementById('successBox').style.display = 'block';
-  if (btn) btn.style.display = 'none';
-}
+    const data = await res.json();
 
+    if (!res.ok) {
+      err.textContent = data.error || 'Signup failed. Please try again.';
+      err.style.display = 'block';
+      if (btn) { btn.disabled = false; btn.textContent = 'Create Account & Submit'; }
+      return;
+    }
+
+    // Send welcome email via EmailJS
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        firstName, lastName, company: 'N/A', phone, email,
+        bill: plan, comments: 'Residential signup — ' + address + ', ' + city + ' ' + zip,
+        time: new Date().toLocaleString()
+      }, EMAILJS_PUBLIC_KEY);
+    } catch (_) {}
+
+    const confirmEmail = document.getElementById('confirmEmail');
+    if (confirmEmail) confirmEmail.textContent = email;
+    document.getElementById('successBox').style.display = 'block';
+    if (btn) btn.style.display = 'none';
+
+  } catch (e) {
+    err.textContent = 'Something went wrong. Please try again.';
+    err.style.display = 'block';
+    if (btn) { btn.disabled = false; btn.textContent = 'Create Account & Submit'; }
+  }
+}
 // ---- SHARED QUOTE SUBMIT ----
 async function sendQuote(fields, bodyId, successId, errorId) {
   const err = document.getElementById(errorId);
@@ -372,15 +397,35 @@ function submitContact() {
 }
 
 // ---- LOGIN ----
-function handleLogin() {
+async function handleLogin() {
   const email    = document.getElementById('lemail')?.value?.trim();
   const password = document.getElementById('lpassword')?.value;
   const success  = document.getElementById('loginSuccess');
   const error    = document.getElementById('loginError');
+  const btn      = document.getElementById('loginBtn');
   if (success) success.style.display = 'none';
   if (error)   error.style.display   = 'none';
-  if (!email || !password) { if (error) error.style.display = 'block'; return; }
-  if (success) { success.textContent = 'Customer portal coming soon! We will email you login details once your account is active.'; success.style.display = 'block'; }
+  if (!email || !password) { if (error) { error.textContent = 'Please enter your email and password.'; error.style.display = 'block'; } return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Logging in...'; }
+  try {
+    const res  = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      if (error) { error.textContent = data.error || 'Invalid email or password.'; error.style.display = 'block'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Log In'; }
+      return;
+    }
+    localStorage.setItem('sunara_token', data.accessToken);
+    localStorage.setItem('sunara_user',  JSON.stringify({ email: data.email, userId: data.userId }));
+    window.location.href = 'dashboard.html';
+  } catch (e) {
+    if (error) { error.textContent = 'Something went wrong. Please try again.'; error.style.display = 'block'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Log In'; }
+  }
 }
 
 // ---- FAQ ----
