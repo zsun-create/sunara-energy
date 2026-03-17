@@ -314,8 +314,16 @@ async function submitSignup() {
 
     const confirmEmail = document.getElementById('confirmEmail');
     if (confirmEmail) confirmEmail.textContent = email;
+
+    // Hide all steps, show only success
+    document.getElementById('formStep3').style.display = 'none';
     document.getElementById('successBox').style.display = 'block';
     if (btn) btn.style.display = 'none';
+
+    // Scroll to success message
+    setTimeout(() => {
+      document.getElementById('successBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
 
   } catch (e) {
     err.textContent = 'Something went wrong. Please try again.';
