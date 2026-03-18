@@ -7,60 +7,83 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 
+
   <style>
-    /* DESKTOP DROPDOWN */
+    /* DROPDOWN NAV */
     .nav-dropdown { position: relative; display: inline-block; }
     .nav-dropdown-toggle {
-      color: var(--navy); font-weight: 600; font-size: 14px;
-      padding: 6px 0; border-bottom: 2px solid transparent;
+      color: var(--navy) !important; font-weight: 600; font-size: 14px;
+      padding: 6px 0; border-bottom: 2px solid transparent !important;
       cursor: pointer; white-space: nowrap;
       transition: color 0.2s, border-color 0.2s;
     }
-    .nav-dropdown-toggle:hover { color: var(--blue); border-color: var(--gold); }
+    .nav-dropdown-toggle:hover { color: var(--blue) !important; border-color: var(--gold) !important; }
     .nav-dropdown-menu {
       display: none;
       position: absolute;
-      top: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%);
+      top: calc(100% + 16px);
+      left: 0;
+      transform: none;
       background: white;
-      border-radius: 14px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      padding: 12px 0;
-      min-width: 200px;
-      z-index: 2000;
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+      padding: 20px 24px;
+      z-index: 9999;
       border: 1px solid var(--border);
+      min-width: 320px;
     }
     .nav-dropdown-menu::before {
       content: '';
       position: absolute;
-      top: -6px; left: 50%;
-      transform: translateX(-50%);
-      width: 12px; height: 12px;
+      top: -7px; left: 40px;
+      transform: rotate(45deg);
+      width: 13px; height: 13px;
       background: white;
       border-left: 1px solid var(--border);
       border-top: 1px solid var(--border);
-      transform: translateX(-50%) rotate(45deg);
+    }
+    .dropdown-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px;
+    }
+    .dropdown-col-title {
+      font-size: 12px; font-weight: 800; color: var(--gray);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 10px; padding-bottom: 6px;
+      border-bottom: 2px solid var(--border);
     }
     .nav-dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--navy);
-      border-bottom: 2px solid transparent !important;
-      transition: background 0.15s, color 0.15s;
+      display: block !important;
+      padding: 7px 0 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: var(--navy) !important;
+      border-bottom: none !important;
+      border-left: none !important;
+      transition: color 0.15s !important;
+      white-space: nowrap;
     }
-    .nav-dropdown-menu a:hover { background: var(--light); color: var(--blue); }
+    .nav-dropdown-menu a:hover { color: var(--blue) !important; padding-left: 4px !important; }
     .nav-dropdown-menu.open { display: block; animation: dropIn 0.2s ease; }
-    @keyframes dropIn { from { opacity:0; transform: translateX(-50%) translateY(-8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+    @keyframes dropIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
 
     /* MOBILE DROPDOWN */
     .mobile-dropdown { display: flex; flex-direction: column; }
-    .mobile-dropdown-toggle { color: white; font-weight: 600; cursor: pointer; }
-    .mobile-dropdown-menu { display: none; flex-direction: column; background: rgba(255,255,255,0.08); border-radius: 8px; margin: 6px 0 6px 12px; padding: 6px 0; }
-    .mobile-dropdown-menu.open { display: flex; }
-    .mobile-dropdown-menu a { color: rgba(255,255,255,0.85) !important; font-size: 14px; padding: 8px 16px; font-weight: 500; }
+    .mobile-dropdown-toggle { color: white !important; font-weight: 600; cursor: pointer; }
+    .mobile-dropdown-menu {
+      display: none; flex-direction: column;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px; margin: 4px 0 4px 12px;
+      padding: 6px 0; columns: 2; column-gap: 0;
+    }
+    .mobile-dropdown-menu.open { display: block; }
+    .mobile-dropdown-menu a {
+      display: block !important;
+      color: rgba(255,255,255,0.85) !important;
+      font-size: 13px !important; padding: 7px 14px !important;
+      font-weight: 500 !important; border-bottom: none !important;
+    }
     .mobile-dropdown-menu a:hover { color: var(--gold) !important; }
   </style>
 </head>
@@ -84,21 +107,29 @@
         <div class="nav-dropdown">
           <a href="areas.html" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">Service Areas ▾</a>
           <div class="nav-dropdown-menu" id="navDropdownMenu">
-            <a href="texas.html">Texas</a>
-            <a href="ohio.html">Ohio</a>
-            <a href="illinois.html">Illinois</a>
-            <a href="pennsylvania.html">Pennsylvania</a>
-            <a href="newjersey.html">New Jersey</a>
-            <a href="maryland.html">Maryland</a>
-            <a href="michigan.html">Michigan</a>
-            <a href="newyork.html">New York</a>
-            <a href="connecticut.html">Connecticut</a>
-            <a href="massachusetts.html">Massachusetts</a>
-            <a href="newhampshire.html">New Hampshire</a>
-            <a href="maine.html">Maine</a>
-            <a href="rhodeisland.html">Rhode Island</a>
-            <a href="delaware.html">Delaware</a>
-            <a href="washingtondc.html">Washington D.C.</a>
+            <div class="dropdown-cols">
+              <div>
+                <div class="dropdown-col-title">Northeast</div>
+                <a href="newyork.html">New York</a>
+                <a href="newjersey.html">New Jersey</a>
+                <a href="pennsylvania.html">Pennsylvania</a>
+                <a href="connecticut.html">Connecticut</a>
+                <a href="massachusetts.html">Massachusetts</a>
+                <a href="rhodeisland.html">Rhode Island</a>
+                <a href="newhampshire.html">New Hampshire</a>
+                <a href="maine.html">Maine</a>
+              </div>
+              <div>
+                <div class="dropdown-col-title">South & Midwest</div>
+                <a href="texas.html">Texas</a>
+                <a href="ohio.html">Ohio</a>
+                <a href="illinois.html">Illinois</a>
+                <a href="maryland.html">Maryland</a>
+                <a href="michigan.html">Michigan</a>
+                <a href="delaware.html">Delaware</a>
+                <a href="washingtondc.html">Washington D.C.</a>
+              </div>
+            </div>
           </div>
         </div>
         <a href="about.html">About</a>
@@ -239,17 +270,18 @@
   <script>
     function toggleDropdown(e) {
       e.preventDefault();
+      e.stopPropagation();
       const menu = document.getElementById('navDropdownMenu');
-      menu.classList.toggle('open');
+      if (menu) menu.classList.toggle('open');
     }
     function toggleMobileDropdown(e) {
       e.preventDefault();
       const menu = document.getElementById('mobileDropdownMenu');
-      menu.classList.toggle('open');
-      const toggle = e.target;
-      toggle.textContent = menu.classList.contains('open') ? 'Service Areas ▴' : 'Service Areas ▾';
+      if (menu) {
+        menu.classList.toggle('open');
+        e.target.textContent = menu.classList.contains('open') ? 'Service Areas ▴' : 'Service Areas ▾';
+      }
     }
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
       const dropdown = document.querySelector('.nav-dropdown');
       const menu = document.getElementById('navDropdownMenu');
