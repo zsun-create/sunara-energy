@@ -218,6 +218,63 @@
       .coming-soon-section { padding: 28px 20px; }
     }
   </style>
+
+  <style>
+    /* DESKTOP DROPDOWN */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-toggle {
+      color: var(--navy); font-weight: 600; font-size: 14px;
+      padding: 6px 0; border-bottom: 2px solid transparent;
+      cursor: pointer; white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-dropdown-toggle:hover { color: var(--blue); border-color: var(--gold); }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      padding: 12px 0;
+      min-width: 200px;
+      z-index: 2000;
+      border: 1px solid var(--border);
+    }
+    .nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 12px; height: 12px;
+      background: white;
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      border-bottom: 2px solid transparent !important;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-dropdown-menu a:hover { background: var(--light); color: var(--blue); }
+    .nav-dropdown-menu.open { display: block; animation: dropIn 0.2s ease; }
+    @keyframes dropIn { from { opacity:0; transform: translateX(-50%) translateY(-8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+
+    /* MOBILE DROPDOWN */
+    .mobile-dropdown { display: flex; flex-direction: column; }
+    .mobile-dropdown-toggle { color: white; font-weight: 600; cursor: pointer; }
+    .mobile-dropdown-menu { display: none; flex-direction: column; background: rgba(255,255,255,0.08); border-radius: 8px; margin: 6px 0 6px 12px; padding: 6px 0; }
+    .mobile-dropdown-menu.open { display: flex; }
+    .mobile-dropdown-menu a { color: rgba(255,255,255,0.85) !important; font-size: 14px; padding: 8px 16px; font-weight: 500; }
+    .mobile-dropdown-menu a:hover { color: var(--gold) !important; }
+  </style>
 </head>
 <body>
 
@@ -236,10 +293,30 @@
       <nav class="main-nav">
         <a href="residential.html">Residential</a>
         <a href="commercial.html">Commercial</a>
-        <a href="areas.html" style="color:var(--blue); border-bottom:2px solid var(--gold);">Service Areas</a>
+        <div class="nav-dropdown">
+          <a href="areas.html" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">Service Areas ▾</a>
+          <div class="nav-dropdown-menu" id="navDropdownMenu">
+            <a href="texas.html">Texas</a>
+            <a href="ohio.html">Ohio</a>
+            <a href="illinois.html">Illinois</a>
+            <a href="pennsylvania.html">Pennsylvania</a>
+            <a href="newjersey.html">New Jersey</a>
+            <a href="maryland.html">Maryland</a>
+            <a href="michigan.html">Michigan</a>
+            <a href="newyork.html">New York</a>
+            <a href="connecticut.html">Connecticut</a>
+            <a href="massachusetts.html">Massachusetts</a>
+            <a href="newhampshire.html">New Hampshire</a>
+            <a href="maine.html">Maine</a>
+            <a href="rhodeisland.html">Rhode Island</a>
+            <a href="delaware.html">Delaware</a>
+            <a href="washingtondc.html">Washington D.C.</a>
+          </div>
+        </div>
         <a href="about.html">About</a>
         <a href="faq.html">FAQs</a>
         <a href="contact.html">Contact</a>
+      
       </nav>
       <div class="header-actions">
         <a href="login.html" class="btn-outline">Log In</a>
@@ -250,7 +327,26 @@
     <div class="mobile-nav" id="mobileNav">
       <a href="residential.html">Residential</a>
       <a href="commercial.html">Commercial</a>
-      <a href="areas.html">Service Areas</a>
+      <div class="mobile-dropdown">
+        <a href="areas.html" onclick="toggleMobileDropdown(event)" class="mobile-dropdown-toggle">Service Areas ▾</a>
+        <div class="mobile-dropdown-menu" id="mobileDropdownMenu">
+          <a href="texas.html">Texas</a>
+          <a href="ohio.html">Ohio</a>
+          <a href="illinois.html">Illinois</a>
+          <a href="pennsylvania.html">Pennsylvania</a>
+          <a href="newjersey.html">New Jersey</a>
+          <a href="maryland.html">Maryland</a>
+          <a href="michigan.html">Michigan</a>
+          <a href="newyork.html">New York</a>
+          <a href="connecticut.html">Connecticut</a>
+          <a href="massachusetts.html">Massachusetts</a>
+          <a href="newhampshire.html">New Hampshire</a>
+          <a href="maine.html">Maine</a>
+          <a href="rhodeisland.html">Rhode Island</a>
+          <a href="delaware.html">Delaware</a>
+          <a href="washingtondc.html">Washington D.C.</a>
+        </div>
+      </div>
       <a href="about.html">About</a>
       <a href="faq.html">FAQs</a>
       <a href="contact.html">Contact</a>
@@ -655,6 +751,29 @@
     // Allow Enter key on ZIP
     document.getElementById('areaZip').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkAreaZip();
+    });
+  </script>
+
+  <script>
+    function toggleDropdown(e) {
+      e.preventDefault();
+      const menu = document.getElementById('navDropdownMenu');
+      menu.classList.toggle('open');
+    }
+    function toggleMobileDropdown(e) {
+      e.preventDefault();
+      const menu = document.getElementById('mobileDropdownMenu');
+      menu.classList.toggle('open');
+      const toggle = e.target;
+      toggle.textContent = menu.classList.contains('open') ? 'Service Areas ▴' : 'Service Areas ▾';
+    }
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.querySelector('.nav-dropdown');
+      const menu = document.getElementById('navDropdownMenu');
+      if (dropdown && menu && !dropdown.contains(e.target)) {
+        menu.classList.remove('open');
+      }
     });
   </script>
 </body>
