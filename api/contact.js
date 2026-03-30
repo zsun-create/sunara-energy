@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     });
 
     return res.status(200).json({
-      message: 'Message received! We will respond within 1 business day.',
+      message: 'Message received! We will respond within 2–3 business days.',
       success: true
     });
 
