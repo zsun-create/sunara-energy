@@ -21,6 +21,11 @@
     .status-active { background:#d1fae5; color:#065f46; }
     .admin-login { max-width:380px; margin:80px auto; background:white; border-radius:16px; padding:36px; box-shadow:var(--shadow); }
     .admin-login h2 { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:20px; }
+
+    .contract-card { background:var(--light); border-radius:10px; padding:20px; border:2px solid var(--border); }
+    .contract-upload-btn { display:inline-block; background:var(--blue); color:white; padding:8px 16px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; transition:background 0.2s; }
+    .contract-upload-btn:hover { background:var(--navy); }
+
     .stat-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
     .stat-card { background:white; border-radius:12px; padding:22px; box-shadow:var(--shadow); border-top:4px solid var(--gold); }
     .stat-card strong { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; color:var(--navy); display:block; }
@@ -57,6 +62,33 @@
           <div class="stat-card"><strong id="statPending">0</strong><span>Pending Orders</span></div>
           <div class="stat-card"><strong id="statActive">0</strong><span>Active Orders</span></div>
           <div class="stat-card" style="border-color:var(--sky);"><strong id="statToday">0</strong><span>Signups Today</span></div>
+        </div>
+
+        
+        <!-- CONTRACT UPLOAD SECTION -->
+        <div style="background:white; border-radius:14px; padding:28px; box-shadow:var(--shadow); margin-bottom:28px;">
+          <h4 style="font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px; padding-bottom:12px; border-bottom:2px solid var(--border);">📄 Contract Management</h4>
+          <p style="color:var(--gray); font-size:14px; margin-bottom:20px;">Upload PDF contracts for each plan. Customers will see a "View Contract" button in their dashboard.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div id="contractCard6month" class="contract-card">
+              <div style="font-weight:800; color:var(--navy); margin-bottom:6px;">6-Month Plan</div>
+              <div id="contractStatus6month" style="font-size:13px; color:var(--gray); margin-bottom:12px;">No contract uploaded</div>
+              <label class="contract-upload-btn">
+                📁 Upload PDF
+                <input type="file" accept=".pdf" onchange="uploadContract('6month', this)" style="display:none;">
+              </label>
+              <button onclick="deleteContract('6month')" id="deleteBtn6month" style="display:none; margin-left:8px; background:#fee2e2; color:#991b1b; border:none; padding:8px 14px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">Remove</button>
+            </div>
+            <div id="contractCard12month" class="contract-card">
+              <div style="font-weight:800; color:var(--navy); margin-bottom:6px;">12-Month Saver</div>
+              <div id="contractStatus12month" style="font-size:13px; color:var(--gray); margin-bottom:12px;">No contract uploaded</div>
+              <label class="contract-upload-btn">
+                📁 Upload PDF
+                <input type="file" accept=".pdf" onchange="uploadContract('12month', this)" style="display:none;">
+              </label>
+              <button onclick="deleteContract('12month')" id="deleteBtn12month" style="display:none; margin-left:8px; background:#fee2e2; color:#991b1b; border:none; padding:8px 14px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">Remove</button>
+            </div>
+          </div>
         </div>
 
         <div class="admin-header">
@@ -191,6 +223,62 @@
       );
       renderTable(filtered);
     }
+
+    // CONTRACT MANAGEMENT
+    async function checkContracts() {
+      for (const plan of ['6month', '12month']) {
+        const url = `https://qsxuvuzqfyownqiegkox.supabase.co/storage/v1/object/public/contracts/contracts/${plan}.pdf`;
+        try {
+          const r = await fetch(url, { method: 'HEAD' });
+          if (r.ok) {
+            document.getElementById(`contractStatus${plan}`).innerHTML = `<a href="${url}" target="_blank" style="color:var(--blue); font-weight:700;">✅ Contract uploaded — View PDF</a>`;
+            document.getElementById(`deleteBtn${plan}`).style.display = 'inline-block';
+          }
+        } catch(_) {}
+      }
+    }
+
+    async function uploadContract(plan, input) {
+      const file = input.files[0];
+      if (!file) return;
+      const statusEl = document.getElementById(`contractStatus${plan}`);
+      statusEl.textContent = 'Uploading...';
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const base64 = e.target.result.split(',')[1];
+        try {
+          const res = await fetch('/api/admin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+            body: JSON.stringify({ plan, fileName: file.name, fileBase64: base64 })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            statusEl.innerHTML = `<a href="${data.url}" target="_blank" style="color:var(--blue); font-weight:700;">✅ Uploaded — View PDF</a>`;
+            document.getElementById(`deleteBtn${plan}`).style.display = 'inline-block';
+          } else {
+            statusEl.textContent = 'Upload failed: ' + (data.error || 'Unknown error');
+          }
+        } catch(err) {
+          statusEl.textContent = 'Upload failed: ' + err.message;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function deleteContract(plan) {
+      if (!confirm('Remove this contract?')) return;
+      const res = await fetch('/api/admin', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+        body: JSON.stringify({ plan })
+      });
+      if (res.ok) {
+        document.getElementById(`contractStatus${plan}`).textContent = 'No contract uploaded';
+        document.getElementById(`deleteBtn${plan}`).style.display = 'none';
+      }
+    }
+
   </script>
 </body>
 </html>

@@ -379,9 +379,8 @@
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
-        <a href="residential.html">Flex Plan</a>
+        <a href="residential.html">6-Month Plan</a>
         <a href="residential.html">12-Month Saver</a>
-        <a href="residential.html">24-Month Ultra</a>
       </div>
       <div class="footer-col">
         <h5>Commercial</h5>
@@ -404,9 +403,8 @@
   <script src="script.js"></script>
   <script>
     const planNames = {
-      'flex':    'Flex Plan — Month-to-Month',
-      '12month': '12-Month Saver',
-      '24month': '24-Month Ultra'
+      '6month':  '6-Month Plan',
+      '12month': '12-Month Saver'
     };
 
     // TOAST SYSTEM
@@ -523,6 +521,7 @@
                 <div class="dash-stat"><div class="dash-stat-label">Start Date</div><div class="dash-stat-value">${o.start_date || '—'}</div></div>
                 <div class="dash-stat"><div class="dash-stat-label">Submitted</div><div class="dash-stat-value">${new Date(o.created_at).toLocaleDateString()}</div></div>
               </div>
+              ${o.contractUrl ? `<div style="margin-top:16px;"><a href="${o.contractUrl}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:var(--navy); color:white; padding:10px 20px; border-radius:8px; font-weight:700; font-size:13px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='var(--blue)'" onmouseout="this.style.background='var(--navy)'">📄 View My Contract</a></div>` : '<div style="margin-top:12px; font-size:13px; color:var(--gray);">Contract not yet available — contact support.</div>'}
             </div>
           `).join('');
         }

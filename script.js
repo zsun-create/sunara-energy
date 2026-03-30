@@ -42,9 +42,8 @@ function setSignupType(type) {
 
 // ---- PLAN DETAIL CARD ----
 const allPlans = [
-  { value: 'flex',    name: 'Flex Plan',      rate: '$0.11/kWh',  desc: 'No contract, cancel anytime. Best for flexibility.' },
-  { value: '12month', name: '12-Month Saver', rate: '$0.09/kWh',  desc: 'Fixed rate for 12 months. Save up to 18% vs. month-to-month.' },
-  { value: '24month', name: '24-Month Ultra', rate: '$0.085/kWh', desc: 'Lowest rate guaranteed for 2 full years.' },
+  { value: '6month',  name: '6-Month Plan',   rate: '$0.10/kWh',  desc: 'Short-term fixed rate. Great for flexibility with savings.' },
+  { value: '12month', name: '12-Month Saver', rate: '$0.09/kWh',  desc: 'Fixed rate for 12 months. Save up to 10% vs. 6-month plan.' },
 ];
 
 function onPlanChange() {
