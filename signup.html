@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Start Service – Sunara Energy</title>
+  <title>Start Service – Sunara Power</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -158,7 +158,6 @@
   </div>
 
   <div class="top-bar">
-    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
     <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
     <a href="login.html" class="top-bar-login">My Account →</a>
   </div>
@@ -166,8 +165,8 @@
   <header id="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
-        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+        <img src="logo.png" alt="Sunara Power" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>POWER</em></span>
       </a>
       <nav class="main-nav">
         <a href="residential.html">Residential</a>
@@ -330,7 +329,7 @@
             </div>
             <div class="form-group" style="flex-direction:row; align-items:flex-start; gap:12px;">
               <input type="checkbox" id="terms" style="width:auto; margin-top:3px; flex-shrink:0;">
-              <label for="terms" style="font-weight:400; font-size:14px; color:var(--gray);">I agree to the <a href="#" style="color:var(--blue);">Terms of Service</a> and <a href="#" style="color:var(--blue);">Privacy Policy</a>. I authorize Sunara Energy to begin electricity service at my address.</label>
+              <label for="terms" style="font-weight:400; font-size:14px; color:var(--gray);">I agree to the <a href="#" style="color:var(--blue);">Terms of Service</a> and <a href="#" style="color:var(--blue);">Privacy Policy</a>. I authorize Sunara Power to begin electricity service at my address.</label>
             </div>
             <div style="display:flex; gap:12px;">
               <button class="btn-submit" onclick="goStep(2)" style="background:var(--light); color:var(--navy); border:2px solid var(--border); width:auto; padding:14px 24px; flex-shrink:0;">← Back</button>
@@ -343,7 +342,7 @@
             <div class="checkmark">✅</div>
             <h3>You're All Set!</h3>
             <p>
-              Welcome to Sunara Energy! We've sent a confirmation to<br>
+              Welcome to Sunara Power! We've sent a confirmation to<br>
               <span class="confirm-email" id="confirmEmail"></span><br><br>
               Our team will contact you within 1 hour to confirm your start date.
             </p>
@@ -354,11 +353,11 @@
         <!-- BUSINESS QUOTE FORM -->
         <div id="businessForm" style="display:none;">
           <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:6px;">Request a Commercial Quote</h2>
-          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A commercial specialist will contact you within 1 business day with a custom rate.</p>
+          <p style="color:var(--gray); font-size:14px; margin-bottom:24px;">A commercial specialist will contact you within 2–3 business days with a custom rate.</p>
           <div id="bizQuoteSuccess" style="display:none; text-align:center; padding:40px 20px; animation:fadeInUp 0.4s ease;">
             <div style="width:72px; height:72px; background:#d1fae5; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 20px;">✅</div>
             <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:10px;">Quote Request Submitted!</h3>
-            <p style="color:var(--gray); font-size:15px;">A Sunara Energy commercial specialist will contact you within 1 business day.</p>
+            <p style="color:var(--gray); font-size:15px;">A Sunara Power commercial specialist will contact you within 2–3 business days.</p>
           </div>
           <div id="bizQuoteBody">
             <div class="form-row">
@@ -385,11 +384,11 @@
               <textarea id="bqComments" placeholder="Tell us about your business, number of locations, or any specific needs..." style="min-height:100px;"></textarea>
             </div>
             <div style="background:var(--light); border-radius:10px; padding:16px 20px; font-size:13px; color:var(--gray); line-height:1.7; margin:20px 0;">
-              Sunara Energy is a licensed Retail Electric Provider. By submitting this form, you authorize Sunara Energy to contact you to discuss commercial electric service offers.
+              Sunara Power is a licensed Retail Electric Provider. By submitting this form, you authorize Sunara Power to contact you to discuss commercial electric service offers.
             </div>
             <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:20px;">
               <input type="checkbox" id="bqAck" style="margin-top:3px; flex-shrink:0; width:auto;">
-              <label for="bqAck" style="font-size:14px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Energy commercial representative will contact me regarding commercial electricity.</label>
+              <label for="bqAck" style="font-size:14px; color:var(--navy); font-weight:600;">I acknowledge that a Sunara Power commercial representative will contact me regarding commercial electricity.</label>
             </div>
             <button class="btn-submit" onclick="submitBizQuote()">Request My Custom Quote</button>
           </div>
@@ -414,7 +413,7 @@
         <div style="background:var(--light); border-radius:14px; padding:28px; border:2px solid var(--gold);">
           <h4 style="color:var(--navy); font-size:15px; font-weight:800; margin-bottom:10px;">Need Help?</h4>
           <p style="font-size:14px; color:var(--gray); margin-bottom:14px;">Our team is ready to help you choose the right plan.</p>
-          <a href="tel:8005551234" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:12px; border-radius:8px; font-weight:800; font-size:15px;">(800) 555-1234</a>
+          
           <p style="font-size:12px; color:var(--gray); text-align:center; margin-top:10px;">Mon–Fri 8am–8pm · Sat 9am–5pm</p>
         </div>
       </div>
@@ -425,9 +424,9 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-col brand-col">
-        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Sunara Power" class="footer-logo" onerror="this.style.display='none'">
         <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
-        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+        
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
@@ -449,7 +448,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>© 2026 Sunara Power. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </footer>
 

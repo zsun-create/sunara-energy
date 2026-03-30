@@ -37,7 +37,7 @@ function setSignupType(type) {
   const title = document.getElementById('signupHeroTitle');
   const sub   = document.getElementById('signupHeroSub');
   if (title) title.textContent = isRes ? 'Start Your Residential Service' : 'Request a Commercial Quote';
-  if (sub)   sub.textContent   = isRes ? 'Create your account and get power turned on fast.' : 'Fill out the form and a specialist will contact you within 1 business day.';
+  if (sub)   sub.textContent   = isRes ? 'Create your account and get power turned on fast.' : 'Fill out the form and a specialist will contact you within 2–3 business days.';
 }
 
 // ---- PLAN DETAIL CARD ----
@@ -385,7 +385,7 @@ if (data.accessToken) {
       if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
 
-    showToast('success', 'Account Created!', 'Welcome to Sunara Energy, ' + firstName + '!');
+    showToast('success', 'Account Created!', 'Welcome to Sunara Power, ' + firstName + '!');
 
   } catch (e) {
     showToast('error', 'Connection Error', 'Something went wrong. Please try again.');
@@ -419,7 +419,7 @@ async function sendQuote(fields, bodyId, successId) {
   } catch (_) {}
   document.getElementById(bodyId).style.display    = 'none';
   document.getElementById(successId).style.display = 'block';
-  showToast('success', 'Request Submitted!', 'A specialist will contact you within 1 business day.');
+  showToast('success', 'Request Submitted!', 'A specialist will contact you within 2–3 business days.');
 }
 
 // ---- COMMERCIAL PAGE QUOTE ----
@@ -460,7 +460,7 @@ function submitContact() {
     showToast('error', 'Missing Fields', 'Please fill in all required fields.');
     return;
   }
-  showToast('success', 'Message Sent!', 'We\'ll get back to you within 1 business day.');
+  showToast('success', 'Message Sent!', 'We\'ll get back to you within 2–3 business days.');
   ['cfirst','clast','cemail','csubject','cmessage'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 }
 

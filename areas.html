@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Areas – Sunara Energy</title>
+  <title>Service Areas – Sunara Power</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
   <style>
@@ -302,7 +302,6 @@
 <body>
 
   <div class="top-bar">
-    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
     <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
     <a href="login.html" class="top-bar-login">My Account →</a>
   </div>
@@ -310,8 +309,8 @@
   <header id="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
-        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+        <img src="logo.png" alt="Sunara Power" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>POWER</em></span>
       </a>
       <nav class="main-nav">
         <a href="residential.html">Residential</a>
@@ -387,7 +386,7 @@
 
   <section class="page-hero" style="padding:60px 20px;">
     <h1>Service Areas</h1>
-    <p>Sunara Energy serves deregulated energy markets across the United States. Check if we're available in your area.</p>
+    <p>Sunara Power serves deregulated energy markets across the United States. Check if we're available in your area.</p>
   </section>
 
   <section style="background:var(--light); padding:80px 20px;">
@@ -396,7 +395,7 @@
       <!-- ZIP CHECKER -->
       <div class="zip-check-section">
         <h2>Check Your Address</h2>
-        <p>Enter your ZIP code to instantly see if Sunara Energy is available at your location.</p>
+        <p>Enter your ZIP code to instantly see if Sunara Power is available at your location.</p>
         <div class="zip-inline">
           <input type="text" id="areaZip" placeholder="Enter ZIP code" maxlength="5" oninput="this.value=this.value.replace(/\D/g,'')">
           <button onclick="checkAreaZip()">Check Availability</button>
@@ -640,7 +639,7 @@
       <!-- COMING SOON -->
       <div class="coming-soon-section">
         <h3>🚀 Expanding Soon</h3>
-        <p style="color:var(--gray); font-size:15px; margin-bottom:24px;">We're actively working to bring Sunara Energy to more deregulated markets.</p>
+        <p style="color:var(--gray); font-size:15px; margin-bottom:24px;">We're actively working to bring Sunara Power to more deregulated markets.</p>
         <div class="coming-states">
           <span class="coming-tag">Montana</span>
           <span class="coming-tag">Oregon</span>
@@ -664,22 +663,22 @@
   <!-- CTA BANNER -->
   <div class="cta-banner">
     <h2>Ready to Switch?</h2>
-    <p>Join thousands of customers saving with Sunara Energy. No hidden fees, ever.</p>
+    <p>Join thousands of customers saving with Sunara Power. No hidden fees, ever.</p>
     <a href="signup.html" class="btn-gold large" style="display:inline-block;">Start Your Service Today</a>
   </div>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-col brand-col">
-        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Sunara Power" class="footer-logo" onerror="this.style.display='none'">
         <p>Reliable, affordable electricity for homes and businesses in deregulated energy markets.</p>
-        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+        
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
-        <a href="residential.html">Flex Plan</a>
+        
         <a href="residential.html">12-Month Saver</a>
-        <a href="residential.html">24-Month Ultra</a>
+        
         <a href="signup.html">Sign Up</a>
       </div>
       <div class="footer-col">
@@ -697,7 +696,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>© 2026 Sunara Power. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </footer>
 
@@ -772,7 +771,7 @@
       const state = deregulatedZips[prefix2] || deregulatedZips[prefix1];
       if (state) {
         result.className = 'available';
-        result.innerHTML = '✅ Great news! Sunara Energy is available in <strong>' + (stateNames[state] || state) + '</strong>. <a href="signup.html?zip=' + zip + '" style="color:var(--gold); font-weight:800; text-decoration:underline;">Start Service →</a>';
+        result.innerHTML = '✅ Great news! Sunara Power is available in <strong>' + (stateNames[state] || state) + '</strong>. <a href="signup.html?zip=' + zip + '" style="color:var(--gold); font-weight:800; text-decoration:underline;">Start Service →</a>';
       } else {
         result.className = 'unavailable';
         result.innerHTML = '❌ We\'re not in your area yet. <a href="contact.html" style="color:#fca5a5; font-weight:800; text-decoration:underline;">Get notified when we expand →</a>';

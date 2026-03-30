@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sunara Energy – Energy Without Limits</title>
-  <meta name="description" content="Sunara Energy — affordable, reliable electricity for homes and businesses nationwide. No hidden fees, no surprises.">
+  <title>Sunara Power – Energy Without Limits</title>
+  <meta name="description" content="Sunara Power — affordable, reliable electricity for homes and businesses nationwide. No hidden fees, no surprises.">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
@@ -93,7 +93,6 @@
 <body>
 
   <div class="top-bar">
-    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
     <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
     <a href="login.html" class="top-bar-login">My Account →</a>
   </div>
@@ -101,8 +100,8 @@
   <header id="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
-        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+        <img src="logo.png" alt="Sunara Power" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>POWER</em></span>
       </a>
       <nav class="main-nav">
         <a href="residential.html">Residential</a>
@@ -206,7 +205,6 @@
   <!-- STATS STRIP -->
   <div class="stats-strip">
     <div class="stat"><strong>50,000+</strong><span>Customers Served</span></div>
-    <div class="stat"><strong>4.8 Stars</strong><span>Average Rating</span></div>
     <div class="stat"><strong>No Deposit</strong><span>Options Available</span></div>
     <div class="stat"><strong>24/7</strong><span>Customer Support</span></div>
   </div>
@@ -216,7 +214,7 @@
     <div class="container">
       <div class="section-header">
         <h2>Who We Serve</h2>
-        <p>Whether you're powering a home or running a business — Sunara Energy has the right solution.</p>
+        <p>Whether you're powering a home or running a business — Sunara Power has the right solution.</p>
       </div>
       <div class="two-col-grid">
         <div style="background:var(--light); border-radius:16px; padding:36px; border-top:4px solid var(--sky);">
@@ -232,7 +230,7 @@
         </div>
         <div style="background:var(--navy); border-radius:16px; padding:36px; border-top:4px solid var(--gold);">
           <h3 style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:white; text-transform:uppercase; margin-bottom:12px;">Commercial</h3>
-          <p style="color:rgba(255,255,255,0.75); font-size:15px; line-height:1.8; margin-bottom:20px;">From small storefronts to large operations — Sunara Energy builds a custom plan around your usage and budget.</p>
+          <p style="color:rgba(255,255,255,0.75); font-size:15px; line-height:1.8; margin-bottom:20px;">From small storefronts to large operations — Sunara Power builds a custom plan around your usage and budget.</p>
           <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:24px;">
             <li style="font-size:14px; color:rgba(255,255,255,0.85);">Custom rates for all business sizes</li>
             <li style="font-size:14px; color:rgba(255,255,255,0.85);">Dedicated business support team</li>
@@ -284,30 +282,47 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="section reviews-section">
+
+  <!-- RESIDENTIAL PLANS OVERVIEW -->
+  <section class="section" style="background:var(--light);">
     <div class="container">
       <div class="section-header">
-        <h2>What Our Customers Say</h2>
-        <div class="overall-rating">4.8 / 5 based on 2,400+ reviews</div>
+        <h2>Our Residential Plans</h2>
+        <p>Two simple options — enter your ZIP code to see exact rates for your area.</p>
       </div>
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"Switched from my old provider and my bill dropped by $40 the first month. The signup was so easy and I had power the same day."</p>
-          <div class="reviewer">— Maria T. &nbsp;·&nbsp; Residential Customer</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:760px; margin:0 auto;">
+        <div class="plan-card">
+          <div class="plan-tag">Short-Term</div>
+          <h3>6-Month Plan</h3>
+          <div style="font-size:15px; font-weight:700; color:var(--gray); margin-bottom:8px; padding:10px 0;">Enter ZIP for Rate</div>
+          <p class="plan-term">6-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li>Fixed rate for 6 months</li>
+            <li>Great short-term savings</li>
+            <li>No deposit required</li>
+            <li>Online account access</li>
+            <li>Daily usage alerts</li>
+            <li>24/7 customer support</li>
+          </ul>
+          <a href="residential.html" class="btn-plan">View Plan</a>
         </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"No hidden fees, no surprise charges. My rate has stayed exactly the same for 8 months. Customer service actually picks up the phone."</p>
-          <div class="reviewer">— James R. &nbsp;·&nbsp; Residential Customer</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"We run 3 locations and Sunara handles all of them on one account. The custom commercial rate saved us over $300 a month."</p>
-          <div class="reviewer">— Linda K. &nbsp;·&nbsp; Commercial Customer</div>
+        <div class="plan-card featured">
+          <div class="plan-tag best">Most Popular</div>
+          <h3>12-Month Saver</h3>
+          <div style="font-size:15px; font-weight:700; color:var(--gray); margin-bottom:8px; padding:10px 0;">Enter ZIP for Rate</div>
+          <p class="plan-term">12-Month Fixed Rate</p>
+          <ul class="plan-features">
+            <li>Locked-in rate, no surprises</li>
+            <li>Save vs. 6-month plan</li>
+            <li>Free daily usage alerts</li>
+            <li>Priority customer support</li>
+            <li>Automatic payment options</li>
+            <li>Early termination: $150 fee</li>
+          </ul>
+          <a href="residential.html" class="btn-plan gold">View Plan</a>
         </div>
       </div>
+      <p style="text-align:center; margin-top:28px; font-size:13px; color:var(--gray);">Rates vary by area. <a href="residential.html" style="color:var(--blue); font-weight:700;">Enter your ZIP on the residential page</a> to see your exact rate.</p>
     </div>
   </section>
 
@@ -315,7 +330,7 @@
   <section class="cta-banner">
     <div class="container">
       <h2>Ready to Start Saving?</h2>
-      <p>Join thousands of homes and businesses that switched to Sunara Energy.</p>
+      <p>Join thousands of homes and businesses that switched to Sunara Power.</p>
       <a href="signup.html" class="btn-gold large" style="margin-right:16px;">Start Residential Service</a>
       <a href="commercial.html" style="color:var(--gold); font-weight:700; font-size:17px; border-bottom:2px solid var(--gold);">Commercial Quote →</a>
     </div>
@@ -324,15 +339,15 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-col brand-col">
-        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Sunara Power" class="footer-logo" onerror="this.style.display='none'">
         <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
-        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+        
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
-        <a href="residential.html">Flex Plan</a>
+        
         <a href="residential.html">12-Month Saver</a>
-        <a href="residential.html">24-Month Ultra</a>
+        
         <a href="signup.html">Sign Up</a>
       </div>
       <div class="footer-col">
@@ -349,7 +364,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>© 2026 Sunara Power. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </footer>
 

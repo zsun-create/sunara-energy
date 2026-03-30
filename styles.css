@@ -1081,3 +1081,10 @@ footer { background: var(--navy); color: rgba(255,255,255,0.75); }
   .state-hero-content h1 { font-size: 28px !important; }
   .zip-hero-form input, .zip-hero-form button { width: 100% !important; }
 }
+
+/* Index plans grid responsive */
+@media (max-width: 640px) {
+  section .container div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}

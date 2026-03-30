@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Dashboard – Sunara Energy</title>
+  <title>My Dashboard – Sunara Power</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
   <style>
@@ -27,29 +27,6 @@
     .toast-title { font-weight: 800; font-size: 14px; color: var(--navy); margin-bottom: 3px; }
     .toast-msg   { font-size: 13px; color: var(--gray); line-height: 1.5; }
     .toast-close { background: none; border: none; cursor: pointer; color: var(--gray); font-size: 18px; padding: 0; line-height: 1; flex-shrink: 0; }
-
-    /* MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-      z-index: 8000; display: flex; align-items: center; justify-content: center;
-      padding: 20px; opacity: 0; pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: white; border-radius: 18px; padding: 40px;
-      max-width: 480px; width: 100%;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-      transform: translateY(20px);
-      transition: transform 0.25s;
-    }
-    .modal-overlay.open .modal { transform: translateY(0); }
-    .modal h3 { font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:900; color:var(--navy); text-transform:uppercase; margin-bottom:10px; }
-    .modal p  { color:var(--gray); font-size:14px; line-height:1.6; margin-bottom:24px; }
-    .modal-actions { display:flex; gap:12px; }
-    .btn-danger { background:#ef4444; color:white; border:none; padding:13px 24px; border-radius:8px; font-weight:800; font-size:14px; cursor:pointer; font-family:'Barlow',sans-serif; transition:background 0.2s; }
-    .btn-danger:hover { background:#dc2626; }
-    .btn-cancel { background:var(--light); color:var(--navy); border:2px solid var(--border); padding:13px 24px; border-radius:8px; font-weight:700; font-size:14px; cursor:pointer; font-family:'Barlow',sans-serif; }
 
     /* DASHBOARD LAYOUT */
     .dash-grid { display:grid; grid-template-columns:280px 1fr; gap:32px; max-width:1100px; margin:40px auto; padding:0 20px; }
@@ -80,10 +57,6 @@
     .settings-row:last-child { border-bottom:none; }
     .settings-label { font-size:14px; font-weight:700; color:var(--navy); }
     .settings-value { font-size:14px; color:var(--gray); }
-    .settings-danger { background:#fff5f5; border:1px solid #fecaca; border-radius:12px; padding:20px; margin-top:8px; }
-    .settings-danger h5 { color:#dc2626; margin-bottom:8px; }
-    .settings-danger p { font-size:13px; color:#991b1b; margin-bottom:16px; }
-
     @media (max-width:768px) { .dash-grid { grid-template-columns:1fr; } }
   </style>
 
@@ -179,20 +152,9 @@
     <button class="toast-close" onclick="hideToast()">×</button>
   </div>
 
-  <!-- DELETE ACCOUNT MODAL -->
-  <div class="modal-overlay" id="deleteModal">
-    <div class="modal">
-      <h3>Delete Account</h3>
-      <p>Are you sure you want to permanently delete your Sunara Energy account? This will cancel all active services and cannot be undone.</p>
-      <div class="modal-actions">
-        <button class="btn-danger" id="confirmDeleteBtn" onclick="confirmDeleteAccount()">Yes, Delete My Account</button>
-        <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
-      </div>
-    </div>
-  </div>
+
 
   <div class="top-bar">
-    <span>📞 <a href="tel:8005551234">(800) 555-1234</a></span>
     <span>Mon–Fri 8am–8pm &nbsp;|&nbsp; Sat 9am–5pm</span>
     <a href="#" onclick="handleLogout()" class="top-bar-login">Log Out →</a>
   </div>
@@ -200,8 +162,8 @@
   <header id="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Sunara Energy" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
-        <span class="logo-fallback" style="display:none">SUNARA <em>ENERGY</em></span>
+        <img src="logo.png" alt="Sunara Power" onerror="this.style.display='none'; this.nextSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">SUNARA <em>POWER</em></span>
       </a>
       <nav class="main-nav">
         <a href="residential.html">Residential</a>
@@ -282,8 +244,7 @@
         <div class="dash-card" style="background:var(--navy);">
           <h4 style="color:var(--gold); border-color:rgba(255,255,255,0.1);">Need Help?</h4>
           <p style="color:rgba(255,255,255,0.65); font-size:14px; margin-bottom:16px;">Our support team is here for you.</p>
-          <a href="tel:8005551234" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:11px; border-radius:8px; font-weight:800; font-size:14px;">(800) 555-1234</a>
-          <a href="contact.html" style="display:block; text-align:center; margin-top:10px; color:rgba(255,255,255,0.6); font-size:13px;">Send a Message</a>
+          <a href="contact.html" style="display:block; text-align:center; background:var(--gold); color:var(--navy); padding:11px; border-radius:8px; font-weight:800; font-size:14px;">Send a Message</a>
         </div>
       </div>
 
@@ -358,10 +319,15 @@
               </div>
             </div>
 
-            <div class="settings-danger">
-              <h5>⚠️ Danger Zone</h5>
-              <p>Permanently delete your account and cancel all services. This action cannot be undone.</p>
-              <button class="btn-danger" onclick="openDeleteModal()">Delete My Account</button>
+            <div class="settings-section" style="margin-top:8px;">
+              <h5>Close Account</h5>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Request Account Closure</div>
+                  <div class="settings-value">To close your account and cancel all services, please contact our support team.</div>
+                </div>
+                <a href="contact.html" style="background:var(--navy); color:white; padding:9px 18px; border-radius:8px; font-weight:700; font-size:13px; white-space:nowrap;">Contact Support</a>
+              </div>
             </div>
           </div>
         </div>
@@ -373,9 +339,9 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-col brand-col">
-        <img src="logo.png" alt="Sunara Energy" class="footer-logo" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Sunara Power" class="footer-logo" onerror="this.style.display='none'">
         <p>Reliable, affordable electricity for homes and businesses nationwide.</p>
-        <p class="footer-phone">📞 <a href="tel:8005551234">(800) 555-1234</a></p>
+        
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
@@ -396,7 +362,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sunara Energy. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>© 2026 Sunara Power. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </footer>
 
@@ -431,41 +397,6 @@
       document.querySelectorAll('.dash-tab-content').forEach(t => t.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
       event.target.classList.add('active');
-    }
-
-    // MODAL
-    function openDeleteModal()  { document.getElementById('deleteModal').classList.add('open'); }
-    function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); }
-
-    // DELETE ACCOUNT
-    async function confirmDeleteAccount() {
-      const btn   = document.getElementById('confirmDeleteBtn');
-      const token = localStorage.getItem('sunara_token');
-      btn.disabled = true;
-      btn.textContent = 'Deleting...';
-
-      try {
-        const res = await fetch('/api/customer', {
-          method: 'DELETE',
-          headers: { 'Authorization': 'Bearer ' + token }
-        });
-
-        if (res.ok) {
-          closeDeleteModal();
-          showToast('info', 'Account Deleted', 'Your account has been permanently deleted.');
-          localStorage.removeItem('sunara_token');
-          localStorage.removeItem('sunara_user');
-          setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-        } else {
-          showToast('error', 'Could Not Delete', 'Please contact support to delete your account.');
-          btn.disabled = false;
-          btn.textContent = 'Yes, Delete My Account';
-        }
-      } catch (e) {
-        showToast('error', 'Connection Error', 'Something went wrong. Please try again.');
-        btn.disabled = false;
-        btn.textContent = 'Yes, Delete My Account';
-      }
     }
 
     // LOGOUT
