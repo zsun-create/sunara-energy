@@ -202,8 +202,8 @@
         <div class="plan-card">
           <div class="plan-tag">Flexible</div>
           <h3>Flex Plan</h3>
-          <div class="plan-rate" id="saver6Rate">—<span>/kWh</span></div>
-          <p class="plan-term">6-Month Fixed Rate</p>
+          <div class="plan-rate" id="flexRate">—<span>/kWh</span></div>
+          <p class="plan-term">Month-to-Month · No Contract</p>
           <ul class="plan-features">
             <li>No long-term commitment</li>
             <li>Cancel anytime, no penalty</li>
@@ -212,7 +212,7 @@
             <li>Daily usage alerts</li>
             <li>24/7 customer support</li>
           </ul>
-          <a id="saver6Link" href="signup.html?plan=6month" class="btn-plan">Select Plan</a>
+          <a id="flexLink" href="signup.html?plan=flex" class="btn-plan">Select Plan</a>
         </div>
         <div class="plan-card featured">
           <div class="plan-tag best">Most Popular</div>
@@ -246,7 +246,45 @@
         </div>
       </div>
 
-      <!-- DEFAULT PLAN OVERVIEW — shown before ZIP entered -->
+      <!-- COMPARISON TABLE WITH REAL RATES -->
+      <div style="margin-top:60px;">
+        <div class="section-header"><h2>Plan Comparison</h2></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);">
+            <thead>
+              <tr style="background:var(--navy); color:white;">
+                <th style="padding:16px 20px; text-align:left; font-size:13px; text-transform:uppercase;">Feature</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">Flex</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase; background:var(--blue);">12-Month</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">24-Month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Rate per kWh</td><td style="padding:14px 20px; text-align:center; font-weight:800; color:var(--blue);" id="tableFlexRate">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb; font-weight:800; color:var(--blue);" id="tableSaverRate">—</td><td style="padding:14px 20px; text-align:center; font-weight:800; color:var(--blue);" id="tableUltraRate">—</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Contract Length</td><td style="padding:14px 20px; text-align:center;">None</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">12 months</td><td style="padding:14px 20px; text-align:center;">24 months</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">No Deposit</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Daily Alerts</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Priority Support</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">VIP</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Monthly Reports</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">—</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr>
+                <td style="padding:14px 20px;"></td>
+                <td style="padding:14px 20px; text-align:center;"><a id="tableFlexLink" href="signup.html?plan=flex" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+                <td style="padding:14px 20px; text-align:center; background:#fffbeb;"><a id="tableSaverLink" href="signup.html?plan=12month" class="btn-plan gold" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+                <td style="padding:14px 20px; text-align:center;"><a id="tableUltraLink" href="signup.html?plan=24month" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Select</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:36px;">
+        <p style="color:var(--gray); font-size:13px; margin-bottom:14px;">Rates shown are estimates for your area. Final rate confirmed at enrollment.</p>
+        <button onclick="resetZip()" style="background:transparent; border:2px solid var(--border); color:var(--gray); padding:10px 24px; border-radius:8px; cursor:pointer; font-family:'Barlow',sans-serif; font-size:14px; font-weight:600;">Search a Different ZIP</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEFAULT PLAN OVERVIEW — shown before ZIP entered -->
   <section id="planOverview" class="section" style="background:white;">
     <div class="container">
       <div class="section-header">
@@ -301,7 +339,40 @@
         </div>
       </div>
 
-      <section class="cta-banner">
+      <!-- DEFAULT COMPARISON TABLE -->
+      <div style="margin-top:60px;">
+        <div class="section-header"><h2>Plan Comparison</h2></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);">
+            <thead>
+              <tr style="background:var(--navy); color:white;">
+                <th style="padding:16px 20px; text-align:left; font-size:13px; text-transform:uppercase;">Feature</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">Flex</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase; background:var(--blue);">12-Month</th>
+                <th style="padding:16px 20px; text-align:center; font-size:13px; text-transform:uppercase;">24-Month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Rate per kWh</td><td style="padding:14px 20px; text-align:center; color:var(--gray);">Enter ZIP</td><td style="padding:14px 20px; text-align:center; background:#fffbeb; color:var(--gray);">Enter ZIP</td><td style="padding:14px 20px; text-align:center; color:var(--gray);">Enter ZIP</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Contract Length</td><td style="padding:14px 20px; text-align:center;">None</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">12 months</td><td style="padding:14px 20px; text-align:center;">24 months</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">No Deposit</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Daily Alerts</td><td style="padding:14px 20px; text-align:center;">Yes</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 20px; font-weight:700;">Priority Support</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">Yes</td><td style="padding:14px 20px; text-align:center;">VIP</td></tr>
+              <tr style="border-bottom:1px solid var(--border); background:var(--light);"><td style="padding:14px 20px; font-weight:700;">Monthly Reports</td><td style="padding:14px 20px; text-align:center;">—</td><td style="padding:14px 20px; text-align:center; background:#fffbeb;">—</td><td style="padding:14px 20px; text-align:center;">Yes</td></tr>
+              <tr>
+                <td style="padding:14px 20px;"></td>
+                <td style="padding:14px 20px; text-align:center;"><button onclick="document.getElementById('zipInput').focus(); window.scrollTo({top:0,behavior:'smooth'})" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Check Rate</button></td>
+                <td style="padding:14px 20px; text-align:center; background:#fffbeb;"><button onclick="document.getElementById('zipInput').focus(); window.scrollTo({top:0,behavior:'smooth'})" class="btn-plan gold" style="max-width:120px; margin:auto; display:block;">Check Rate</button></td>
+                <td style="padding:14px 20px; text-align:center;"><button onclick="document.getElementById('zipInput').focus(); window.scrollTo({top:0,behavior:'smooth'})" class="btn-plan" style="max-width:120px; margin:auto; display:block;">Check Rate</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
     <div class="container">
       <h2>Ready to Start?</h2>
       <p>Enter your ZIP code above to see your rates and sign up in minutes.</p>
@@ -318,8 +389,9 @@
       </div>
       <div class="footer-col">
         <h5>Residential</h5>
-        <a href="residential.html">6-Month Plan</a>
+        <a href="residential.html">Flex Plan</a>
         <a href="residential.html">12-Month Saver</a>
+        <a href="residential.html">24-Month Ultra</a>
         <a href="signup.html">Sign Up</a>
       </div>
       <div class="footer-col">
